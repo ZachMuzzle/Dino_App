@@ -2,6 +2,7 @@
  * Updated node.js 
  * Now use imports instead of const with require('express');
  * Stopped @47:19 in video: https://www.youtube.com/watch?v=wYALykLb5oY
+ * API keys in env file
 */
 import fetch from 'node-fetch';
 import express from 'express';
