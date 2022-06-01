@@ -2,6 +2,13 @@
 console.log('Scripts.js loaded!');
 
 document.getElementById('button-load').addEventListener('click', () => {
+    if(document.querySelector('#dinoName') !== null) {
+        document.querySelector('#dinoName').remove();
+    }
+
+    if(document.querySelector('#dinoImage') !== null) {
+        document.querySelector('#dinoImage').remove();
+    }
     getDinoName();
     getDinoImage();
 })
@@ -15,7 +22,10 @@ async function getDinoName() {
     console.log(dinoname);
     
     /* Div section */
-    document.getElementById("dinoName").textContent = dinoname;
+    let dinoNameDiv = document.createElement('div');
+    dinoNameDiv.id = 'dinoName';
+    dinoNameDiv.textContent = dinoname;
+    document.querySelector('#dinoWrapper').appendChild(dinoNameDiv);
 }
 
 async function getDinoImage() {
@@ -27,13 +37,9 @@ async function getDinoImage() {
     console.log(dinoimage);
     console.log(dinoImageUrl,dinoAlt);
 
-    if(document.querySelector('#dinoImage') !== null) {
-        document.querySelector('#dinoImage').remove();
-    }
-    
     let img = document.createElement('img');
     img.id = 'dinoImage'; // set id of img created
     img.src = dinoImageUrl;
     img.alt = dinoAlt;
-    document.querySelector('body').appendChild(img); // put img element into body of html
+    document.querySelector('#dinoWrapper').appendChild(img); // put img element into body of html
 }
