@@ -2,6 +2,7 @@
  * Updated node.js 
  * Now use imports instead of const with require('express');
  * Stopped @19:34 in video: https://www.youtube.com/watch?v=wYALykLb5oY
+ * 
 */
 import fetch from 'node-fetch';
 import express from 'express';
@@ -28,4 +29,21 @@ app.get('/dinoname', async(request,response) => {
 //   .then(response => response.json())
 //   .then(data => console.log(data))
 //   .catch(err => console.error('Where did all the dinosaurs go?'))
+});
+
+app.get('/dinoimage', async(request,response) => {
+    const fetchAPI = await fetch('https://bing-image-search1.p.rapidapi.com/images/search?q=dinosaur&count=10', 
+    {
+        method: 'GET',
+        headers: {
+            'X-RapidAPI-Host': 'bing-image-search1.p.rapidapi.com',
+            'X-RapidAPI-Key': 'f9890be724msh2646fdfb051d29cp1ae4abjsna97db6f72c58',
+        },
+    }
+);
+
+    
+    const dinoImageResponse = await fetchAPI.json();
+    console.log(dinoImageResponse);
+    response.json(dinoImageResponse);
 });
