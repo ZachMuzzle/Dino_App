@@ -4,10 +4,75 @@ html {
 }
 
 *, *::before, *::after {
-    box-sizing: inherit;
+    /* inherit values from parent element */
+    box-sizing: inherit; 
 }
 
 body {
+    margin: 0px;
+    padding: 0px;
+    /* background: url('casey-horner-1sim8ojvCbE-unsplash.jpg') cover no-repeat center; */
+    background: url('casey-horner-1sim8ojvCbE-unsplash.jpg') no-repeat center;
+    display: grid;
+    place-items: center;
+    height: 100vh;
+}
+
+h1 {
+    font-size: 10rem;
+    color: coral;
+    font-family: 'Fira Sans', sans-serif;
     margin: 0;
-    padding: 0;
+}
+
+section > button {
+    font-size: 3rem;
+    background-color: rgb(230, 107, 0);
+    border-style: solid;
+    border-radius: 10%;
+    border-color: black;
+    text-transform: uppercase;
+    z-index: -1;
+}
+
+section > button:hover {
+    background-color: rgba(247, 148, 61, .8);
+    cursor: pointer;
+}
+
+#dinoName {
+    background-color: white;
+    font-size: 2rem;
+    padding: 0.25rem;
+    border-radius: 1rem 1rem 0 0;
+}
+
+#dinoImage {
+    max-width: 100%;
+    border-radius: 0 0 1rem 1rem;
+}
+
+#dinoWrapper {
+    width: 80%;
+    max-width: 25rem;
+    display: block;
+    margin: auto;
+}
+
+.generator, .button-load {
+    padding: 5px;
+    margin: 5px;
+    text-align: center;
+}
+
+@media (max-width: 37.5em) {
+    h1 {
+        font-size: 3rem;
+    }
+    #dinoWrapper {
+        width: 50%;
+        max-width: 25rem;
+        display: block;
+        margin: auto;
+    }
 }
