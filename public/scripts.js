@@ -13,7 +13,9 @@ document.getElementById('button-load').addEventListener('click', () => {
     getDinoImage();
 })
 
-async function getDinoName() {
+// getDinoName();
+
+async function getDinoName() { 
     const response = await fetch('/dinoname'); //fetch data
     const data = await response.json(); //formate as json data
     let dinoname = data[0].join(' '); // name with spaces, first element
