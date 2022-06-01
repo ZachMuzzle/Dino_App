@@ -1,8 +1,7 @@
 /* Server-side javascript 
  * Updated node.js 
  * Now use imports instead of const with require('express');
- * Stopped @19:34 in video: https://www.youtube.com/watch?v=wYALykLb5oY
- * 
+ * Stopped @47:19 in video: https://www.youtube.com/watch?v=wYALykLb5oY
 */
 import fetch from 'node-fetch';
 import express from 'express';
