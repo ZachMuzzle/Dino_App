@@ -1,17 +1,23 @@
 /* Client side javascript */
+const gallery_array_url = [];
+const gallery_array_name = [];
 console.log('Scripts.js loaded!');
+let el = document.getElementById('button-load');
+if(el) {
 
-document.getElementById('button-load').addEventListener('click', () => {
-    if(document.querySelector('#dinoName') !== null) {
-        document.querySelector('#dinoName').remove();
-    }
+    el.addEventListener('click', () => {
+        if(document.querySelector('#dinoName') !== null) {
+            document.querySelector('#dinoName').remove();
+        }
 
-    if(document.querySelector('#dinoImage') !== null) {
-        document.querySelector('#dinoImage').remove();
-    }
-    getDinoName();
-    getDinoImage();
-})
+        if(document.querySelector('#dinoImage') !== null) {
+            document.querySelector('#dinoImage').remove();
+        }
+        getDinoName();
+        getDinoImage();
+
+    });
+}
 
 // getDinoName();
 
@@ -26,6 +32,10 @@ async function getDinoName() {
     dinoNameDiv.id = 'dinoName';
     dinoNameDiv.textContent = dinoname;
     document.querySelector('#dinoWrapper').appendChild(dinoNameDiv);
+
+    /* Gallery Section for name */
+    gallery_array_name.push(dinoname);
+    sessionStorage.setItem("dino-name", gallery_array_name);
 }
 
 async function getDinoImage() {
@@ -42,4 +52,16 @@ async function getDinoImage() {
     img.src = dinoImageUrl;
     img.alt = dinoAlt;
     document.querySelector('#dinoWrapper').appendChild(img); // put img element into body of html
+
+    /* Gallery Section */
+    
+    gallery_array_url.push(dinoImageUrl);
+    // gallery_array_name.push(dinoAlt);
+
+    console.log("TESTING ARRAYS NOW: ")
+    // console.log(gallery_array_name);
+    console.log(gallery_array_url);
+
+    sessionStorage.setItem("url-dino",gallery_array_url);
+    // sessionStorage.setItem("url-name",gallery_array_name);
 }
