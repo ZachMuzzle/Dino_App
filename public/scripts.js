@@ -1,7 +1,7 @@
 /* Client side javascript */
 const gallery_array_url = [];
 const gallery_array_name = [];
-console.log('Scripts.js loaded!');
+
 let el = document.getElementById('button-load');
 if(el) {
 
@@ -38,6 +38,7 @@ async function getDinoName() {
     sessionStorage.setItem("dino-name", gallery_array_name);
 }
 
+
 async function getDinoImage() {
     const response = await fetch('/dinoimage');
     const data = await response.json(); // data length is 10
@@ -65,3 +66,4 @@ async function getDinoImage() {
     sessionStorage.setItem("url-dino",gallery_array_url);
     // sessionStorage.setItem("url-name",gallery_array_name);
 }
+
