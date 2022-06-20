@@ -42,12 +42,7 @@ const options  = {
 };
 
 app.get('/dinoimage', async(request,response) => {
-    const fetchAPI = await fetch('https://bing-image-search1.p.rapidapi.com/images/search?q=dinosaur&count=10000', options)
-	.then(response => response.json())
-	.then(response => console.log(response))
-	.catch(err => console.error(err));
-
-    
+    const fetchAPI = await fetch('https://bing-image-search1.p.rapidapi.com/images/search?q=dinosaur&count=10000', options);
     const dinoImageResponse = await fetchAPI.json();
     console.log(dinoImageResponse);
     response.json(dinoImageResponse);
