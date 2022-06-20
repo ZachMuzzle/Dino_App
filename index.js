@@ -32,21 +32,20 @@ app.get('/dinoname', async(request,response) => {
     console.log(dinoNameResponse); // writes to console
     response.json(dinoNameResponse); // responded to any client requests
 
-//   .then(response => response.json())
-//   .then(data => console.log(data))
-//   .catch(err => console.error('Where did all the dinosaurs go?'))
 });
+const options  = {
+    method: 'GET',
+	headers: {
+		'X-RapidAPI-Key': 'f9890be724msh2646fdfb051d29cp1ae4abjsna97db6f72c58',
+		'X-RapidAPI-Host': 'bing-image-search1.p.rapidapi.com'
+	}
+};
 
 app.get('/dinoimage', async(request,response) => {
-    const fetchAPI = await fetch('https://bing-image-search1.p.rapidapi.com/images/search?q=dinosaur&count=20', 
-    {
-        method: 'GET',
-        headers: {
-            'X-RapidAPI-Host': 'bing-image-search1.p.rapidapi.com',
-            'X-RapidAPI-Key': api_key,
-        },
-    }
-);
+    const fetchAPI = await fetch('https://bing-image-search1.p.rapidapi.com/images/search?q=dinosaur&count=10000', options)
+	.then(response => response.json())
+	.then(response => console.log(response))
+	.catch(err => console.error(err));
 
     
     const dinoImageResponse = await fetchAPI.json();

@@ -1,3 +1,13 @@
+html {
+    font-size: 100%;
+    box-sizing: border-box;
+}
+
+*, *::before, *::after {
+    /* inherit values from parent element */
+    box-sizing: inherit; 
+}
+
 body {
     margin: 0px;
     padding: 0px;
@@ -144,3 +154,14 @@ ul > li a:hover {
     text-decoration: none;
     cursor: pointer;
   }
+
+  .errorDiv {
+    padding-top: 200px;
+}
+
+.headerErrorImage {
+    background-color: rgb(230, 107, 0);
+    border-radius: 10%;
+    padding: 5px 5px;
+}
+

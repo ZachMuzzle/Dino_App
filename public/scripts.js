@@ -2,7 +2,7 @@
 const gallery_array_url = [];
 const gallery_array_name = [];
 console.log('Scripts.js loaded!');
-let el = document.getElementById('button-load');
+let el = document.getElementById('button-load');  // Check before doing operation
 if(el) {
 
     el.addEventListener('click', () => {
@@ -21,7 +21,7 @@ if(el) {
 
 // getDinoName();
 
-async function getDinoName() { 
+async function getDinoName() { // the keyword async before a function makes the function return a promise
     const response = await fetch('/dinoname'); //fetch data
     const data = await response.json(); //formate as json data
     let dinoname = data[0].join(' '); // name with spaces, first element
@@ -40,8 +40,8 @@ async function getDinoName() {
 
 async function getDinoImage() {
     const response = await fetch('/dinoimage');
-    const data = await response.json(); // data length is 10
-    let dinoimage = data.value[Math.floor(Math.random() * data.value.length)]; // hard coded to get first value from json.
+    const data = await response.json(); // data length is whatever count is ?
+    let dinoimage = data.value[Math.floor(Math.random() * data.value.length)]; // random dino image  from the length
     let dinoImageUrl = dinoimage.thumbnailUrl;
     let dinoAlt = dinoimage.name; 
     console.log(dinoimage);

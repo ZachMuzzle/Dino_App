@@ -3,7 +3,13 @@ try {
 
         const dataUrl = sessionStorage.getItem("url-dino");
         const dataAlt = sessionStorage.getItem("dino-name");
-        if(dataUrl == null) throw "Generate a dino image!"
+        if(dataUrl == null) {
+            const dinoImgError = document.createElement('h1');
+            dinoImgError.className = 'headerErrorImage';
+            dinoImgError.innerHTML = "PLEASE ADD AN IMAGE USING THE GENERATE BUTTON!";
+            document.querySelector('.errorDiv').appendChild(dinoImgError);
+            throw "Generate a dino image!";
+        }
         if(dataAlt == null) throw "Generate a dino name!";
         const urlArray = dataUrl.split(',');
         const nameArray = dataAlt.split(','); 
