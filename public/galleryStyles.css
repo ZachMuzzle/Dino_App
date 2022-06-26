@@ -29,7 +29,7 @@ body {
     border: rgba(247, 148, 61, .8);
     border-style: groove;
     max-height: 500px;
-    margin: 10px;
+    /* margin: 10px; */
 }
  .gallery {
     height: 80%;
@@ -206,4 +206,45 @@ ul > li a:hover {
     }
     
 }
+
+/* Image Name Hover */
+
+.imgWrap {
+    position:relative;
+    max-width: 500px;
+    margin-top:  10px; ;
+}
+
+/* Responsive Image */
+.imgWrap .dinoGalleryImage {
+    width: 100%;
+}
+
+/* Caption Text */
+.hoverName {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 10px;
+
+    /* Place text at top of image */
+    position:absolute;
+    top: 0; 
+    left: 0;
+
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+}
+
+/* Show or Hide */
+
+.hoverName { 
+    visibility: none;
+    opacity: 0;
+}
+
+.imgWrap:hover .hoverName {
+    visibility: visible; 
+    opacity: 1;
+}
+
 

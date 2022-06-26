@@ -15,11 +15,25 @@ try {
         const nameArray = dataAlt.split(','); 
 
         for(let i = 0; i < urlArray.length; i++) {
-        let img = document.createElement('img');
+        /* Div creation */    
+        const imgWrap = document.createElement('div');
+        imgWrap.className = "imgWrap";
+        /* Image creation */
+        const img = document.createElement('img');
         img.className = 'dinoGalleryImage';
         img.src = urlArray[i];
         img.alt = nameArray[i];
-        document.querySelector('#dinoWrapperGallery').appendChild(img);
+        document.querySelector('#dinoWrapperGallery').appendChild(imgWrap);
+        document.querySelectorAll('.imgWrap')[i].appendChild(img);
+
+        /* Div creation for text of dino */
+        const textDiv = document.createElement("div");
+        textDiv.className = "hoverName";
+        document.querySelectorAll(".imgWrap")[i].appendChild(textDiv);
+        const text = document.createElement("h2");
+        text.className = "textHeader";
+        text.innerHTML = nameArray[i];
+        document.querySelectorAll(".hoverName")[i].appendChild(text);
         }
 
          /* MODEL FOR IMAGE */
