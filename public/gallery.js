@@ -1,6 +1,6 @@
 try {
     window.onload = function displayImage() {
-
+    
         const dataUrl = sessionStorage.getItem("url-dino");
         const dataAlt = sessionStorage.getItem("dino-name");
         if(dataUrl == null) {
@@ -35,6 +35,33 @@ try {
         text.innerHTML = nameArray[i];
         document.querySelectorAll(".hoverName")[i].appendChild(text);
         }
+        /* Search auto complete ability */
+        const autocomplete = document.querySelector('#autocomplete');
+        const resultsHTML = document.querySelector('#results');
+        const searchButton = document.querySelector('#searchButton');
+
+        autocomplete.oninput = function () { 
+            let results = [];
+            console.log("RESULTS ARRAY: ", results);
+            const userInput = this.value;
+            resultsHTML.innerHTML = "";
+            // change this to higher number for larger data sets.
+            if(userInput.length > 0) {
+                results = getResults(userInput, nameArray);
+                resultsHTML.style.display = "block";
+                for(let i = 0; i < results.length; i++) {
+                    resultsHTML.innerHTML += "<li>" + results[i] + "</li>";
+                }
+            }
+        };
+
+        /* Onclick for autocomplete */
+        resultsHTML.onclick = function(event) {
+            const setValue = event.target.innerText;
+            autocomplete.value = setValue;
+            this.innerHTML = "";
+        }
+
 
          /* MODEL FOR IMAGE */
          let model = document.getElementById("myModel");
@@ -46,6 +73,28 @@ try {
           * ? There may be a way to do this outside of  this function, but I thought this was the easiest to implement
           * 
           * */ 
+  /* Button click for search */
+try {
+  searchButton.onclick = function(event) {
+    console.log("Images Length: ", images.length)
+    for(let i = 0; i < images.length; i++) {
+        console.log("IMAGES: ", images[i]);
+        console.log(images[i].alt);
+        console.log(autocomplete.value);
+        if(images[i].alt === autocomplete.value) {
+            console.log("IF WAS HIT!")
+            model.style.display = "block";
+            imgSrc.src = images[i].src;
+            imgCaption.innerHTML = images[i].alt;
+            break
+        } else throw "Search dino name is not in gallery!"
+    }
+
+}
+} catch(err) {
+    console.log(err);
+}
+         /* Maybe turn this into a function for easy recall? */
          try {
             if(images.length == 0) throw "No images found!";
             for(let j =  0; j < images.length; j++) {
@@ -67,4 +116,16 @@ try {
     }
 } catch(err) {
     console.log(err);
+}
+
+function getResults(input,data) {
+const results = [];
+    for (let i = 0; i < data.length; i++) {
+        console.log("GET RESULTS: ", data[i]);
+        console.log("INPUT: ", input);
+        if(input === data[i].slice(0, input.length)) {
+            results.push(data[i]);
+        }
+    }
+    return results;
 }
