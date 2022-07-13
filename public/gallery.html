@@ -17,9 +17,10 @@
         <li><a href="index.html">Dinosaur Generator</a></li>
         <li><a class="active" href="gallery.html">Dinosaur Gallery</a></li>
         <div class="search-container">
-            <form action="/action_page.php">
-                <input type="text" placeholder="Search..." name="search">
-                <button type="submit"><i class="fa fa-search"></i></button>
+            <form onsubmit="return false">
+                <input id="autocomplete" type="text" placeholder="Search..." name="search">
+                <button id="searchButton" type="submit"><i class="fa fa-search"></i></button>
+                <ul id="results"></ul>
             </form>
         </div>
     </ul>
@@ -28,10 +29,8 @@
         <div id="dinoWrapperGallery"></div>
     </section>
     
-    <div class="errorDiv">
-        
-        <p id="error"></p>
-    </div>
+    <div class="errorDiv"></div>
+    
     <div id="myModel" class="model">
         <span class="close">&times;</span>
 
