@@ -73,27 +73,27 @@ try {
           * ? There may be a way to do this outside of  this function, but I thought this was the easiest to implement
           * 
           * */ 
-  /* Button click for search */
-try {
-  searchButton.onclick = function(event) {
-    console.log("Images Length: ", images.length)
-    for(let i = 0; i < images.length; i++) {
-        console.log("IMAGES: ", images[i]);
-        console.log(images[i].alt);
-        console.log(autocomplete.value);
-        if(images[i].alt === autocomplete.value) {
-            console.log("IF WAS HIT!")
-            model.style.display = "block";
-            imgSrc.src = images[i].src;
-            imgCaption.innerHTML = images[i].alt;
-            break
-        } else throw "Search dino name is not in gallery!"
-    }
+        /* Button click for search */
+        try {
+        searchButton.onclick = function(event) {
+            console.log("Images Length: ", images.length)
+            for(let i = 0; i < images.length; i++) {
+                console.log("IMAGES: ", images[i]);
+                console.log(images[i].alt);
+                console.log(autocomplete.value);
+                if(images[i].alt == autocomplete.value) {
+                    console.log("IF WAS HIT!")
+                    model.style.display = "block";
+                    imgSrc.src = images[i].src;
+                    imgCaption.innerHTML = images[i].alt;
+                    break
+                } else if(images.length-1 == i) throw "No available image for search field!"
+            }
 
-}
-} catch(err) {
-    console.log(err);
-}
+        }
+        } catch(err) {
+            console.log(err);
+        }
          /* Maybe turn this into a function for easy recall? */
          try {
             if(images.length == 0) throw "No images found!";
