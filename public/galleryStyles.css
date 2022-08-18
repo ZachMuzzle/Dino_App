@@ -58,11 +58,11 @@ body {
     z-index: 1;
 }
 
-ul > li {
+.nav-bar > li {
     float: left;
 }
 
-ul > li a {
+.nav-bar > li a {
     display: block;
     color: white;
     text-align: center;
@@ -70,7 +70,7 @@ ul > li a {
     text-decoration: none;
 }
 
-ul > li a:hover {
+.nav-bar > li a:hover {
     background-color: #111;
 }
 
@@ -166,31 +166,75 @@ ul > li a:hover {
     padding: 5px 5px;
 }
 
-/* Search Bar Styles */
-.nav-bar .search-container {
+/* Search Styles */
+.search-container {
     float: right;
+    width: 400px;
+    position: relative;
+    margin: 100px auto;
 }
-.nav-bar input[type=text] {
+input[type=text] {
     padding: 6px;
     border: none;
-    margin-top: 8px;
     font-size: 17px;
 }
 
-.nav-bar .search-container button  {
-    float: right;
+.search-container button  {
+    width: 100%;
     padding: 6px 10px;
-    margin-top: 8px;
-    margin-right: 16px;
+    margin-top: 5px;
     background: #ddd;
     font-size: 17px;
     border: none;
     cursor: pointer;
 }
 
+input {
+    border: 0 none;
+  }
+
+  .search-container input,
+  .search-container .suggestions {
+    width: 100%;
+    background: #fff;
+    text-align: left;
+  }
+  .search-container input {
+    background: rgba(225, 224, 224, 0.46);
+    height: 60px;
+    padding: 0 10px;
+  }
+
+.has-suggestions {
+    display: none;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,0.2);
+    max-height: 200px;
+    overflow-y: auto;
+    background-color: rgba(0, 0, 0, 0.2);;
+}
+
+ul.has-suggestions {
+    display: block;
+}
+
+.has-suggestions li {
+    padding: 10px;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.has-suggestions li:hover {
+    background-color: rgba(247, 148, 61, .8);
+}
+
 .nav-bar .search-container button:hover {
     background: #ccc;
   }
+
+/* END OF NAV/SEARCH BAR */
 
 @media screen and (max-width: 600px) {
     .nav-bar a, .nav-bar input[type=text] {

@@ -16,15 +16,19 @@
     <ul class="nav-bar">
         <li><a href="index.html">Dinosaur Generator</a></li>
         <li><a class="active" href="gallery.html">Dinosaur Gallery</a></li>
-        <div class="search-container">
-            <form onsubmit="return false">
-                <input id="autocomplete" type="text" placeholder="Search..." name="search">
-                <button id="searchButton" type="submit"><i class="fa fa-search"></i></button>
-                <ul id="results"></ul>
-            </form>
-        </div>
+       
     </ul>
-
+    <div class="search-container">
+        <!-- <form onsubmit="return false"> -->
+            <input id="autocomplete" type="text" placeholder="Search..." name="search">
+            <!-- </form> -->
+            <div class="suggestions">
+                
+                <ul></ul>
+            </div>
+            <button id="searchButton" type="submit"><i class="fa fa-search"></i></button>
+    </div>
+        
     <section class="gallery">
         <div id="dinoWrapperGallery"></div>
     </section>

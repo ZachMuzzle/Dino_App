@@ -37,7 +37,7 @@ try {
         }
         /* Search auto complete ability */
         const autocomplete = document.querySelector('#autocomplete');
-        const resultsHTML = document.querySelector('#results');
+        const resultsHTML = document.querySelector('.suggestions ul');
         const searchButton = document.querySelector('#searchButton');
 
         autocomplete.oninput = function () { 
@@ -52,16 +52,21 @@ try {
                 for(let i = 0; i < results.length; i++) {
                     resultsHTML.innerHTML += "<li>" + results[i] + "</li>";
                 }
+                resultsHTML.classList.add('has-suggestions');
             }
-        };
-
-        /* Onclick for autocomplete */
+            else {
+                results = [];
+                resultsHTML.innerHTML="";
+                resultsHTML.classList.remove('has-suggestions');
+        }
+        }
+        
+        /* Onclick for suggestions */
         resultsHTML.onclick = function(event) {
             const setValue = event.target.innerText;
             autocomplete.value = setValue;
             this.innerHTML = "";
         }
-
 
          /* MODEL FOR IMAGE */
          let model = document.getElementById("myModel");
@@ -87,9 +92,13 @@ try {
                     imgSrc.src = images[i].src;
                     imgCaption.innerHTML = images[i].alt;
                     break
-                } else if(images.length-1 == i) throw "No available image for search field!"
+                } else if(images.length-1 == i) {
+                    alert("PLEASE INPUT A DINOSAUR NAME BEFORE SUBMITTING");
+                    throw "No available image for search field!"
+                }
             }
-
+            //Clear search values when
+            autocomplete.value = "";
         }
         } catch(err) {
             console.log(err);

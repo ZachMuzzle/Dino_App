@@ -19,8 +19,6 @@ if(el) {
     });
 }
 
-// getDinoName();
-
 async function getDinoName() { // the keyword async before a function makes the function return a promise
     const response = await fetch('/dinoname'); //fetch data
     const data = await response.json(); //formate as json data
