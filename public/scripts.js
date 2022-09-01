@@ -6,17 +6,21 @@ let el = document.getElementById('button-load');  // Check before doing operatio
 if(el) {
 
     el.addEventListener('click', () => {
-        if(document.querySelector('#dinoName') !== null) {
-            document.querySelector('#dinoName').remove();
-        }
-
-        if(document.querySelector('#dinoImage') !== null) {
-            document.querySelector('#dinoImage').remove();
-        }
-        getDinoName();
-        getDinoImage();
-
+        el.disabled = true;
+            if(document.querySelector('#dinoName') !== null) {
+                document.querySelector('#dinoName').remove();
+            }
+            
+            if(document.querySelector('#dinoImage') !== null) {
+                document.querySelector('#dinoImage').remove();
+            }
+            getDinoName();
+            getDinoImage();
+            setTimeout(function() {
+                el.disabled = false;
+            },2000);
     });
+    
 }
 
 async function getDinoName() { // the keyword async before a function makes the function return a promise
