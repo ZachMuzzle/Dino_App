@@ -22,7 +22,7 @@ app.use(express.static('public'));
 app.listen(port, function() {
     console.log(`Example app listening at http://localhost:${port}`);
 });
-const api_key = process.env.API_KEY;
+const api_key = process.env.API_KEY; // Used for API KEY instead of actual key in options
 app.get('/dinoname', async(request,response) => {
     // RUN CODE HERE
     
@@ -33,16 +33,17 @@ app.get('/dinoname', async(request,response) => {
     response.json(dinoNameResponse); // responded to any client requests
 
 });
-const options  = {
+const options = {
     method: 'GET',
-	headers: {
-		'X-RapidAPI-Key': 'f9890be724msh2646fdfb051d29cp1ae4abjsna97db6f72c58',
-		'X-RapidAPI-Host': 'bing-image-search1.p.rapidapi.com'
-	}
-};
+    headers: {
+      'X-RapidAPI-Key': api_key,
+      'X-RapidAPI-Host': 'duckduckgo-image-search.p.rapidapi.com'
+    }
+  };
+const url = 'https://duckduckgo-image-search.p.rapidapi.com/search/image?q=dinosaur';
 
 app.get('/dinoimage', async(request,response) => {
-    const fetchAPI = await fetch('https://bing-image-search1.p.rapidapi.com/images/search?q=dinosaur&count=10000', options);
+    const fetchAPI = await fetch(url, options);
     const dinoImageResponse = await fetchAPI.json();
     console.log(dinoImageResponse);
     response.json(dinoImageResponse);
