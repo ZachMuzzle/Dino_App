@@ -43,9 +43,10 @@ async function getDinoName() { // the keyword async before a function makes the 
 async function getDinoImage() {
     const response = await fetch('/dinoimage');
     const data = await response.json(); // data length is whatever count is ?
-    let dinoimage = data.value[Math.floor(Math.random() * data.value.length)]; // random dino image  from the length
-    let dinoImageUrl = dinoimage.thumbnailUrl;
-    let dinoAlt = dinoimage.name; 
+    console.log("DATA CALL AFTER BUTTON CLICK: ", data.results)
+    let dinoimage = data.results[Math.floor(Math.random() * data.results.length)]; // random dino image  from the length
+    let dinoImageUrl = dinoimage.image;
+    let dinoAlt = dinoimage.title; 
     console.log(dinoimage);
     console.log(dinoImageUrl,dinoAlt);
 
