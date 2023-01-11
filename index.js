@@ -22,7 +22,7 @@ app.use(express.static('public'));
 app.listen(port, function() {
     console.log(`Example app listening at http://localhost:${port}`);
 });
-const api_key = process.env.API_KEY;
+const api_key = process.env.API_KEY; // Used for API KEY instead of actual key in options
 app.get('/dinoname', async(request,response) => {
     // RUN CODE HERE
     
