@@ -258,6 +258,8 @@ ul.has-suggestions {
     position:relative;
     max-width: 500px;
     margin-top:  10px; ;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* Responsive Image */

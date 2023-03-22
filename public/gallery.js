@@ -1,28 +1,27 @@
 try {
-    window.onload = function displayImage() {
+    window.onload = async function displayImage() {
     
-        const dataUrl = sessionStorage.getItem("url-dino");
-        const dataAlt = sessionStorage.getItem("dino-name");
-        if(dataUrl == null) {
+        let allData = await getData();
+        console.log(allData)
+        if(allData.length === 0) {
             const dinoImgError = document.createElement('h1');
             dinoImgError.className = 'headerErrorImage';
             dinoImgError.innerHTML = "PLEASE ADD AN IMAGE USING THE GENERATE BUTTON!";
             document.querySelector('.errorDiv').appendChild(dinoImgError);
             throw "Generate a dino image!";
         }
-        if(dataAlt == null) throw "Generate a dino name!";
-        const urlArray = dataUrl.split(',');
-        const nameArray = dataAlt.split(','); 
-
-        for(let i = 0; i < urlArray.length; i++) {
+        if(allData.length === 0) throw "Generate a dino name!";
+    
+        
+        for(let i = 0; i < allData.length; i++) {
         /* Div creation */    
         const imgWrap = document.createElement('div');
         imgWrap.className = "imgWrap";
         /* Image creation */
         const img = document.createElement('img');
         img.className = 'dinoGalleryImage';
-        img.src = urlArray[i];
-        img.alt = nameArray[i];
+        img.src = allData[i].dino_image_url;
+        img.alt = allData[i].dino_name;
         document.querySelector('#dinoWrapperGallery').appendChild(imgWrap);
         document.querySelectorAll('.imgWrap')[i].appendChild(img);
 
@@ -32,7 +31,7 @@ try {
         document.querySelectorAll(".imgWrap")[i].appendChild(textDiv);
         const text = document.createElement("h2");
         text.className = "textHeader";
-        text.innerHTML = nameArray[i];
+        text.innerHTML = allData[i].dino_name;
         document.querySelectorAll(".hoverName")[i].appendChild(text);
         }
         /* Search auto complete ability */
@@ -47,7 +46,7 @@ try {
             resultsHTML.innerHTML = "";
             // change this to higher number for larger data sets.
             if(userInput.length > 0) {
-                results = getResults(userInput, nameArray);
+                results = getResults(userInput, allData);
                 resultsHTML.style.display = "block";
                 for(let i = 0; i < results.length; i++) {
                     resultsHTML.innerHTML += "<li>" + results[i] + "</li>";
@@ -132,9 +131,21 @@ const results = [];
     for (let i = 0; i < data.length; i++) {
         console.log("GET RESULTS: ", data[i]);
         console.log("INPUT: ", input);
-        if(input === data[i].slice(0, input.length)) {
-            results.push(data[i]);
+        console.log(data[i].dino_name.slice(0, input.length))
+        if(input === data[i].dino_name.slice(0, input.length)) {
+            results.push(data[i].dino_name);
         }
     }
     return results;
+}
+
+async function getData() {
+    return new Promise((resolve) => {
+
+        fetch('http://localhost:3000/getData')
+        .then(response => response.json())
+        .then(data => {
+            resolve(data['data'])
+        });  
+        });
 }

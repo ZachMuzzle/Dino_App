@@ -2,6 +2,7 @@
 const gallery_array_url = [];
 const gallery_array_name = [];
 console.log('Scripts.js loaded!');
+getData();
 let el = document.getElementById('button-load');  // Check before doing operation
 if(el) {
 
@@ -15,7 +16,7 @@ if(el) {
                 document.querySelector('#dinoImage').remove();
             }
             getDinoName();
-            getDinoImage();
+            // getDinoImage(dinoName);
             setTimeout(function() {
                 el.disabled = false;
             },2000);
@@ -38,9 +39,20 @@ async function getDinoName() { // the keyword async before a function makes the 
     /* Gallery Section for name */
     gallery_array_name.push(dinoname);
     sessionStorage.setItem("dino-name", gallery_array_name);
+
+    // fetch('http://localhost:3000/insert', {
+    //     headers: {
+    //         'Content-type': 'application/json'
+    //     },
+    //     method: 'POST',
+    //     body: JSON.stringify({dino_name: dinoname})
+    // })
+    // .then(response => response.json)
+    // .then(data => console.log(data))
+    getDinoImage(dinoname)
 }
 
-async function getDinoImage() {
+async function getDinoImage(dinoName) {
     const response = await fetch('/dinoimage');
     const data = await response.json(); // data length is whatever count is ?
     console.log("DATA CALL AFTER BUTTON CLICK: ", data.results)
@@ -60,11 +72,34 @@ async function getDinoImage() {
     
     gallery_array_url.push(dinoImageUrl);
     // gallery_array_name.push(dinoAlt);
-
+    
     console.log("TESTING ARRAYS NOW: ")
     // console.log(gallery_array_name);
     console.log(gallery_array_url);
-
+    
     sessionStorage.setItem("url-dino",gallery_array_url);
     // sessionStorage.setItem("url-name",gallery_array_name);
+
+    insert(dinoName, dinoImageUrl);
+   
+}
+
+async function insert(dinoName, dinoImageUrl) {
+    fetch('http://localhost:3000/insert', {
+        headers: {
+            'Content-type': 'application/json'
+        },
+        method: 'POST',
+        body: JSON.stringify({dino_name: dinoName,
+            dino_image_url: dinoImageUrl
+        })
+    })
+    .then(response => response.json)
+    .then(data => console.log(data))
+}
+
+async function getData() {
+    fetch('http://localhost:3000/getData')
+    .then(response => response.json())
+    .then(data => console.log(data['data']))
 }
