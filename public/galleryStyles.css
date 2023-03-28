@@ -216,8 +216,14 @@ input {
     background-color: rgba(0, 0, 0, 0.2);;
 }
 
+.suggestions > ul {
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
 ul.has-suggestions {
     display: block;
+    margin-bottom: 5px;
 }
 
 .has-suggestions li {
