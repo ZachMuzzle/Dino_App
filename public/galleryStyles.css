@@ -32,8 +32,7 @@ body {
     /* margin: 10px; */
 }
  .gallery {
-    height: 80%;
-    width: 80%;
+    width: 100%;
  }
 
  #gallery-body {
