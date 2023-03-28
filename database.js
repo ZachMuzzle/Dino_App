@@ -1,4 +1,5 @@
 // var mysql = require('mysql');
+import { reject } from 'async';
 import mysql from 'mysql'
 let instance = null;
 var connection = mysql.createConnection({
@@ -54,6 +55,22 @@ export default class DbService {
             }
         } catch(error) {
             console.log(error);
+        }
+    }
+
+    async truncateAllData() {
+        try {
+            const response = await new Promise((resolve, reject) => {
+                const query = "TRUNCATE TABLE dino_table";
+                connection.query(query, (err, result) => {
+                    if(err) reject(new Error(err.message));
+                    resolve(result.affectedRows);
+                })
+            });
+
+            return response === 0 ? true : false;
+        } catch(error) {
+            console.log(error)
         }
     }
 }

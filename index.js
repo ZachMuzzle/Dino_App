@@ -75,6 +75,15 @@ app.get('/getData', (request, response) => {
 
   result
   .then(data => response.json({data: data}))
-  .then(err => console.log(err));
+  .catch(err => console.log(err));
 });
+
+app.get('/truncate', (request, response) => {
+  const db = DbService.getDbServiceInstance();
+  const result = db.truncateAllData();
+
+  result
+  .then(data => response.json({data:data}))
+  .catch(err => console.log(err))
+})
 

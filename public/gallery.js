@@ -8,10 +8,14 @@ try {
             dinoImgError.className = 'headerErrorImage';
             dinoImgError.innerHTML = "PLEASE ADD AN IMAGE USING THE GENERATE BUTTON!";
             document.querySelector('.errorDiv').appendChild(dinoImgError);
-            throw "Generate a dino image!";
+            // throw "Generate a dino image!";
         }
-        if(allData.length === 0) throw "Generate a dino name!";
-    
+        // if(allData.length === 0) throw "Generate a dino name!";
+
+        if(allData.length === 0) {
+            let deleteButtonClass = document.querySelectorAll('.delete_all_container');
+            deleteButtonClass[0].hidden = true;
+        }
         
         for(let i = 0; i < allData.length; i++) {
         /* Div creation */    
@@ -126,6 +130,15 @@ try {
     console.log(err);
 }
 
+try {
+    let button = document.querySelector('#delete_all');
+    button.onclick = function() {
+        truncateAllData();
+    }
+} catch(error) {
+    console.log(error);
+}
+
 function getResults(input,data) {
 const results = [];
     for (let i = 0; i < data.length; i++) {
@@ -148,4 +161,16 @@ async function getData() {
             resolve(data['data'])
         });  
         });
+}
+
+async function truncateAllData() {
+    return new Promise((resolve) => {
+        fetch('http://localhost:3000/truncate')
+        .then(response => response.json())
+        .then(data => {
+            if(data.data) {
+                location.reload();
+            }
+        })
+    })
 }
