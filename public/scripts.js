@@ -2,11 +2,11 @@
 const gallery_array_url = [];
 const gallery_array_name = [];
 console.log('Scripts.js loaded!');
-getData();
+
 let el = document.getElementById('button-load');  // Check before doing operation
 if(el) {
 
-    el.addEventListener('click', () => {
+    el.addEventListener('click', async () => {
         el.disabled = true;
             if(document.querySelector('#dinoName') !== null) {
                 document.querySelector('#dinoName').remove();
@@ -15,11 +15,11 @@ if(el) {
             if(document.querySelector('#dinoImage') !== null) {
                 document.querySelector('#dinoImage').remove();
             }
-            getDinoName();
+            await getDinoName();
             // getDinoImage(dinoName);
             setTimeout(function() {
                 el.disabled = false;
-            },2000);
+            },1000);
     });
     
 }
@@ -49,7 +49,7 @@ async function getDinoName() { // the keyword async before a function makes the 
     // })
     // .then(response => response.json)
     // .then(data => console.log(data))
-    getDinoImage(dinoname)
+   await getDinoImage(dinoname)
 }
 
 async function getDinoImage(dinoName) {
@@ -80,26 +80,23 @@ async function getDinoImage(dinoName) {
     sessionStorage.setItem("url-dino",gallery_array_url);
     // sessionStorage.setItem("url-name",gallery_array_name);
 
-    insert(dinoName, dinoImageUrl);
+    await insert(dinoName, dinoImageUrl);
    
 }
 
 async function insert(dinoName, dinoImageUrl) {
-    fetch('http://localhost:3000/insert', {
-        headers: {
-            'Content-type': 'application/json'
-        },
-        method: 'POST',
-        body: JSON.stringify({dino_name: dinoName,
-            dino_image_url: dinoImageUrl
-        })
-    })
-    .then(response => response.json)
-    .then(data => console.log(data))
-}
+    return new Promise((resolve) => {
 
-async function getData() {
-    fetch('http://localhost:3000/getData')
-    .then(response => response.json())
-    .then(data => console.log(data['data']))
+        fetch('http://localhost:3000/insert', {
+            headers: {
+                'Content-type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({dino_name: dinoName,
+                dino_image_url: dinoImageUrl
+            })
+        })
+        .then(response => response.json)
+        resolve()
+    })
 }
