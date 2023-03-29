@@ -1,5 +1,4 @@
 // var mysql = require('mysql');
-import { reject } from 'async';
 import mysql from 'mysql'
 let instance = null;
 var connection = mysql.createConnection({
