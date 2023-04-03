@@ -11,8 +11,8 @@ html {
 body {
     margin: 0px;
     padding: 0px;
-    background: url('casey-horner-1sim8ojvCbE-unsplash.jpg') cover no-repeat center;
-    background: url('casey-horner-1sim8ojvCbE-unsplash.jpg') no-repeat center;
+    /* background: #4e713e url('casey-horner-1sim8ojvCbE-unsplash.jpg') cover no-repeat center; */
+    background: #4e713e url('casey-horner-1sim8ojvCbE-unsplash.jpg') no-repeat center;
     display: grid;
     place-items: center;
  }
@@ -33,15 +33,6 @@ body {
 }
  .gallery {
     width: 100%;
- }
-
- #gallery-body {
-    margin: 0px;
-    padding: 0px;
-    background: url('casey-horner-1sim8ojvCbE-unsplash.jpg') cover no-repeat center;
-    background: url('casey-horner-1sim8ojvCbE-unsplash.jpg') no-repeat center;
-    display: grid;
-    place-items: center;
  }
 
 /* NAV BAR STYLES */
