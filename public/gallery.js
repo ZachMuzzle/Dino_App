@@ -2,7 +2,7 @@ try {
     window.onload = async function displayImage() {
     
         let allData = await getData();
-        console.log(allData)
+        console.log(allData) // show id
         if(allData.length === 0) {
             const dinoImgError = document.createElement('h1');
             dinoImgError.className = 'headerErrorImage';
@@ -23,11 +23,17 @@ try {
         imgWrap.className = "imgWrap";
         /* Image creation */
         const img = document.createElement('img');
+        const button = document.createElement('button');
+        button.setAttribute('data-id', allData[i].id)
+        button.className = 'deleteImage'
+        const textButton = document.createTextNode('Delete Image');
+        button.appendChild(textButton);
         img.className = 'dinoGalleryImage';
         img.src = allData[i].dino_image_url;
         img.alt = allData[i].dino_name;
         document.querySelector('#dinoWrapperGallery').appendChild(imgWrap);
         document.querySelectorAll('.imgWrap')[i].appendChild(img);
+        document.querySelectorAll('.imgWrap')[i].appendChild(button);
 
         /* Div creation for text of dino */
         const textDiv = document.createElement("div");
@@ -38,6 +44,15 @@ try {
         text.innerHTML = allData[i].dino_name;
         document.querySelectorAll(".hoverName")[i].appendChild(text);
         }
+
+        /* Delete Button for each image */
+        for(let i = 0; i < allData.length; i++) {
+
+        const deleteButton = document.querySelectorAll('.deleteImage')[i];
+        deleteButton.onclick = function(event) {
+            deleteById(event.target.dataset.id)
+        }
+    }
         /* Search auto complete ability */
         const autocomplete = document.querySelector('#autocomplete');
         const resultsHTML = document.querySelector('.suggestions ul');
@@ -173,4 +188,16 @@ async function truncateAllData() {
             }
         })
     })
+}
+
+function deleteById(id) {
+    fetch('http://localhost:3000/delete/' + id, {
+        method: 'DELETE'
+    })
+    .then(response => response.json())
+    .then(data => {
+        if(data.success) {
+            location.reload();
+        }
+    });
 }

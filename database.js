@@ -72,6 +72,24 @@ export default class DbService {
             console.log(error)
         }
     }
+
+    async deleteById(id) {
+        try {
+            id = parseInt(id,10);
+            const response = await new Promise((resolve, reject) => {
+            const query = "DELETE FROM dino_table WHERE id = ?";
+            connection.query(query, [id], (err, result) => {
+                if(err) reject(new Error(err.message));
+                resolve(result.affectedRows); //resolve sends back value after promise. Result is just an object
+            })
+        });
+        console.log(response); 
+        return response === 1 ? true : false;
+
+        } catch(error) {
+            console.log(error)
+        }
+    }
 }
 
 // module.exports =  DbService;

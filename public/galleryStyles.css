@@ -161,7 +161,7 @@ body {
     float: right;
     width: 400px;
     position: relative;
-    margin: 100px auto;
+    margin-top: 100px;
 }
 input[type=text] {
     padding: 6px;
@@ -251,11 +251,13 @@ ul.has-suggestions {
 /* Image Name Hover */
 
 .imgWrap {
-    position:relative;
-    max-width: 500px;
-    margin-top:  10px; ;
+    position: relative;
+    max-width: 700px;
+    margin-top: 10px;
     margin-left: auto;
     margin-right: auto;
+    padding-right: 100px;
+    padding-left: 100px;
 }
 
 /* Responsive Image */
@@ -266,17 +268,15 @@ ul.has-suggestions {
 /* Caption Text */
 .hoverName {
     box-sizing: border-box;
-    width: 100%;
+    width: 71%;
     padding: 10px;
-
-    /* Place text at top of image */
-    position:absolute;
-    top: 0; 
-    left: 0;
-
+    position: absolute;
+    top: 0;
+    left: 100px;
     background-color: rgba(0, 0, 0, 0.5);
     color: white;
-}
+  }
+
 
 /* Show or Hide */
 
@@ -285,7 +285,7 @@ ul.has-suggestions {
     opacity: 0;
 }
 
-.imgWrap:hover .hoverName {
+.dinoGalleryImage:hover ~ .hoverName, .dinoGalleryImage ~ .hoverName:hover  {
     visibility: visible; 
     opacity: 1;
 }
@@ -309,6 +309,25 @@ ul.has-suggestions {
 }
 
 #delete_all:hover {
+    background-color: rgba(247, 148, 61, .95);
+
+}
+
+/* Delete Single Image CSS */
+
+/* Button CSS */
+.deleteImage {
+    background-color: rgba(247, 148, 61, .8);
+    padding: 10px 12px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    top: 130px;
+    margin-left: 20px;
+}
+
+.deleteImage:hover {
     background-color: rgba(247, 148, 61, .95);
 
 }

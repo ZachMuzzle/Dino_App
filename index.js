@@ -85,5 +85,16 @@ app.get('/truncate', (request, response) => {
   result
   .then(data => response.json({data:data}))
   .catch(err => console.log(err))
-})
+});
+
+app.delete('/delete/:id', (request, response) => {
+  const {id} = request.params;
+  const db = DbService.getDbServiceInstance();
+
+  const result = db.deleteById(id);
+
+  result
+  .then(data => response.json({success:data}))
+  .catch(err => console.log(err))
+});
 
