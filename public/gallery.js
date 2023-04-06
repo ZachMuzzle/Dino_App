@@ -2,7 +2,7 @@ try {
     window.onload = async function displayImage() {
     
         let allData = await getData();
-        console.log(allData) // show id
+        console.log(allData)
         if(allData.length === 0) {
             const dinoImgError = document.createElement('h1');
             dinoImgError.className = 'headerErrorImage';
@@ -26,7 +26,7 @@ try {
         const button = document.createElement('button');
         button.setAttribute('data-id', allData[i].id)
         button.className = 'deleteImage'
-        const textButton = document.createTextNode('Delete Image');
+        const textButton = document.createTextNode(`Delete ${allData[i].dino_name} Image`);
         button.appendChild(textButton);
         img.className = 'dinoGalleryImage';
         img.src = allData[i].dino_image_url;
