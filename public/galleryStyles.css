@@ -11,8 +11,7 @@ html {
 body {
     margin: 0px;
     padding: 0px;
-    /* background: #4e713e url('casey-horner-1sim8ojvCbE-unsplash.jpg') cover no-repeat center; */
-    background: #4e713e url('casey-horner-1sim8ojvCbE-unsplash.jpg') repeat center;
+    background: #4e713e url('casey-horner-1sim8ojvCbE-unsplash.jpg') repeat;
     display: grid;
     place-items: center;
  }
