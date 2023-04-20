@@ -1,4 +1,6 @@
 // var mysql = require('mysql');
+import { reject } from 'async';
+import { response } from 'express';
 import mysql from 'mysql'
 let instance = null;
 var connection = mysql.createConnection({
@@ -88,6 +90,24 @@ export default class DbService {
 
         } catch(error) {
             console.log(error)
+        }
+    }
+
+    async updateById(id, dino_name, dino_image_url, date_added) {
+        try {
+            id = parseInt(id,10);
+            const response = await new Promise((resolve, reject) => {
+                const query = "UPDATE dino_table set dino_name = ?, dino_image_url = ?, date_added = ? where id = ?;"
+                connection.query(query, [dino_name, dino_image_url, date_added, id], (err, result) => {
+                    if(err) reject(new Error(err.message));
+                    resolve(result.affectedRows);
+                })
+            });
+            console.log("RESPONSE: ", response)
+            return response === 1 ? true : false;
+        } catch (error) {
+            console.log(error);
+            return false
         }
     }
 }
