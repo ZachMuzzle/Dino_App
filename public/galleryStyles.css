@@ -80,7 +80,7 @@ body {
     opacity: 0.7;
 }
 /* The Modal (background) */
-.model {
+.model, .modal {
     display: none;
     position: fixed;
     z-index: 1; /* Sit on top */
@@ -92,19 +92,23 @@ body {
     overflow: auto; /* Enable scroll if needed */
     background-color: rgb(0,0,0); /* Fallback color */
     background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+    text-align: center;
 }
 
 /* Modal Content (Image) */
-.model-content {
+.model-content, .modal-content-update {
     margin: auto;
     display: block;
     width: 80%;
     max-width: 1500px;
+    animation-name: zoom;
+    animation-duration: 0.6s;
+    max-width: 600px;
   }
 
   
 /* Caption of Modal Image (Image Text) - Same Width as the Image */
-#caption {
+#caption, #caption-update{
     margin: auto;
     display: block;
     width: 80%;
@@ -113,14 +117,9 @@ body {
     color: #ccc;
     padding: 10px 0;
     height: 150px;
+    animation-name: zoom;
+    animation-duration: 0.6s;
   }
-
-/* Add Animation - Zoom in the Modal */
-.modal-content, #caption {
-  animation-name: zoom;
-  animation-duration: 0.6s;
-}
-
 
 @keyframes zoom {
     from {transform:scale(0)}
@@ -331,5 +330,40 @@ ul.has-suggestions {
     background-color: rgba(247, 148, 61, .95);
 
 }
+
+/* Update Button CSS */
+
+.updateImage {
+    background-color: rgba(247, 148, 61, .8);
+    padding: 10px 12px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    top: 190px;
+    margin-left: 20px;
+    width: 30%;
+}
+
+.updateImage:hover {
+    background-color: rgba(247, 148, 61, .95);
+}
+
+/* Update Modal Buttons */
+.RandomImageButton, .submitButton {
+    background-color: rgba(247, 148, 61, .8);
+    padding: 10px 12px;
+    color: white;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    margin: auto 5px;
+}
+
+.RandomImageButton:hover, .submitButton:hover {
+    background-color: rgba(247, 148, 61, .95);
+}
+
+
 
 

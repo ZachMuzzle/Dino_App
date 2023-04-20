@@ -24,16 +24,24 @@ try {
         /* Image creation */
         const img = document.createElement('img');
         const button = document.createElement('button');
-        button.setAttribute('data-id', allData[i].id)
+        const updateButton = document.createElement('button');
+        button.setAttribute('data-id', allData[i].id);
         button.className = 'deleteImage'
         const textButton = document.createTextNode(`Delete ${allData[i].dino_name} Image`);
         button.appendChild(textButton);
+
+        updateButton.setAttribute('data-id', allData[i].id);
+        updateButton.className = 'updateImage'
+        const textUpdate = document.createTextNode(`Update ${allData[i].dino_name} Image`);
+        updateButton.appendChild(textUpdate);
+
         img.className = 'dinoGalleryImage';
         img.src = allData[i].dino_image_url;
         img.alt = allData[i].dino_name;
         document.querySelector('#dinoWrapperGallery').appendChild(imgWrap);
         document.querySelectorAll('.imgWrap')[i].appendChild(img);
         document.querySelectorAll('.imgWrap')[i].appendChild(button);
+        document.querySelectorAll('.imgWrap')[i].appendChild(updateButton);
 
         /* Div creation for text of dino */
         const textDiv = document.createElement("div");
@@ -53,6 +61,118 @@ try {
             deleteById(event.target.dataset.id)
         }
     }
+        /* Delete button end  */
+
+        /* Update Button for each image */
+        let modal = document.getElementById("updateModal");
+        console.log(modal)
+        let imgSrcUpdate = document.getElementById("img-src-update");
+        let imgCaptionUpdate = document.getElementById("caption-update");
+        let generateImageButtonUpdate = document.createElement("button");
+        const textForButton = document.createTextNode("Generate new Image");
+        
+        generateImageButtonUpdate.className = "RandomImageButton";
+        generateImageButtonUpdate.appendChild(textForButton);
+        modal.appendChild(generateImageButtonUpdate)
+
+        console.log(modal);
+        for(let i = 0; i < allData.length; i++) {
+            const updateButton = document.querySelectorAll('.updateImage')[i];
+            updateButton.onclick = function(event) {
+                updatePopUp(event.target.dataset.id, modal,allData[i].dino_name)
+            }
+        }
+
+        function updatePopUp(id,modal,dinoName) {
+                
+                modal.style.display = "block"
+                let generateButton = document.querySelector('.RandomImageButton');
+
+                generateButton.onclick = async function() {
+                    // console.log("WORKED AGAIN!")
+                    
+                    const response = await fetch('/dinoimage');
+                    const data = await response.json();
+                    // console.log(data.results);
+                    let dinoimage = data.results[Math.floor(Math.random() * data.results.length)]; // random dino image  from the length
+                    let dinoImageUrl = dinoimage.image;
+                    let dinoAlt = dinoName
+
+                    let imgSrc = document.querySelector('#img-src-update');
+                    let imageCaption = document.querySelector('#caption-update');
+
+                    imgSrc.src = dinoImageUrl;
+                    imageCaption.innerHTML = dinoAlt;
+
+                    /* Create new button to save image/name */
+                    let submitButton = document.createElement('button');
+                    let textForButton = document.createTextNode('Submit Update')
+                    submitButton.className = 'submitButton';
+                    submitButton.appendChild(textForButton);
+                    modal.appendChild(submitButton);
+
+                    /* Delete second submit button that appears */
+                    if(document.querySelectorAll('.submitButton')[1]) {
+                        let secondSubmitButton = document.querySelectorAll('.submitButton')[1];
+                        secondSubmitButton.remove();
+                    }
+                    submitButton.onclick =  async function() {
+                        /**
+                         * * had to change from dinoImageUrl to imgSrc.src. 
+                         * ? Not sure why I had to do this
+                         */
+                        await updateImage(id, imgSrc.src, dinoAlt);
+                    }
+                }
+
+
+            }
+
+            async function updateImage(id, dinoImage, dinoAlt) {
+                fetch('http://localhost:3000/update', {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        id: id,
+                        dino_name: dinoAlt,
+                        dino_image_url: dinoImage,
+                        date_added: new Date().toLocaleString()
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if(data.success) {
+                        location.reload();
+                    }
+                });
+            }
+        /* Update button end */
+
+        /* Close Modal Buttons */
+        let closeImage = document.querySelectorAll('.close');
+
+        for(let i = 0; i < closeImage.length; i++) {
+            closeImage[i].onclick = function() {
+                if(closeImage[i] == closeImage[0]) {
+                    model.style.display = "none";
+                }
+                else if (closeImage[i] == closeImage[1]) {
+                    modal.style.display = "none";
+                    document.querySelector('#img-src-update').removeAttribute('src')
+                    document.querySelector('#caption-update').innerHTML = "";
+
+                   if(document.querySelectorAll('.submitButton')[0]) {
+                       
+                       document.querySelectorAll('.submitButton')[0].remove();
+                } 
+
+                }
+            }
+        }
+        
+
         /* Search auto complete ability */
         const autocomplete = document.querySelector('#autocomplete');
         const resultsHTML = document.querySelector('.suggestions ul');
@@ -88,6 +208,7 @@ try {
 
          /* MODEL FOR IMAGE */
          let model = document.getElementById("myModel");
+         console.log(model)
          let images = document.getElementsByClassName("dinoGalleryImage");
          let imgSrc = document.getElementById("img-src");
          let imgCaption = document.getElementById("caption");
@@ -135,10 +256,6 @@ try {
          } catch(err) {
             console.log(err);
             console.log("Length of images: " + images.length);
-         }
-         let span = document.getElementsByClassName("close")[0];
-         span.onclick = function() {
-            model.style.display = "none";
          }
     }
 } catch(err) {

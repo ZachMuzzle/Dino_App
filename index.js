@@ -98,3 +98,15 @@ app.delete('/delete/:id', (request, response) => {
   .catch(err => console.log(err))
 });
 
+app.patch('/update', (request, response) => {
+  const {id, dino_name, dino_image_url, date_added} = request.body;
+  console.log(request.body);
+  const db = DbService.getDbServiceInstance();
+
+  const result = db.updateById(id, dino_name, dino_image_url, date_added);
+
+  result
+  .then(data => response.json({success: data}))
+  .catch(err => console.log(err));
+});
+
