@@ -1,7 +1,7 @@
 /* Server-side javascript 
  * Updated node.js 
  * Now use imports instead of const with require('express');
- * Stopped @47:19 in video: https://www.youtube.com/watch?v=wYALykLb5oY
+ * This is where calls between client side connect here then go to the DB
  * API keys in env file
 */
 import fetch from 'node-fetch';
@@ -17,7 +17,7 @@ dotenv.config();
 const { request, response } = express;
 const app = express();
 const port = 3000;
-/* Needed for request.body to show data? */
+
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));

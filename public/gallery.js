@@ -16,7 +16,7 @@ try {
             let deleteButtonClass = document.querySelectorAll('.delete_all_container');
             deleteButtonClass[0].hidden = true;
         }
-        
+        /* LOOP Creates all the necessary image galleries for this page until no data left*/
         for(let i = 0; i < allData.length; i++) {
         /* Div creation */    
         const imgWrap = document.createElement('div');
@@ -82,7 +82,9 @@ try {
                 updatePopUp(event.target.dataset.id, modal,allData[i].dino_name)
             }
         }
-
+        /* updatePopUp Function when called modal is displayed.
+        User is allowed to generate a new image and submit it for update in the DB        
+        */
         function updatePopUp(id,modal,dinoName) {
                 
                 modal.style.display = "block"
@@ -150,7 +152,10 @@ try {
             }
         /* Update button end */
 
-        /* Close Modal Buttons */
+        /* Close Modal Buttons when popup modal appears
+            two if statements. One is for the first modal when viewing an image
+            Second is for when updating an image.
+        */
         let closeImage = document.querySelectorAll('.close');
 
         for(let i = 0; i < closeImage.length; i++) {
@@ -270,7 +275,7 @@ try {
 } catch(error) {
     console.log(error);
 }
-
+/* getResults function gets suggestions from search bar input and returns if any found */
 function getResults(input,data) {
 const results = [];
     for (let i = 0; i < data.length; i++) {
@@ -294,7 +299,9 @@ async function getData() {
         });  
         });
 }
-
+/* Deletes all data. 
+    ? Not sure if return promise is needed since we aren't returning anything
+*/
 async function truncateAllData() {
     return new Promise((resolve) => {
         fetch('http://localhost:3000/truncate')
