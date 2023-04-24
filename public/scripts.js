@@ -28,7 +28,6 @@ async function getDinoName() { // the keyword async before a function makes the 
     const response = await fetch('/dinoname'); //fetch data
     const data = await response.json(); //formate as json data
     let dinoname = data[0].join(' '); // name with spaces, first element
-    console.log(dinoname);
     
     /* Div section */
     let dinoNameDiv = document.createElement('div');
@@ -36,19 +35,6 @@ async function getDinoName() { // the keyword async before a function makes the 
     dinoNameDiv.textContent = dinoname;
     document.querySelector('#dinoWrapper').appendChild(dinoNameDiv);
 
-    /* Gallery Section for name */
-    gallery_array_name.push(dinoname);
-    sessionStorage.setItem("dino-name", gallery_array_name);
-
-    // fetch('http://localhost:3000/insert', {
-    //     headers: {
-    //         'Content-type': 'application/json'
-    //     },
-    //     method: 'POST',
-    //     body: JSON.stringify({dino_name: dinoname})
-    // })
-    // .then(response => response.json)
-    // .then(data => console.log(data))
    await getDinoImage(dinoname)
 }
 
@@ -67,18 +53,6 @@ async function getDinoImage(dinoName) {
     img.src = dinoImageUrl;
     img.alt = dinoAlt;
     document.querySelector('#dinoWrapper').appendChild(img); // put img element into body of html
-
-    /* Gallery Section */
-    
-    gallery_array_url.push(dinoImageUrl);
-    // gallery_array_name.push(dinoAlt);
-    
-    console.log("TESTING ARRAYS NOW: ")
-    // console.log(gallery_array_name);
-    console.log(gallery_array_url);
-    
-    sessionStorage.setItem("url-dino",gallery_array_url);
-    // sessionStorage.setItem("url-name",gallery_array_name);
 
     await insert(dinoName, dinoImageUrl);
    

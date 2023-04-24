@@ -15,7 +15,7 @@ connection.connect(function(err) {
     console.log('Database is connected successfully!')
 });
 // module.exports = connection;
-
+/* Export class to be used in index.js */
 export default class DbService {
     static getDbServiceInstance() {
         return instance ? instance : new DbService();
