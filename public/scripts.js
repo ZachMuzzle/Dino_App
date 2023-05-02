@@ -1,32 +1,46 @@
 /* Client side javascript */
-const gallery_array_url = [];
-const gallery_array_name = [];
 console.log('Scripts.js loaded!');
+let generateButton = document.getElementById('button-load');  // Check before doing operation
 
-let el = document.getElementById('button-load');  // Check before doing operation
-if(el) {
+checkForButtonPress(generateButton);
 
-    el.addEventListener('click', async () => {
-        el.disabled = true;
-            if(document.querySelector('#dinoName') !== null) {
-                document.querySelector('#dinoName').remove();
-            }
-            
-            if(document.querySelector('#dinoImage') !== null) {
-                document.querySelector('#dinoImage').remove();
-            }
-            await getDinoName();
-            // getDinoImage(dinoName);
-            setTimeout(function() {
-                el.disabled = false;
-            },1000);
-    });
-    
+function checkForButtonPress(generateButton) {
+    if(generateButton) {
+
+        generateButton.addEventListener('click', async () => {
+            generateButton.disabled = true;
+                if(document.querySelector('#dinoName') !== null) {
+                    document.querySelector('#dinoName').remove();
+                }
+                
+                if(document.querySelector('#dinoImage') !== null) {
+                    document.querySelector('#dinoImage').remove();
+                }
+                let data = await getDinoName();
+                let dinoName = createDinoDiv(data);
+                let imageData = await getDinoImage(dinoName);
+                let imageDataBranch = createImage(imageData[0], imageData[1]);
+                await insert(imageDataBranch[0], imageDataBranch[1]);
+                setTimeout(function() {
+                    generateButton.disabled = false;
+                },1000);
+        });
+        
+    }
 }
-
+/* 
+! Make this function only get DinoName and make other tasks work outside this function
+*/
 async function getDinoName() { // the keyword async before a function makes the function return a promise
     const response = await fetch('/dinoname'); //fetch data
     const data = await response.json(); //formate as json data
+
+    return data;
+
+//    await getDinoImage(dinoname)
+}
+
+function createDinoDiv(data) {
     let dinoname = data[0].join(' '); // name with spaces, first element
     
     /* Div section */
@@ -35,13 +49,25 @@ async function getDinoName() { // the keyword async before a function makes the 
     dinoNameDiv.textContent = dinoname;
     document.querySelector('#dinoWrapper').appendChild(dinoNameDiv);
 
-   await getDinoImage(dinoname)
+    return dinoname;
 }
-
+/* 
+! Do the same thing here. But for this only do the task of getting the dino image.
+*/
 async function getDinoImage(dinoName) {
     const response = await fetch('/dinoimage');
     const data = await response.json(); // data length is whatever count is ?
     console.log("DATA CALL AFTER BUTTON CLICK: ", data.results)
+     // put img element into body of html
+
+     return [data,dinoName];
+
+    // await insert(dinoName, dinoImageUrl);
+   
+}
+
+function createImage(data, dinoName) {
+    console.log("In Function: ", data)
     let dinoimage = data.results[Math.floor(Math.random() * data.results.length)]; // random dino image  from the length
     let dinoImageUrl = dinoimage.image;
     let dinoAlt = dinoimage.title; 
@@ -52,10 +78,9 @@ async function getDinoImage(dinoName) {
     img.id = 'dinoImage'; // set id of img created
     img.src = dinoImageUrl;
     img.alt = dinoAlt;
-    document.querySelector('#dinoWrapper').appendChild(img); // put img element into body of html
+    document.querySelector('#dinoWrapper').appendChild(img);
 
-    await insert(dinoName, dinoImageUrl);
-   
+    return [dinoName, dinoImageUrl];
 }
 
 async function insert(dinoName, dinoImageUrl) {
