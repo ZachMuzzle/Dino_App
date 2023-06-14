@@ -4,10 +4,11 @@ import { response } from 'express';
 import mysql from 'mysql'
 let instance = null;
 var connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
+    host: 'dinodatabase.cmkkztbgkkcr.us-east-2.rds.amazonaws.com',
+    user: 'admin',
     password: 'Bacon123!',
-    database: 'dino_database'
+    database: 'dino_database',
+    port: 3306
 });
 
 connection.connect(function(err) {
