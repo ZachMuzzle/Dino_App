@@ -1,14 +1,20 @@
 // var mysql = require('mysql');
 import { reject } from 'async';
 import { response } from 'express';
+import dotenv from 'dotenv';
 import mysql from 'mysql'
+
+if(process.env.NODE_ENV != 'production') {
+    dotenv.config();
+    }
+    
 let instance = null;
 var connection = mysql.createConnection({
-    host: 'dinodatabase.cmkkztbgkkcr.us-east-2.rds.amazonaws.com',
-    user: 'admin',
-    password: 'Bacon123!',
-    database: 'dino_database',
-    port: 3306
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DATABASE,
+    port: process.env.DATABASE_PORT
 });
 
 connection.connect(function(err) {

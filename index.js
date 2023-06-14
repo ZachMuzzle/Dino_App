@@ -10,9 +10,7 @@ import dotenv from 'dotenv';
 import DbService from './database.js'
 import cors from 'cors';
 
-if(process.env.NODE_ENV != 'production') {
 dotenv.config();
-}
 
 const { request, response } = express;
 const app = express();
