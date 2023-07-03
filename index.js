@@ -7,7 +7,7 @@
 import fetch from 'node-fetch';
 import express from 'express';
 import dotenv from 'dotenv';
-import DbService from './database.js'
+import DbService from './database/database.js'
 import cors from 'cors';
 
 dotenv.config();
