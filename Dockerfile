@@ -4,13 +4,16 @@ FROM  node:18
 WORKDIR /home/zachary/code/dino-app
 
 COPY package*.json ./
-RUN npm install
-# RUN npm ci --omit=dev
-
-# Bundle app source
 
 COPY . .
+
+RUN npm install
 
 EXPOSE 3000
 
 CMD [ "node", "index.js" ]
+# RUN npm ci --omit=dev
+
+# Bundle app source
+
+
