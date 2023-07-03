@@ -86,7 +86,7 @@ function createImage(data, dinoName) {
 async function insert(dinoName, dinoImageUrl) {
     return new Promise((resolve) => {
 
-        fetch('http://localhost:3000/insert', {
+        fetch('/insert', {
             headers: {
                 'Content-type': 'application/json'
             },

@@ -121,7 +121,7 @@ const results = [];
 async function getData() {
     return new Promise((resolve) => {
 
-        fetch('http://localhost:3000/getData')
+        fetch('/getData')
         .then(response => response.json())
         .then(data => {
             resolve(data['data'])
@@ -133,7 +133,7 @@ async function getData() {
 */
 async function truncateAllData() {
     return new Promise((resolve) => {
-        fetch('http://localhost:3000/truncate')
+        fetch('/truncate')
         .then(response => response.json())
         .then(data => {
             if(data.data) {
@@ -144,7 +144,7 @@ async function truncateAllData() {
 }
 
 function deleteById(id) {
-    fetch('http://localhost:3000/delete/' + id, {
+    fetch('/delete/' + id, {
         method: 'DELETE'
     })
     .then(response => response.json())
@@ -306,7 +306,7 @@ function updatePopUp(id,modal,dinoName) {
 }
 
 async function updateImage(id, dinoImage, dinoAlt) {
-    fetch('http://localhost:3000/update', {
+    fetch('/update', {
         method: 'PATCH',
         headers: {
             'Content-type': 'application/json'
