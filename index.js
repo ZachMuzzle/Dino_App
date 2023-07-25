@@ -9,17 +9,55 @@ import express from 'express';
 import dotenv from 'dotenv';
 import DbService from './database/database.js'
 import cors from 'cors';
-
+import path from 'path';
+import {fileURLToPath} from 'url';
 dotenv.config();
 
+const getDirName = function (moduleUrl) {
+  const filename = fileURLToPath(moduleUrl)
+  return path.dirname(filename)
+}
 const { request, response } = express;
 const app = express();
+const publicPath=path.join(getDirName(import.meta.url), 'public')
 const port = 3000;
 /* App uses */
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
-app.use(express.static('public'));
+// app.use(express.static('public')); 
+app.get('',(response,request) => {
+  request.sendFile(`${publicPath}/index.html`)
+});
+
+app.get('/DinoGenerator',(response,request) => {
+  request.sendFile(`${publicPath}/index.html`)
+});
+
+app.get('/Gallery',(response,request) => {
+  request.sendFile(`${publicPath}/gallery.html`)
+});
+
+app.get('/styles.css',(response,request) => {
+  request.sendFile(`${publicPath}/styles.css`)
+});
+
+app.get('/scripts.js',(response,request) => {
+  request.sendFile(`${publicPath}/scripts.js`)
+});
+
+app.get('/galleryStyles.css',(response,request) => {
+  request.sendFile(`${publicPath}/galleryStyles.css`)
+});
+
+app.get('/gallery.js',(response,request) => {
+  request.sendFile(`${publicPath}/gallery.js`)
+});
+
+app.get('/casey-horner-1sim8ojvCbE-unsplash.jpg',(response,request) => {
+  request.sendFile(`${publicPath}/casey-horner-1sim8ojvCbE-unsplash.jpg`)
+});
+
 
 app.listen(port, function() {
     console.log(`Example app listening at http://localhost:${port}`);
@@ -44,12 +82,16 @@ const options = {
   };
 const url = 'https://duckduckgo-image-search.p.rapidapi.com/search/image?q=dinosaur';
 
+try {
 app.get('/dinoimage', async(request,response) => {
     const fetchAPI = await fetch(url, options);
     const dinoImageResponse = await fetchAPI.json();
     // console.log(dinoImageResponse);
     response.json(dinoImageResponse);
 });
+} catch(error){
+  console.log(error)
+}
 
 /* Database Functionality */
 
