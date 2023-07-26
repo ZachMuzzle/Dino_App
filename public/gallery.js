@@ -23,6 +23,19 @@ try {
         deleteButtonOnImages(allData);
         updateImageModal(allData,modal)
         closeButtons(closeImage,modal,model);
+
+        /* Hover Text Dynamic Width */
+        function Resize() {
+            for(let i = 0; i < allData.length; i++) {
+                const parent = document.querySelectorAll(".dinoGalleryImage")[i]
+                const parentWidth = getComputedStyle(parent).width;
+                document.documentElement.style.setProperty('--hover-width', parentWidth);
+                document.documentElement.style.setProperty('--button-width', parentWidth);
+
+            }
+        }
+        Resize()
+        window.addEventListener("resize", Resize)
          
         autocomplete.oninput = function () { 
             let results = [];
@@ -191,12 +204,17 @@ function createImages(allData, i) {
     imgWrap.className = "imgWrap";
     /* Image creation */
     const img = document.createElement('img');
+    const buttonDiv = document.createElement('div');
+    buttonDiv.className = "buttonContainer";
 
     img.className = 'dinoGalleryImage';
     img.src = allData[i].dino_image_url;
     img.alt = allData[i].dino_name;
     document.querySelector('#dinoWrapperGallery').appendChild(imgWrap);
     document.querySelectorAll('.imgWrap')[i].appendChild(img);
+    // document.querySelectorAll('.imgWrap')[i].appendChild(buttonDiv);
+    document.querySelector('#dinoWrapperGallery').appendChild(buttonDiv);
+
 }
 
 function deleteImagesButton(allData, i) {
@@ -205,7 +223,7 @@ function deleteImagesButton(allData, i) {
     button.className = 'deleteImage'
     const textButton = document.createTextNode(`Delete ${allData[i].dino_name} Image`);
     button.appendChild(textButton);
-    document.querySelectorAll('.imgWrap')[i].appendChild(button);
+    document.querySelectorAll('.buttonContainer')[i].appendChild(button);
 
 }
 
@@ -215,7 +233,7 @@ function updateImagesButton(allData, i) {
     updateButton.className = 'updateImage'
     const textUpdate = document.createTextNode(`Update ${allData[i].dino_name} Image`);
     updateButton.appendChild(textUpdate);
-    document.querySelectorAll('.imgWrap')[i].appendChild(updateButton);
+    document.querySelectorAll('.buttonContainer')[i].appendChild(updateButton);
 
 }
 
