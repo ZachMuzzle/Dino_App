@@ -251,11 +251,13 @@ ul.has-suggestions {
 .imgWrap {
     position: relative;
     max-width: 700px;
+    /* width: 700px; */
     margin-top: 10px;
     margin-left: auto;
     margin-right: auto;
     padding-right: 100px;
     padding-left: 100px;
+    margin-bottom: 10px;
 }
 
 /* Responsive Image */
@@ -266,13 +268,13 @@ ul.has-suggestions {
 /* Caption Text */
 .hoverName {
     box-sizing: border-box;
-    width: 71%;
-    padding: 10px;
     position: absolute;
+    width: var(--hover-width);
+    padding: 10px;
     top: 0;
-    left: 100px;
     background-color: rgba(0, 0, 0, 0.5);
     color: white;
+    font-size: 1vw;
   }
 
 
@@ -310,6 +312,12 @@ ul.has-suggestions {
     background-color: rgba(247, 148, 61, .95);
 
 }
+/* Button Container */
+.buttonContainer {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+  }
 
 /* Delete Single Image CSS */
 
@@ -320,10 +328,10 @@ ul.has-suggestions {
     color: white;
     border: none;
     cursor: pointer;
-    position: absolute;
-    top: 130px;
-    margin-left: 20px;
-    width: 30%;
+    font-size: 1.3vw;
+    margin: 10px auto;
+    max-width: 500px;
+    width: var(--button-width);
 }
 
 .deleteImage:hover {
@@ -339,10 +347,13 @@ ul.has-suggestions {
     color: white;
     border: none;
     cursor: pointer;
-    position: absolute;
-    top: 190px;
-    margin-left: 20px;
-    width: 30%;
+    font-size: 1.3vw;
+    margin: 10px auto;
+    max-width: 500px;
+    width: var(--button-width);
+    
+    
+
 }
 
 .updateImage:hover {
@@ -364,6 +375,13 @@ ul.has-suggestions {
     background-color: rgba(247, 148, 61, .95);
 }
 
+/* 
+@media screen and (max-width: 850px) {
+    .hoverName {
+        width:65%
+    }
+    
+} */
 
 
 
