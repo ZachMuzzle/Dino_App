@@ -22,7 +22,7 @@ function checkForButtonPress(generateButton) {
                 let imageDataBranch = createImage(imageData[0], imageData[1]);
                 await insert(imageDataBranch[0], imageDataBranch[1]);
                 setTimeout(function() {
-                    generateButton.disabled = false;
+                generateButton.disabled = false;
                 },1000);
         });
         
@@ -67,20 +67,29 @@ async function getDinoImage(dinoName) {
 }
 
 function createImage(data, dinoName) {
-    console.log("In Function: ", data)
-    let dinoimage = data.results[Math.floor(Math.random() * data.results.length)]; // random dino image  from the length
-    let dinoImageUrl = dinoimage.image;
-    let dinoAlt = dinoimage.title; 
-    console.log(dinoimage);
-    console.log(dinoImageUrl,dinoAlt);
+    try {
 
-    let img = document.createElement('img');
-    img.id = 'dinoImage'; // set id of img created
-    img.src = dinoImageUrl;
-    img.alt = dinoAlt;
-    document.querySelector('#dinoWrapper').appendChild(img);
-
-    return [dinoName, dinoImageUrl];
+        console.log("In Function: ", data)
+        let dinoimage = data.results[Math.floor(Math.random() * data.results.length)]; // random dino image  from the length
+        let dinoImageUrl = dinoimage.image;
+        let dinoAlt = dinoimage.title; 
+        console.log(dinoimage);
+        console.log(dinoImageUrl,dinoAlt);
+        if(dinoImageUrl.substring(0,5) !== 'https') {
+            dinoImageUrl = [dinoImageUrl.slice(0,4), 's', dinoImageUrl.slice(4)].join('');
+        }
+    
+        let img = document.createElement('img');
+        img.id = 'dinoImage'; // set id of img created
+        img.src = dinoImageUrl;
+        console.log("URL: ", img.src)
+        img.alt = dinoAlt;
+        document.querySelector('#dinoWrapper').appendChild(img);
+    
+        return [dinoName, dinoImageUrl];
+    } catch(error) {
+        console.log(error)
+    } 
 }
 
 async function insert(dinoName, dinoImageUrl) {
