@@ -383,5 +383,41 @@ ul.has-suggestions {
     
 } */
 
+@media screen and (max-width:500px) {
+    .search-container {
+        position: sticky;
+        top: 50px;
+        z-index: 1;
+    }
+
+    .search-container button {
+        opacity: .4;
+    }
+
+    .search-container button:hover {
+        opacity: .7;
+    }
+        
+    
+}
+
+@media screen and (max-width:400px) {
+    .search-container {
+        width: auto;
+    }
 
 
+}
+
+@media screen and (max-width: 362px) {
+    .search-container {
+        top: 100px;
+        margin-top: 130px;
+      }
+}
+
+@media screen and (max-width: 193px) {
+    .search-container {
+        top: 120px;
+    }
+}
