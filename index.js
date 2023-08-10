@@ -58,6 +58,9 @@ app.get('/casey-horner-1sim8ojvCbE-unsplash.jpg',(response,request) => {
   request.sendFile(`${publicPath}/casey-horner-1sim8ojvCbE-unsplash.jpg`)
 });
 
+app.get('/myIcon.ico',(response,request) => {
+  request.sendFile(`${publicPath}/myIcon.ico`)
+});
 
 app.listen(port, function() {
     console.log(`Example app listening at http://localhost:${port}`);
