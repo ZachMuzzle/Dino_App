@@ -26,3 +26,31 @@ Each time the button is pressed a dinosaur name from the text api will be displa
     3.  Under **count input** type in 10. This is the number I tested with.
 11. Now use the **X-RapidAPI-Key** and place that in your `.env` file.
 12. Now you should be able to run `npm run dev` again and now when the button is clicked images will be displayed.
+
+## Updated Code Instructions
+
+The above instructions will still work for local deployment, but this code has been updated to be ran on a AWS server on a website in production. We now use docker for deployment of this code.
+
+This was done because it's incredibly easier to deploy using docker instead of doing all these steps for each deployment. However, I have not figured out how to just update the existing docker container/image and I always delete and re-compile the image/container.
+
+### Example of Building the Docker Image and Container
+
+``` docker 
+# Build dino app
+docker build . -t zachmuzzle/dino-web-app
+# Fixes permission error
+sudo chmod 666 /var/run/docker.sock
+# runs docker app on server 49160. -d means runs in background
+docker run -i -t -p 49160:3000 -d zachmuzzle/dino-web-app
+#Kill an image that won't stop
+docker exec -it <container> kill 1
+#Rebuild
+docker-compose up --force-recreate --build -d
+docker image prune -f
+#Kill images/container
+sudo systemctl restart docker.socket docker.service
+# Removes all images
+sudo docker image rm -f $(sudo docker image ls -q)
+```
+If this is your first time building using docker... Then you will only need to do the first 3 prompts.
+If you're rebuilding the docker image/container you will need to kill the image and rebuild *you may have to not rebuild under the **#Rebuild** section above and just kill and remove all images and containers. Then rebuild like before.* (I still haven't figured out how to successfully update the docker piece)
