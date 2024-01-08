@@ -60,6 +60,12 @@ try {
              searchButtonOnClick();
          }
 
+         /* Search button click when model isn't blocked*/
+         document.onkeydown = function() {
+            if(window.event.keyCode == 13 && model.style.display !== "block" && autocomplete.value.length > 0) {
+             searchButtonOnClick();
+            }
+         }
 
          /* Button click for search */
         function searchButtonOnClick() {
