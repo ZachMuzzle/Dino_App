@@ -12,6 +12,8 @@ try {
         let imgSrc = document.getElementById("img-src");
         let imgCaption = document.getElementById("caption");
         let closeImage = document.querySelectorAll('.close');
+        let popupModel = document.getElementById("popupModel");
+        let popupMessage = document.getElementById("popupMessage");
         
         const autocomplete = document.querySelector('#autocomplete');
         const resultsHTML = document.querySelector('.suggestions ul');
@@ -22,7 +24,7 @@ try {
         createGallery(allData);
         deleteButtonOnImages(allData);
         updateImageModal(allData,modal)
-        closeButtons(closeImage,modal,model);
+        closeButtons(closeImage,modal,model,popupModel);
 
         /* Hover Text Dynamic Width */
         function Resize() {
@@ -82,7 +84,16 @@ try {
                         imgCaption.innerHTML = images[i].alt;
                         break
                     } else if(images.length-1 == i) {
-                        alert("PLEASE INPUT A DINOSAUR NAME BEFORE SUBMITTING");
+                        /* Where we will add custom alert */
+                        // popupMessage.innerHTML = "PLEASE INPUT A DINOSAUR NAME BEFORE SUBMITTING"
+                        let popupValue = document.createElement("div");
+                        let popupValueContents = document.createTextNode("PLEASE INPUT A DINOSAUR NAME BEFORE SUBMITTING")
+                        popupValue.setAttribute("id", "popupValue");
+                        popupValue.appendChild(popupValueContents);
+                        popupMessage.appendChild(popupValue);
+                        popupModel.style.display = "block"
+
+                        // alert("PLEASE INPUT A DINOSAUR NAME BEFORE SUBMITTING");
                         throw "No available image for search field!"
                     }
                 }
@@ -93,7 +104,10 @@ try {
             }
         }
 
-         /* Maybe turn this into a function for easy recall? */
+         /* 
+         !!
+         Maybe turn this into a function for easy recall? 
+         */
          try {
             if(images.length == 0) throw "No images found!";
             for(let j =  0; j < images.length; j++) {
@@ -355,7 +369,7 @@ async function updateImage(id, dinoImage, dinoAlt) {
         * two if statements. One is for the first modal when viewing an image
         * Second is for when updating an image.
         */
-function closeButtons(closeImage,modal,model) {
+function closeButtons(closeImage,modal,model,popupModel) {
 
     for(let i = 0; i < closeImage.length; i++) {
         closeImage[i].onclick = function() {
@@ -372,6 +386,13 @@ function closeButtons(closeImage,modal,model) {
                    document.querySelectorAll('.submitButton')[0].remove();
             } 
 
+            }
+            else if (closeImage[i] == closeImage[2]) {
+                popupModel.style.display = "none";
+                
+                if(document.getElementById("popupValue")) {
+                    document.getElementById("popupValue").remove();
+                }
             }
         }
     }
