@@ -26,7 +26,9 @@ try {
         updateImageModal(allData,modal)
         closeButtons(closeImage,modal,model,popupModel);
 
-        /* Hover Text Dynamic Width */
+        /* Hover Text Dynamic Width 
+           based on width of dinoGalleryImage
+        */
         function Resize() {
             for(let i = 0; i < allData.length; i++) {
                 const parent = document.querySelectorAll(".dinoGalleryImage")[i]

@@ -69,17 +69,7 @@ section > button:hover {
     text-align: center;
 }
 
-@media (max-width: 37.5em) {
-    h1 {
-        font-size: 3rem;
-    }
-    #dinoWrapper {
-        width: 50%;
-        max-width: 25rem;
-        display: block;
-        margin: auto;
-    }
-}
+
 /* NAV BAR STYLES */
 .nav-bar {
     list-style-type:none;
@@ -114,4 +104,59 @@ ul > li a:hover {
 
 .active:hover {
     background-color: rgba(247, 148, 61, .6);
+}
+
+@media (max-width: 850px) {
+    h1 {
+        font-size: 3rem
+    }
+    #dinoWrapper {
+        width: 50%;
+        max-width: 25rem;
+        display: block;
+        margin: auto;
+    }
+}
+:root {
+    --font-size-button: 3rem
+}
+.button-load {
+    font-size: var(--font-size-button);
+}
+
+
+@media (max-width:544px) {
+    .button-load {
+        --font-size-button:2.3rem
+    }
+}
+
+@media (max-width:427px) {
+    .button-load {
+        --font-size-button:2.0rem
+    }
+}
+
+@media (max-width:378px) {
+    .button-load {
+        --font-size-button:2.0rem
+    }
+}
+
+@media (max-width:377px) {
+    .button-load {
+        --font-size-button:1.7rem
+    }
+}
+
+@media (max-width:327px) {
+    .button-load {
+        --font-size-button:1.4rem
+    }
+}
+
+@media (max-width:277px) {
+    .button-load {
+        --font-size-button:1rem
+    }
 }
