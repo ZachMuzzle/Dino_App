@@ -82,9 +82,10 @@ section > button:hover {
     width: 100%;
 }
 
-ul > li {
+
+/* ul > li {
     float: left;
-}
+} */
 
 ul > li a {
     display: block;
@@ -92,6 +93,7 @@ ul > li a {
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
+    float:left
 }
 
 ul > li a:hover {

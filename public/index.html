@@ -7,16 +7,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dinosaur Generator</title>
     <link href="styles.css" rel="stylesheet">
+    <link href="loginStyles.css" rel="stylesheet">
+    <link href="modelStyle.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@200&display=swap" rel="stylesheet">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
     <!-- NAV BAR -->
     <ul class="nav-bar">
         <li><a class="active" href="/DinoGenerator">Dinosaur Generator</a></li>
         <li><a href="/Gallery">Dinosaur Gallery</a></li>
+        <li><button id="loginButton" class="loginButton">Login</button></li>
     </ul>
+
+    <div id="loginModel" class="model">
+        <span class="close">&times;</span>
+        <div class="center">
+            <h1>Dino Generator Login</h1>
+            <form id="loginForm">
+              <div class="inputbox">
+                <input id="inputEmail" type="text" required="required">
+                <span>Email</span>
+              </div>
+              <div class="inputbox">
+                <input id="inputPassword" type="password" required="required">
+                <span>Password</span>
+              </div>
+              <div class="inputbox">
+                <p>Show Password</p>
+                <input id="passwordCheck" type="checkbox" onclick="showPassword()"> 
+                </div>
+              <div class="inputbox">
+                <button id="submitBtn" type="button" class="submitBtn">Submit</button>
+              </div>
+            </form>
+        </div>
+    <!-- <div id="loginForm">
+        <form action="/action_page.php" class="formContainer">
+            <h1>Login</h1>
+
+    <label for="email"><b>Email</b></label>
+    <input type="text" placeholder="Enter Email" name="email" required>
+
+    <label for="psw"><b>Password</b></label>
+    <input type="password" placeholder="Enter Password" name="psw" required>
+
+    <button type="submit" class="btn">Login</button>
+    <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
+        </form>
+    </div> -->
+    </div>
 
     <section class="generator">
         
@@ -27,4 +69,15 @@
     </section>
 </body>
 <script defer src="scripts.js" type="module"></script>
+<script defer src="loginForm.js" type="module"></script>
+<script>
+    function showPassword() {
+    let passwordShow = document.getElementById("inputPassword");
+    if(passwordShow.type === "password") {
+        passwordShow.type = "text";
+    } else {
+        passwordShow.type = "password"
+    }
+}
+</script>
 </html>
