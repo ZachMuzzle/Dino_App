@@ -1,6 +1,8 @@
 try {
     window.onload = async function displayImage() {
         let allData = await getData();
+        /* Test for login data */
+        let allLoginData = await getLoginData();
         let modal = document.getElementById("updateModal");
         
         let imgSrcUpdate = document.getElementById("img-src-update");
@@ -162,6 +164,16 @@ async function getData() {
             resolve(data['data'])
         });  
         });
+}
+/* test login function */
+async function getLoginData() {
+    return new Promise((resolve) => {
+        fetch('/getLoginData')
+        .then(response => response.json())
+        .then(data => {
+            resolve(data['data'])
+        });
+    });
 }
 /* Deletes all data. 
     ? Not sure if return promise is needed since we aren't returning anything
@@ -371,12 +383,13 @@ async function updateImage(id, dinoImage, dinoAlt) {
         * two if statements. One is for the first modal when viewing an image
         * Second is for when updating an image.
         */
-function closeButtons(closeImage,modal,model,popupModel) {
+export function closeButtons(closeImage,modal,model,popupModel) {
 
     for(let i = 0; i < closeImage.length; i++) {
         closeImage[i].onclick = function() {
             if(closeImage[i] == closeImage[0]) {
                 model.style.display = "none";
+
             }
             else if (closeImage[i] == closeImage[1]) {
                 modal.style.display = "none";
