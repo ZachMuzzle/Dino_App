@@ -8,6 +8,7 @@ import fetch from 'node-fetch';
 import express from 'express';
 import dotenv from 'dotenv';
 import DbService from './database/database.js'
+import DbLoginService from './database/loginDatabase.js';
 import cors from 'cors';
 import path from 'path';
 import {fileURLToPath} from 'url';
@@ -50,8 +51,21 @@ app.get('/galleryStyles.css',(response,request) => {
   request.sendFile(`${publicPath}/galleryStyles.css`)
 });
 
+app.get('/modelStyle.css',(response,request) => {
+  request.sendFile(`${publicPath}/modelStyle.css`)
+});
+
+app.get('/loginStyles.css',(response,request) => {
+  request.sendFile(`${publicPath}/loginStyles.css`)
+});
+
+
 app.get('/gallery.js',(response,request) => {
   request.sendFile(`${publicPath}/gallery.js`)
+});
+
+app.get('/loginForm.js',(response,request) => {
+  request.sendFile(`${publicPath}/loginForm.js`)
 });
 
 app.get('/casey-horner-1sim8ojvCbE-unsplash.jpg',(response,request) => {
@@ -152,3 +166,11 @@ app.patch('/update', (request, response) => {
   .catch(err => console.log(err));
 });
 
+app.get('/getLoginData', (request, response) => {
+  const db = DbLoginService.getDbLoginServiceInstance();
+  const results = db.getAllData();
+
+  results
+  .then(data => response.json({data: data}))
+  .catch(err => console.log(err));
+})

@@ -1,0 +1,130 @@
+/* FORM STYLES */
+.loginButton {
+    display: block;
+    color: white;
+    background-color: #333;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    border: none;
+    font-size: inherit;
+    opacity: 1;
+    float:right;
+}
+.loginButton:hover {
+    opacity: .8;
+    cursor: pointer;
+}
+
+#loginForm {
+    display: none;
+    animation-name: zoom;
+    animation-duration: 0.6s;
+}
+
+#loginModel {
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+
+@import url("https://fonts.googleapis.com/css2?family=Sansita+Swashed:wght@600&display=swap");
+.center {
+  position: relative;
+  padding: 50px 50px;
+  background: rgb(204, 204, 204);
+  border-radius: 10px;
+  animation-name: zoom;
+  animation-duration: 0.6s;
+}
+@keyframes zoom {
+    from {transform:scale(0)}
+    to {transform:scale(1)}
+  }
+.center h1 {
+  font-size: 2em;
+  border-left: 5px solid rgba(247, 148, 61, .8);
+  padding: 10px;
+  color: #000;
+  letter-spacing: 5px;
+  margin-bottom: 60px;
+  font-weight: bold;
+  padding-left: 10px;
+}
+.center .inputbox {
+  position: relative;
+  width: 300px;
+  height: 50px;
+  margin-bottom: 50px;
+  display: flex;
+}
+.center .inputbox input {
+  /* position: absolute;
+  top: 0;
+  left: 0; */
+  width: 100%;
+  border: 2px solid #000;
+  outline: none;
+  background: none;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 1.2em;
+}
+.center .inputbox:last-child {
+  margin-bottom: 0;
+}
+.center .inputbox span {
+  position: absolute;
+  top: 14px;
+  left: 20px;
+  font-size: 1em;
+  transition: 0.6s;
+  font-family: sans-serif;
+}
+/* Move email and password text to top when in focus */
+.center .inputbox input:focus ~ span,
+.center .inputbox input:valid ~ span {
+  transform: translateX(-13px) translateY(-35px);
+  font-size: 1em;
+}
+
+
+.center .inputbox button{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  border: 2px solid #000;
+  outline: none;
+  background: none;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 1.2em;
+}
+
+.center .inputbox button{
+    width: 50%;
+    background: rgba(247, 148, 61, .8);
+    color: #fff;
+    border: #fff;
+}
+
+.inputbox > button:hover {
+    background: rgba(247, 148, 61, 1);
+
+}
+
+#passwordCheck {
+  width: 20px;
+  margin-right: auto;
+}
+
+
+/* .submitBtn {
+    position: relative;
+    width: 300px;
+    height: 50px;
+    margin-bottom: 50px;
+    background: rgba(247, 148, 61, .8);
+} */
