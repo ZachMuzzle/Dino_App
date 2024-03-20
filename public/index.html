@@ -1,25 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <title>Dinosaur Generator</title>
     <link rel="shortcut icon" href="myIcon.ico" type="image/x-icon"/> <!-- This works -->
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dinosaur Generator</title>
     <link href="styles.css" rel="stylesheet">
     <link href="loginStyles.css" rel="stylesheet">
     <link href="modelStyle.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@200&display=swap" rel="stylesheet">
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script defer src="scripts.js" type="module"></script>
+    <script defer src="loginForm.js" type="module"></script>
+    <script defer src="Recaptcha.js" type="module"></script>
 </head>
 <body>
     <!-- NAV BAR -->
     <ul class="nav-bar">
         <li><a class="active" href="/DinoGenerator">Dinosaur Generator</a></li>
         <li><a href="/Gallery">Dinosaur Gallery</a></li>
-        <li><button id="loginButton" class="loginButton">Login</button></li>
+        <li><button id="loginButton" class="loginButton"> Login</button></li>
     </ul>
 
     <div id="loginModel" class="model">
@@ -39,8 +41,9 @@
                 <p>Show Password</p>
                 <input id="passwordCheck" type="checkbox" onclick="showPassword()"> 
                 </div>
+                <div class="g-recaptcha"></div>
               <div class="inputbox">
-                <button id="submitBtn" type="button" class="submitBtn">Submit</button>
+                <button id="submitBtn" type="submit" class="submitBtn">Submit</button>
               </div>
             </form>
         </div>
@@ -68,8 +71,9 @@
         <div id="dinoWrapper"></div>
     </section>
 </body>
-<script defer src="scripts.js" type="module"></script>
-<script defer src="loginForm.js" type="module"></script>
+<script defer src="https://www.google.com/recaptcha/api.js"></script>
+
+
 <script>
     function showPassword() {
     let passwordShow = document.getElementById("inputPassword");

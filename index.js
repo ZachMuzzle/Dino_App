@@ -12,7 +12,10 @@ import DbLoginService from './database/loginDatabase.js';
 import cors from 'cors';
 import path from 'path';
 import {fileURLToPath} from 'url';
-dotenv.config();
+
+if(process.env.NODE_ENV != 'production') {
+  dotenv.config();
+  }
 
 const getDirName = function (moduleUrl) {
   const filename = fileURLToPath(moduleUrl)
@@ -62,6 +65,9 @@ app.get('/loginStyles.css',(response,request) => {
 
 app.get('/gallery.js',(response,request) => {
   request.sendFile(`${publicPath}/gallery.js`)
+});
+app.get('/Recaptcha.js',(response,request) => {
+  request.sendFile(`${publicPath}/Recaptcha.js`)
 });
 
 app.get('/loginForm.js',(response,request) => {
@@ -174,3 +180,34 @@ app.get('/getLoginData', (request, response) => {
   .then(data => response.json({data: data}))
   .catch(err => console.log(err));
 })
+/* Login for google Recaptcha */
+
+app.get('/login/key', (request, response) => {
+  const publicSecret = {key: process.env.GOOGLE_RECAP_PUBLIC_SECERT};
+  response.json(publicSecret);
+  console.log(publicSecret)
+});
+
+app.post('/login', (request, response) => {
+  const params = new URLSearchParams({
+    secret: process.env.GOOGLE_RECAP_SECERT,
+    response:request.body['g-recaptcha-response'],
+    remoteip: request.ip,
+  });
+
+  console.log(params)
+  // console.log(params['secret'])
+  
+  fetch('https://www.google.com/recaptcha/api/siteverify', {
+    method:"POST",
+    body: params,
+  })
+  .then(response => response.json())
+  .then(data => {
+    if(data.success) {
+      response.json({captchaSuccess: true});
+    } else {
+      response.json({ captchaSuccess: false});
+    }
+  })
+});
