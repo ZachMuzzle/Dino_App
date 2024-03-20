@@ -1,5 +1,4 @@
 /* Client side javascript */
-console.log('Scripts.js loaded!');
 let generateButton = document.getElementById('button-load');  // Check before doing operation
 
 checkForButtonPress(generateButton);
@@ -32,11 +31,15 @@ function checkForButtonPress(generateButton) {
 ! Make this function only get DinoName and make other tasks work outside this function
 */
 async function getDinoName() { // the keyword async before a function makes the function return a promise
-    const response = await fetch('/dinoname'); //fetch data
-    const data = await response.json(); //formate as json data
+    return new Promise((resolve) => {
 
-    return data;
-
+        fetch('/dinoname') //fetch data
+        .then(response => response.json())
+        .then(data => {
+            resolve(data)
+        })
+        .catch(err => console.log(err))
+    })
 //    await getDinoImage(dinoname)
 }
 
@@ -57,7 +60,7 @@ function createDinoDiv(data) {
 async function getDinoImage(dinoName) {
     const response = await fetch('/dinoimage');
     const data = await response.json(); // data length is whatever count is ?
-    console.log("DATA CALL AFTER BUTTON CLICK: ", data.results)
+    // console.log("DATA CALL AFTER BUTTON CLICK: ", data.results)
      // put img element into body of html
 
      return [data,dinoName];

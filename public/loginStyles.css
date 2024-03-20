@@ -120,6 +120,13 @@
   margin-right: auto;
 }
 
+.inputbox~.inputbox {
+  margin-bottom: 20px;
+}
+.g-recaptcha {
+  margin-bottom: 20px;
+}
+
 
 /* .submitBtn {
     position: relative;
