@@ -15,6 +15,8 @@
     <script defer src="scripts.js" type="module"></script>
     <script defer src="loginForm.js" type="module"></script>
     <script defer src="Recaptcha.js" type="module"></script>
+    <script defer src="styleEffects.js" type="module"></script>
+
 </head>
 <body>
     <!-- NAV BAR -->
@@ -27,6 +29,7 @@
     <div id="loginModel" class="model">
         <span class="close">&times;</span>
         <div class="center">
+          <div id="popupMessage"></div>
             <h1>Dino Generator Login</h1>
             <form id="loginForm">
               <div class="inputbox">
@@ -41,26 +44,12 @@
                 <p>Show Password</p>
                 <input id="passwordCheck" type="checkbox" onclick="showPassword()"> 
                 </div>
-                <div class="g-recaptcha"></div>
+                <div id="gID" class="g-recaptcha"></div>
               <div class="inputbox">
                 <button id="submitBtn" type="submit" class="submitBtn">Submit</button>
               </div>
             </form>
         </div>
-    <!-- <div id="loginForm">
-        <form action="/action_page.php" class="formContainer">
-            <h1>Login</h1>
-
-    <label for="email"><b>Email</b></label>
-    <input type="text" placeholder="Enter Email" name="email" required>
-
-    <label for="psw"><b>Password</b></label>
-    <input type="password" placeholder="Enter Password" name="psw" required>
-
-    <button type="submit" class="btn">Login</button>
-    <button type="button" class="btn cancel" onclick="closeForm()">Close</button>
-        </form>
-    </div> -->
     </div>
 
     <section class="generator">
@@ -71,7 +60,9 @@
         <div id="dinoWrapper"></div>
     </section>
 </body>
-<script defer src="https://www.google.com/recaptcha/api.js"></script>
+<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+    defer async >
+</script>
 
 
 <script>
@@ -84,4 +75,13 @@
     }
 }
 </script>
+
+<script type="text/javascript">
+    var onloadCallback = function() {
+        grecaptcha.render('gID', {
+          'sitekey' : '6LcqGJgpAAAAAN5_hDLAiWO44xIiQwBmHzbPOKDy'
+        });
+    };
+  </script>
+  
 </html>

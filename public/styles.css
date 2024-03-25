@@ -107,6 +107,57 @@ ul > li a:hover {
 .active:hover {
     background-color: rgba(247, 148, 61, .6);
 }
+/* popup message */
+#popupMessage {
+    margin: auto;
+    display: none;
+    max-width: 700px;
+    text-align: center;
+    color: #ccc;
+    background-color: rgb(167, 11, 11);
+    padding: 5px 0;
+    line-height: 75px;
+    box-shadow:  0 0 20px 10px rgba(153, 152, 152, 0.75);
+    border-radius: 25px;
+    margin-bottom: 20px;
+}
+
+#popupValue {
+    color: white;
+    font-weight: bold;
+    padding: 0 10px;
+}
+
+.zoom {
+    animation-name: zoom;
+    animation-duration: 0.6s;
+    animation-iteration-count: 1;
+}
+
+.shake {
+    position: relative;
+    animation: shake 0.5s
+  }
+  /* 
+   * @keyframes defines behavior at various points within an animation\
+   * animationName after keyframe is for the animation that you choose. For this instance we use shake  
+  */
+  @keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(3px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(1px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+  }
+
+  
+  
 
 @media (max-width: 850px) {
     h1 {
