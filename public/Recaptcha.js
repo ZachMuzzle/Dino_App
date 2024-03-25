@@ -1,26 +1,8 @@
-import{loginButtonPress,loginButton,submitButton,loginModel} from './loginForm.js'
-/* 
-!! Errors to look into below
-*An invalid form control is not focusable. 3 localhost:3000
-*The invalid form control with name=‘g-recaptcha-response’ is not focusable. localhost:3000
-*An invalid form control is not focusable.
-* Means that the fields for the form were empty.
-*/
-const recaptchaKey = await getRecaptchPublicKey();
-const recaptchaKeyInsert = document.querySelectorAll('.g-recaptcha');
-recaptchaKeyInsert[0].setAttribute("data-sitekey",recaptchaKey.key);
-
-async function getRecaptchPublicKey() {
-return new Promise((resolve) => {
-
-    fetch('/login/key')
-    .then(response => response.json())
-    .then(data => {
-        resolve(data)
-    })
-    .catch(err => console.log(err))
-});
-}
+import{loginButtonPress,loginButton,submitButton,loginModel,inputElementEmail,inputElementPassword,loginForm} from './loginForm.js'
+// const recaptchaKey = await getRecaptchPublicKey();
+// const recaptchaKeyInsert = document.querySelectorAll('.g-recaptcha');
+/* Pull key from api. Set the key value to the attribute in html */
+// recaptchaKeyInsert[0].setAttribute("data-sitekey",recaptchaKey.key);
 
 // recaptchaKey[0].setAttribute("data-sitekey","6LcqGJgpAAAAAN5_hDLAiWO44xIiQwBmHzbPOKDy")
 // const loginBtn = document.getElementById("loginButton");
@@ -29,24 +11,28 @@ return new Promise((resolve) => {
  * Look to remove event listener or try to add them outside of each other
  * instead of inside one another
  */
+
+loginForm.addEventListener('submit', async function submitForm(e) {
+    e.preventDefault();
+    if((inputElementEmail.value.length == 0) || 
+    (inputElementPassword.value.length == 0)) {
+        console.log("Please fill out both Email and Password fields")
+    } else {
+    await LoginClick()
+    loginModel.style.display = "none"
+    /*
+    !! Web Browser freezes when using alert  
+    * Had to close and reopen web apps  
+    */
+    setTimeout(function() {
+        alert("You have been logged in")
+    },1000);          
+}
+});
+
 loginButton.addEventListener('click', function loginEvent(){
     loginButtonPress(loginButton)
-    
-         /* 
-         * I need to create logic that makes sure the fields are filled before
-         * submitting
-         */
-         submitButton.onclick = async function submitFormClose() {
-            await LoginClick()
-            loginModel.style.display = "none"
-            setTimeout(function() {
-                alert("You have been logged in")
-            },0);          
-        }
 
-
-    // const captchaReturnValue = LoginClick();
-    // console.log("Returned value: ", captchaReturnValue)
 });
 
  export async function LoginClick() {   
@@ -54,10 +40,14 @@ loginButton.addEventListener('click', function loginEvent(){
         // form.submit();
 
         const captchaResponse = grecaptcha.getResponse();
-        console.log(captchaResponse)
+        // console.log(captchaResponse)
         if (!captchaResponse.length > 0) {
-            throw new Error("Captcha not complete!")
+            // throw new Error("Captcha not complete!")
+            // setTimeout(function() {
+            //     alert("You must complete the Captcha verification before submitting")
+            // },0);
         }
+        else {
 
         const fd = new FormData(document.querySelector("form"));
         // console.log(fd)
@@ -76,10 +66,11 @@ loginButton.addEventListener('click', function loginEvent(){
                 resolve(data.captchaSuccess)
                 console.log('Validation successful!')
             } else {
-                console.log('Validation failed!')
                 resolve(data.captchaSuccess)
+                console.log('Validation failed!')
             }
         })
         .catch(err => console.log(err))
     });
+}
 }

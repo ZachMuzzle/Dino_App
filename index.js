@@ -182,12 +182,6 @@ app.get('/getLoginData', (request, response) => {
 })
 /* Login for google Recaptcha */
 
-app.get('/login/key', (request, response) => {
-  const publicSecret = {key: process.env.GOOGLE_RECAP_PUBLIC_SECERT};
-  response.json(publicSecret);
-  console.log(publicSecret)
-});
-
 app.post('/login', (request, response) => {
   const params = new URLSearchParams({
     secret: process.env.GOOGLE_RECAP_SECERT,
