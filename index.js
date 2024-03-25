@@ -74,6 +74,10 @@ app.get('/loginForm.js',(response,request) => {
   request.sendFile(`${publicPath}/loginForm.js`)
 });
 
+app.get('/styleEffects.js',(response,request) => {
+  request.sendFile(`${publicPath}/styleEffects.js`)
+});
+
 app.get('/casey-horner-1sim8ojvCbE-unsplash.jpg',(response,request) => {
   request.sendFile(`${publicPath}/casey-horner-1sim8ojvCbE-unsplash.jpg`)
 });
@@ -181,12 +185,6 @@ app.get('/getLoginData', (request, response) => {
   .catch(err => console.log(err));
 })
 /* Login for google Recaptcha */
-
-app.get('/login/key', (request, response) => {
-  const publicSecret = {key: process.env.GOOGLE_RECAP_PUBLIC_SECERT};
-  response.json(publicSecret);
-  console.log(publicSecret)
-});
 
 app.post('/login', (request, response) => {
   const params = new URLSearchParams({

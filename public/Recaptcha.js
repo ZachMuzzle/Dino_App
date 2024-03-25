@@ -1,63 +1,75 @@
-import{loginButtonPress,loginButton,submitButton,loginModel} from './loginForm.js'
-/* 
-!! Errors to look into below
-*An invalid form control is not focusable. 3 localhost:3000
-*The invalid form control with name=‘g-recaptcha-response’ is not focusable. localhost:3000
-*An invalid form control is not focusable.
-* Means that the fields for the form were empty.
-*/
-const recaptchaKey = await getRecaptchPublicKey();
-const recaptchaKeyInsert = document.querySelectorAll('.g-recaptcha');
-recaptchaKeyInsert[0].setAttribute("data-sitekey",recaptchaKey.key);
-
-async function getRecaptchPublicKey() {
-return new Promise((resolve) => {
-
-    fetch('/login/key')
-    .then(response => response.json())
-    .then(data => {
-        resolve(data)
-    })
-    .catch(err => console.log(err))
-});
-}
+import{closeImage,loginButtonPress,loginButton,submitButton,loginModel,inputElementEmail,inputElementPassword,loginForm} from './loginForm.js'
+import {addZoomEffect,removeZoomEffect,addShakeEffect,removeShakeEffect} from './styleEffects.js'
+// const recaptchaKey = await getRecaptchPublicKey();
+// const recaptchaKeyInsert = document.querySelectorAll('.g-recaptcha');
+/* Pull key from api. Set the key value to the attribute in html */
+// recaptchaKeyInsert[0].setAttribute("data-sitekey",recaptchaKey.key);
 
 // recaptchaKey[0].setAttribute("data-sitekey","6LcqGJgpAAAAAN5_hDLAiWO44xIiQwBmHzbPOKDy")
 // const loginBtn = document.getElementById("loginButton");
 
-/*
- * Look to remove event listener or try to add them outside of each other
- * instead of inside one another
- */
-loginButton.addEventListener('click', function loginEvent(){
-    loginButtonPress(loginButton)
-    
-         /* 
-         * I need to create logic that makes sure the fields are filled before
-         * submitting
-         */
-         submitButton.onclick = async function submitFormClose() {
-            await LoginClick()
-            loginModel.style.display = "none"
-            setTimeout(function() {
-                alert("You have been logged in")
-            },0);          
-        }
-
-
-    // const captchaReturnValue = LoginClick();
-    // console.log("Returned value: ", captchaReturnValue)
+loginForm.addEventListener('submit', async function submitForm(e) {
+    e.preventDefault();
+    // if((inputElementEmail.value.length == 0) || 
+    // (inputElementPassword.value.length == 0)) {
+    //     alert("Please fill out both Email and Password fields")
+    // } else {
+    await submitClick()
+    loginModel.style.display = "none"
+    /*
+    !! Web Browser freezes when using alert  
+    * Had to close and reopen web apps  
+    */
+    setTimeout(function() {
+        alert("You have been logged in")
+    },1000);          
+// }
 });
 
- export async function LoginClick() {   
+loginButton.addEventListener('click', function loginEvent(){
+    loginButtonPress(loginButton)
+
+});
+
+/* 
+* Removal of pop value happens in closeButtons()
+*/
+function popupMessageAlert() {
+    const popupMessageId = document.getElementById('popupMessage')
+    const popupValue = document.createElement("div");
+    const popupValueContents = document.createTextNode("Please complete Recaptcha before submitting")
+    popupValue.setAttribute("id", "popupValue");
+    popupValue.appendChild(popupValueContents);
+    popupMessageId.appendChild(popupValue);
+    addZoomEffect();
+    popupMessageId.style.display = 'block'
+    setTimeout(removeZoomEffect,1000);
+    
+
+}
+
+ export async function submitClick() {   
     // const form = document.getElementById("loginForm");
         // form.submit();
-
         const captchaResponse = grecaptcha.getResponse();
-        console.log(captchaResponse)
+        // console.log(captchaResponse)
         if (!captchaResponse.length > 0) {
-            throw new Error("Captcha not complete!")
+            if(document.getElementById("popupValue")) {
+                /*
+                * Add shake effect to element
+                */
+               addShakeEffect();
+               setTimeout(removeShakeEffect,2000);
+                throw new Error('Complete the Captcha!')
+            }
+            else {
+                setTimeout(function() {
+                    popupMessageAlert();
+                },0);
+                throw new Error("Captcha not complete!")
+            }
         }
+        else {
 
         const fd = new FormData(document.querySelector("form"));
         // console.log(fd)
@@ -76,10 +88,11 @@ loginButton.addEventListener('click', function loginEvent(){
                 resolve(data.captchaSuccess)
                 console.log('Validation successful!')
             } else {
-                console.log('Validation failed!')
                 resolve(data.captchaSuccess)
+                console.log('Validation failed!')
             }
         })
         .catch(err => console.log(err))
     });
+}
 }
