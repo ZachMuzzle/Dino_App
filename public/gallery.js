@@ -96,6 +96,8 @@ try {
                         popupValue.appendChild(popupValueContents);
                         popupMessage.appendChild(popupValue);
                         popupModel.style.display = "block"
+                        popupMessage.style.display = "block"
+                        
 
                         // alert("PLEASE INPUT A DINOSAUR NAME BEFORE SUBMITTING");
                         throw "No available image for search field!"
