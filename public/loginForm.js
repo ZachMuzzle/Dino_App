@@ -5,14 +5,14 @@ import{closeButtons} from './gallery.js'
 /* DOM Methods */
 export const inputElementEmail = document.getElementById('inputEmail')
 export const inputElementPassword = document.getElementById('inputPassword')
-const inputElementPasswordCheck = document.getElementById('passwordCheck')
-let closeImage = document.querySelectorAll('.close');
-let modal = document.getElementById("updateModal");
-let popupModel = document.getElementById("popupModel");
 export const loginModel = document.getElementById('loginModel');
 export const submitButton = document.getElementById('submitBtn');
 export const loginButton = document.getElementById('loginButton');
 export const loginForm = document.getElementById('loginForm');
+export const closeImage = document.querySelectorAll('.close');
+const inputElementPasswordCheck = document.getElementById('passwordCheck')
+let modal = document.getElementById("updateModal");
+let popupModel = document.getElementById("popupModel");
 // loginButtonPress(loginButton);
 export function loginButtonPress(loginButton) {
     if(loginButton) {
@@ -26,6 +26,7 @@ export function loginButtonPress(loginButton) {
 /* Call function only on hover over */
 closeImage[0].onmouseover = function() {
       closeButtons(closeImage,modal,loginModel,popupModel)
+
 
 }
 /* 

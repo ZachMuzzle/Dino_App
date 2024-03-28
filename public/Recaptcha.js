@@ -1,4 +1,5 @@
-import{loginButtonPress,loginButton,submitButton,loginModel,inputElementEmail,inputElementPassword,loginForm} from './loginForm.js'
+import{closeImage,loginButtonPress,loginButton,submitButton,loginModel,inputElementEmail,inputElementPassword,loginForm} from './loginForm.js'
+import {addZoomEffect,removeZoomEffect,addShakeEffect,removeShakeEffect} from './styleEffects.js'
 // const recaptchaKey = await getRecaptchPublicKey();
 // const recaptchaKeyInsert = document.querySelectorAll('.g-recaptcha');
 /* Pull key from api. Set the key value to the attribute in html */
@@ -7,18 +8,13 @@ import{loginButtonPress,loginButton,submitButton,loginModel,inputElementEmail,in
 // recaptchaKey[0].setAttribute("data-sitekey","6LcqGJgpAAAAAN5_hDLAiWO44xIiQwBmHzbPOKDy")
 // const loginBtn = document.getElementById("loginButton");
 
-/*
- * Look to remove event listener or try to add them outside of each other
- * instead of inside one another
- */
-
 loginForm.addEventListener('submit', async function submitForm(e) {
     e.preventDefault();
-    if((inputElementEmail.value.length == 0) || 
-    (inputElementPassword.value.length == 0)) {
-        console.log("Please fill out both Email and Password fields")
-    } else {
-    await LoginClick()
+    // if((inputElementEmail.value.length == 0) || 
+    // (inputElementPassword.value.length == 0)) {
+    //     alert("Please fill out both Email and Password fields")
+    // } else {
+    await submitClick()
     loginModel.style.display = "none"
     /*
     !! Web Browser freezes when using alert  
@@ -27,7 +23,7 @@ loginForm.addEventListener('submit', async function submitForm(e) {
     setTimeout(function() {
         alert("You have been logged in")
     },1000);          
-}
+// }
 });
 
 loginButton.addEventListener('click', function loginEvent(){
@@ -35,17 +31,43 @@ loginButton.addEventListener('click', function loginEvent(){
 
 });
 
- export async function LoginClick() {   
+/* 
+* Removal of pop value happens in closeButtons()
+*/
+function popupMessageAlert() {
+    const popupMessageId = document.getElementById('popupMessage')
+    const popupValue = document.createElement("div");
+    const popupValueContents = document.createTextNode("Please complete Recaptcha before submitting")
+    popupValue.setAttribute("id", "popupValue");
+    popupValue.appendChild(popupValueContents);
+    popupMessageId.appendChild(popupValue);
+    addZoomEffect();
+    popupMessageId.style.display = 'block'
+    setTimeout(removeZoomEffect,1000);
+    
+
+}
+
+ export async function submitClick() {   
     // const form = document.getElementById("loginForm");
         // form.submit();
-
         const captchaResponse = grecaptcha.getResponse();
         // console.log(captchaResponse)
         if (!captchaResponse.length > 0) {
-            // throw new Error("Captcha not complete!")
-            // setTimeout(function() {
-            //     alert("You must complete the Captcha verification before submitting")
-            // },0);
+            if(document.getElementById("popupValue")) {
+                /*
+                * Add shake effect to element
+                */
+               addShakeEffect();
+               setTimeout(removeShakeEffect,2000);
+                throw new Error('Complete the Captcha!')
+            }
+            else {
+                setTimeout(function() {
+                    popupMessageAlert();
+                },0);
+                throw new Error("Captcha not complete!")
+            }
         }
         else {
 

@@ -74,6 +74,10 @@ app.get('/loginForm.js',(response,request) => {
   request.sendFile(`${publicPath}/loginForm.js`)
 });
 
+app.get('/styleEffects.js',(response,request) => {
+  request.sendFile(`${publicPath}/styleEffects.js`)
+});
+
 app.get('/casey-horner-1sim8ojvCbE-unsplash.jpg',(response,request) => {
   request.sendFile(`${publicPath}/casey-horner-1sim8ojvCbE-unsplash.jpg`)
 });

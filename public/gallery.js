@@ -110,7 +110,7 @@ try {
 
          /* 
          !!
-         Maybe turn this into a function for easy recall? 
+         !! Maybe turn this into a function for easy recall? 
          */
          try {
             if(images.length == 0) throw "No images found!";
@@ -389,6 +389,11 @@ export function closeButtons(closeImage,modal,model,popupModel) {
         closeImage[i].onclick = function() {
             if(closeImage[i] == closeImage[0]) {
                 model.style.display = "none";
+                document.getElementById('popupMessage').style.display = 'none';
+                
+                if(document.getElementById("popupValue")) {
+                    document.getElementById("popupValue").remove();
+                }
 
             }
             else if (closeImage[i] == closeImage[1]) {
