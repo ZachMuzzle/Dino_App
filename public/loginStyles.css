@@ -33,10 +33,12 @@
 .center {
   position: relative;
   padding: 50px 50px;
+  margin: 50px 50px;
   background: rgb(204, 204, 204);
   border-radius: 10px;
   animation-name: zoom;
   animation-duration: 0.6s;
+  min-width: 0;
 }
 @keyframes zoom {
     from {transform:scale(0)}
@@ -54,10 +56,11 @@
 }
 .center .inputbox {
   position: relative;
-  width: 300px;
+  max-width: 300px;
   height: 50px;
   margin-bottom: 50px;
   display: flex;
+  min-width: 100px;
 }
 .center .inputbox input {
   /* position: absolute;
@@ -78,9 +81,10 @@
   position: absolute;
   top: 14px;
   left: 20px;
-  font-size: 1em;
+  font-size: calc(10px + .5vw);
   transition: 0.6s;
   font-family: sans-serif;
+  
 }
 /* Move email and password text to top when in focus */
 .center .inputbox input:focus ~ span,
@@ -90,27 +94,24 @@
 }
 
 
-.center .inputbox button{
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  border: 2px solid #000;
+.center .inputbox button {
+  width: 50%;
+  background: rgba(247, 148, 61, .8);
+  color: #fff;
+  border: #fff;
   outline: none;
-  background: none;
   padding: 10px;
   border-radius: 10px;
   font-size: 1.2em;
+  min-width: 75px;
 }
 
 .center .inputbox button{
-    width: 50%;
-    background: rgba(247, 148, 61, .8);
     color: #fff;
     border: #fff;
 }
 
-.inputbox > button:hover {
+.center .inputbox  button:hover {
     background: rgba(247, 148, 61, 1);
 
 }
@@ -119,13 +120,35 @@
   width: 20px;
   margin-right: auto;
 }
-
+/* Pick a specific class  */
 .inputbox~.inputbox {
   margin-bottom: 20px;
 }
 .g-recaptcha {
   margin-bottom: 20px;
 }
+
+@media (max-width: 450px) {
+  .g-recaptcha {
+    transform:scale(0.75);
+    transform-origin:0 0;
+  }
+}
+
+@media (max-width: 375px) {
+  .g-recaptcha {
+    transform:scale(0.65);
+    transform-origin:0 0;
+  }
+}
+
+@media (max-width: 637px) {
+  .center {
+    padding: 10px;
+  }
+}
+
+
 
 
 /* .submitBtn {

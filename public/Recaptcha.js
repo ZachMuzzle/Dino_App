@@ -15,6 +15,7 @@ loginForm.addEventListener('submit', async function submitForm(e) {
     //     alert("Please fill out both Email and Password fields")
     // } else {
     await submitClick()
+    document.getElementById('popupMessage').style.display = 'none';
     loginModel.style.display = "none"
     /*
     !! Web Browser freezes when using alert  
@@ -55,9 +56,6 @@ function popupMessageAlert() {
         // console.log(captchaResponse)
         if (!captchaResponse.length > 0) {
             if(document.getElementById("popupValue")) {
-                /*
-                * Add shake effect to element
-                */
                addShakeEffect();
                setTimeout(removeShakeEffect,2000);
                 throw new Error('Complete the Captcha!')
