@@ -39,7 +39,7 @@ app.get('/DinoGenerator',(response,request) => {
 });
 
 app.get('/Gallery',(response,request) => {
-  request.sendFile(`${publicPath}/gallery.html`)
+  request.sendFile(`${publicPath}/Gallery/gallery.html`)
 });
 
 app.get('/styles.css',(response,request) => {
@@ -51,7 +51,7 @@ app.get('/scripts.js',(response,request) => {
 });
 
 app.get('/galleryStyles.css',(response,request) => {
-  request.sendFile(`${publicPath}/galleryStyles.css`)
+  request.sendFile(`${publicPath}/Gallery/galleryStyles.css`)
 });
 
 app.get('/modelStyle.css',(response,request) => {
@@ -59,19 +59,19 @@ app.get('/modelStyle.css',(response,request) => {
 });
 
 app.get('/loginStyles.css',(response,request) => {
-  request.sendFile(`${publicPath}/loginStyles.css`)
+  request.sendFile(`${publicPath}/Login/loginStyles.css`)
 });
 
 
 app.get('/gallery.js',(response,request) => {
-  request.sendFile(`${publicPath}/gallery.js`)
+  request.sendFile(`${publicPath}/Gallery/gallery.js`)
 });
 app.get('/Recaptcha.js',(response,request) => {
   request.sendFile(`${publicPath}/Recaptcha.js`)
 });
 
 app.get('/loginForm.js',(response,request) => {
-  request.sendFile(`${publicPath}/loginForm.js`)
+  request.sendFile(`${publicPath}/Login/loginForm.js`)
 });
 
 app.get('/styleEffects.js',(response,request) => {
@@ -79,7 +79,7 @@ app.get('/styleEffects.js',(response,request) => {
 });
 
 app.get('/casey-horner-1sim8ojvCbE-unsplash.jpg',(response,request) => {
-  request.sendFile(`${publicPath}/casey-horner-1sim8ojvCbE-unsplash.jpg`)
+  request.sendFile(`${publicPath}/Gallery/casey-horner-1sim8ojvCbE-unsplash.jpg`)
 });
 
 app.get('/myIcon.ico',(response,request) => {
