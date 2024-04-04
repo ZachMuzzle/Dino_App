@@ -1,7 +1,5 @@
-/* Error when importing this file.
-?? Process still works though. Will need to look into this
-*/
-import{closeButtons} from './gallery.js'
+//Import gallery.js is pulled from index.js. Where we routed it.
+import{closeButtons} from '/gallery.js'
 /* DOM Methods */
 export const inputElementEmail = document.getElementById('inputEmail')
 export const inputElementPassword = document.getElementById('inputPassword')

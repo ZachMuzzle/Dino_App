@@ -1,4 +1,4 @@
-import{closeImage,loginButtonPress,loginButton,submitButton,loginModel,inputElementEmail,inputElementPassword,loginForm} from './loginForm.js'
+import{closeImage,loginButtonPress,loginButton,submitButton,loginModel,inputElementEmail,inputElementPassword,loginForm} from '/loginForm.js'
 import {addZoomEffect,removeZoomEffect,addShakeEffect,removeShakeEffect} from './styleEffects.js'
 // const recaptchaKey = await getRecaptchPublicKey();
 // const recaptchaKeyInsert = document.querySelectorAll('.g-recaptcha');
