@@ -74,6 +74,10 @@ app.get('/loginForm.js',(response,request) => {
   request.sendFile(`${publicPath}/Login/loginForm.js`)
 });
 
+app.get('/signUpForm.js',(response,request) => {
+  request.sendFile(`${publicPath}/Login/signUpForm.js`)
+});
+
 app.get('/styleEffects.js',(response,request) => {
   request.sendFile(`${publicPath}/styleEffects.js`)
 });

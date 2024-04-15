@@ -16,6 +16,8 @@
     <script defer src="loginForm.js" type="module"></script>
     <script defer src="Recaptcha.js" type="module"></script>
     <script defer src="styleEffects.js" type="module"></script>
+    <script defer src="signUpForm.js" type="module"></script>
+
 
 </head>
 <body>
@@ -28,6 +30,7 @@
 
     <div id="loginModel" class="model">
         <span class="close">&times;</span>
+        <!-- Login Screen -->
         <div class="center">
           <div id="popupMessage"></div>
             <h1>Dino Generator Login</h1>
@@ -47,6 +50,36 @@
                 <div id="gID" class="g-recaptcha"></div>
               <div class="inputbox">
                 <button id="submitBtn" type="submit" class="submitBtn">Submit</button>
+              </div>
+              <div id="signUpButton" class="signUpDiv">
+                <p>Don't have an account?</p>
+                <span>Sign up</span>
+              </div>          
+            </form>
+        </div>
+        <!-- Sign up page -->
+        <div class="center">
+          <!-- <div id="popupMessageSignup"></div> -->
+          <div>
+              <h1>Dino Generator Signup</h1>
+              <p>Please fill out the email and password fields 
+                for creating an account</p>
+          </div>
+            <form id="signUpForm">
+              <div class="inputbox">
+                <input id="inputEmailSignUp" type="text" required="required">
+                <span>Email</span>
+              </div>
+              <div class="inputbox">
+                <input id="inputPasswordSignUp" type="password" required="required">
+                <span>Password</span>
+              </div>
+              <div class="inputbox">
+                <p>Show Password</p>
+                <input id="passwordCheckSignUp" type="checkbox" onclick="showSignupPassword()"> 
+                </div>
+              <div class="inputbox">
+                <button id="submitBtnSignUp" type="submit" class="submitBtn">Submit</button>
               </div>
             </form>
         </div>
@@ -68,12 +101,28 @@
 <script>
     function showPassword() {
     let passwordShow = document.getElementById("inputPassword");
+
     if(passwordShow.type === "password") {
         passwordShow.type = "text";
-    } else {
-        passwordShow.type = "password"
+    } 
+    else {
+        passwordShow.type = "password";
     }
 }
+</script>
+
+<script>
+  function showSignupPassword() {
+    let passwordShowSignUp = document.getElementById("inputPasswordSignUp");
+
+    if(passwordShowSignUp.type === "password") {
+        passwordShowSignUp.type = "text";  
+    }  
+    else {
+      passwordShowSignUp.type = "password";
+    } 
+  }
+
 </script>
 
 <script type="text/javascript">
