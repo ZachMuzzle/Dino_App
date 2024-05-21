@@ -29,7 +29,7 @@ signUpButton.addEventListener('click', function signUpClick(e) {
     },200)
 });
 
-signUpForm.addEventListener('submit', function submitSignUpForm(e) {
+signUpForm.addEventListener('submit', async function submitSignUpForm(e) {
     try {
         e.preventDefault();
         formCenter[1].style.display = 'none';
@@ -52,8 +52,19 @@ signUpForm.addEventListener('submit', function submitSignUpForm(e) {
         /* 
         !! When we add the database creation for the username and password. Will need to check if already in the database.
         */
+       await fetch('/createNewUser', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({user: inputEmailSignUp.value, pass: inputPasswordSignUp.value})
+       })
+       .then(response => response.json())
+       .catch(error => {
+        console.log('Firebase account creation error: ', error)
+       });
             setTimeout(function() {
-                alert("An account has been created!")
+                alert("Please use the link in the email sent to " + inputEmailSignUp.value + " to verify your account")
                 formCenter[0].style.display = "block";
             },1000);
         } 

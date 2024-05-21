@@ -107,7 +107,7 @@ async function insert(dinoName, dinoImageUrl) {
                 dino_image_url: dinoImageUrl
             })
         })
-        .then(response => response.json)
+        .then(response => response.json())
         resolve()
     })
 }

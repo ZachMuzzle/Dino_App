@@ -1,6 +1,4 @@
 // var mysql = require('mysql');
-import { reject } from 'async';
-import { response } from 'express';
 import dotenv from 'dotenv';
 import mysql from 'mysql'
 
