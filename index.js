@@ -12,6 +12,7 @@ import DbLoginService from './database/loginDatabase.js';
 import cors from 'cors';
 import path from 'path';
 import {fileURLToPath} from 'url';
+import routes from './routes/router.js'
 
 if(process.env.NODE_ENV != 'production') {
   dotenv.config();
@@ -22,14 +23,20 @@ const getDirName = function (moduleUrl) {
   return path.dirname(filename)
 }
 const { request, response } = express;
-const app = express();
+export const app = express();
 const publicPath=path.join(getDirName(import.meta.url), 'public')
 const port = 3000;
+const api_key = process.env.API_KEY; // Used for API KEY instead of actual key in options
 /* App uses */
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
-// app.use(express.static('public')); 
+app.use(express.static('public')); 
+app.use('/createNewUser',routes);
+app.listen(port, function() {
+  console.log(`Example app listening at http://localhost:${port}`);
+});
+
 app.get('',(response,request) => {
   request.sendFile(`${publicPath}/index.html`)
 });
@@ -49,6 +56,7 @@ app.get('/styles.css',(response,request) => {
 app.get('/scripts.js',(response,request) => {
   request.sendFile(`${publicPath}/scripts.js`)
 });
+
 
 app.get('/galleryStyles.css',(response,request) => {
   request.sendFile(`${publicPath}/Gallery/galleryStyles.css`)
@@ -90,10 +98,6 @@ app.get('/myIcon.ico',(response,request) => {
   request.sendFile(`${publicPath}/myIcon.ico`)
 });
 
-app.listen(port, function() {
-    console.log(`Example app listening at http://localhost:${port}`);
-});
-const api_key = process.env.API_KEY; // Used for API KEY instead of actual key in options
 app.get('/dinoname', async(request,response) => {
     // RUN CODE HERE
     
@@ -213,3 +217,6 @@ app.post('/login', (request, response) => {
     }
   })
 });
+
+
+
