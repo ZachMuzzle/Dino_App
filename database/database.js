@@ -87,7 +87,7 @@ export default class DbService {
             const response = await new Promise((resolve, reject) => {
             const query = "DELETE FROM dino_table WHERE id = ?";
             connection.query(query, [id], (err, result) => {
-                if(err) reject(new Error(err.message));
+                if(err) reject(new Error("Delete SQL ERROR " + err.message));
                 resolve(result.affectedRows); //resolve sends back value after promise. Result is just an object
             })
         });
@@ -95,7 +95,7 @@ export default class DbService {
         return response === 1 ? true : false;
 
         } catch(error) {
-            console.log(error)
+            console.log("DATABASE ERROR: " + error)
         }
     }
 
