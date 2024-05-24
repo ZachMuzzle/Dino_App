@@ -12,8 +12,15 @@ import DbLoginService from './database/loginDatabase.js';
 import cors from 'cors';
 import path from 'path';
 import {fileURLToPath} from 'url';
-import routes from './routes/router.js'
-
+import firebaseCreateUser from './routes/firebase.js';
+import getDinoRoutes from './routes/getDinos.js';
+import dinoNameRoutes from './routes/getDinoName.js';
+import dinoImageRoutes from './routes/getDinoImage.js';
+import insertDinoDataRoutes from './routes/insertDinoData.js';
+import deleteAllDinoDataRoutes from './routes/deleteAllData.js';
+import deleteDinoIdRoutes from './routes/deleteDinoId.js';
+import updateDinoRoutes from './routes/updateDino.js';
+import loginDinoRoutes from './routes/login.js';
 if(process.env.NODE_ENV != 'production') {
   dotenv.config();
   }
@@ -32,7 +39,16 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(express.static('public')); 
-app.use('/createNewUser',routes);
+app.use('/createNewUser',firebaseCreateUser);
+app.use('/getData',getDinoRoutes);
+app.use('/dinoname',dinoNameRoutes);
+app.use('/dinoimage',dinoImageRoutes);
+app.use('/insert',insertDinoDataRoutes);
+app.use('/truncate',deleteAllDinoDataRoutes);
+app.use('/delete',deleteDinoIdRoutes);
+app.use('/update',updateDinoRoutes);
+app.use('/login',loginDinoRoutes);
+
 app.listen(port, function() {
   console.log(`Example app listening at http://localhost:${port}`);
 });
@@ -98,91 +114,91 @@ app.get('/myIcon.ico',(response,request) => {
   request.sendFile(`${publicPath}/myIcon.ico`)
 });
 
-app.get('/dinoname', async(request,response) => {
-    // RUN CODE HERE
+// app.get('/dinoname', async(request,response) => {
+//     // RUN CODE HERE
     
-    const fetchAPI = await fetch('https://dinoipsum.com/api/?format=json&words=2&paragraphs=1');
+//     const fetchAPI = await fetch('https://dinoipsum.com/api/?format=json&words=2&paragraphs=1');
 
-    const dinoNameResponse = await fetchAPI.json();
-    // console.log(dinoNameResponse); // writes to console
-    response.json(dinoNameResponse); // responded to any client requests
+//     const dinoNameResponse = await fetchAPI.json();
+//     // console.log(dinoNameResponse); // writes to console
+//     response.json(dinoNameResponse); // responded to any client requests
 
-});
-const options = {
-    method: 'GET',
-    headers: {
-      'X-RapidAPI-Key': api_key,
-      'X-RapidAPI-Host': 'duckduckgo-image-search.p.rapidapi.com'
-    }
-  };
-const url = 'https://duckduckgo-image-search.p.rapidapi.com/search/image?q=dinosaur';
+// });
+// const options = {
+//     method: 'GET',
+//     headers: {
+//       'X-RapidAPI-Key': api_key,
+//       'X-RapidAPI-Host': 'duckduckgo-image-search.p.rapidapi.com'
+//     }
+//   };
+// const url = 'https://duckduckgo-image-search.p.rapidapi.com/search/image?q=dinosaur';
 
-try {
-app.get('/dinoimage', async(request,response) => {
-    const fetchAPI = await fetch(url, options);
-    const dinoImageResponse = await fetchAPI.json();
-    // console.log(dinoImageResponse);
-    response.json(dinoImageResponse);
-});
-} catch(error){
-  console.log(error)
-}
+// try {
+// app.get('/dinoimage', async(request,response) => {
+//     const fetchAPI = await fetch(url, options);
+//     const dinoImageResponse = await fetchAPI.json();
+//     // console.log(dinoImageResponse);
+//     response.json(dinoImageResponse);
+// });
+// } catch(error){
+//   console.log(error)
+// }
 
 /* Database Functionality */
 
-app.post('/insert', (request, response) => {
-  const {dino_name,dino_image_url} = request.body;
-  console.log(request.body)
-  const db = DbService.getDbServiceInstance();
+// app.post('/insert', (request, response) => {
+//   const {dino_name,dino_image_url} = request.body;
+//   console.log(request.body)
+//   const db = DbService.getDbServiceInstance();
 
-  const result = db.insertDino(dino_name, dino_image_url);
-  /* Need to add dino url */
-  result
-  .then(data => response.json({data: data}))
-  .catch(err => console.log(err));
-}); 
+//   const result = db.insertDino(dino_name, dino_image_url);
+//   /* Need to add dino url */
+//   result
+//   .then(data => response.json({data: data}))
+//   .catch(err => console.log(err));
+// }); 
 
-app.get('/getData', (request, response) => {
-  const db = DbService.getDbServiceInstance();
+// app.get('/getData', (request, response) => {
+//   const db = DbService.getDbServiceInstance();
 
-  const result = db.getAllData();
+//   const result = db.getAllData();
 
-  result
-  .then(data => response.json({data: data}))
-  .catch(err => console.log(err));
-});
+//   result
+//   .then(data => response.json({data: data}))
+//   .catch(err => console.log(err));
+// });
 
-app.get('/truncate', (request, response) => {
-  const db = DbService.getDbServiceInstance();
-  const result = db.truncateAllData();
+// app.get('/truncate', (request, response) => {
+//   const db = DbService.getDbServiceInstance();
+//   const result = db.truncateAllData();
 
-  result
-  .then(data => response.json({data:data}))
-  .catch(err => console.log(err))
-});
+//   result
+//   .then(data => response.json({data:data}))
+//   .catch(err => console.log(err))
+// });
 
-app.delete('/delete/:id', (request, response) => {
-  const {id} = request.params;
-  const db = DbService.getDbServiceInstance();
+// app.delete('/delete/:id', (request, response) => {
+//   const {id} = request.params;
+//   const db = DbService.getDbServiceInstance();
 
-  const result = db.deleteById(id);
+//   const result = db.deleteById(id);
 
-  result
-  .then(data => response.json({success:data}))
-  .catch(err => console.log(err))
-});
+//   result
+//   .then(data => response.json({success:data}))
+//   .catch(err => console.log(err))
+// });
 
-app.patch('/update', (request, response) => {
-  const {id, dino_name, dino_image_url, date_added} = request.body;
-  console.log(request.body);
-  const db = DbService.getDbServiceInstance();
+// app.patch('/update', (request, response) => {
+//   const {id, dino_name, dino_image_url, date_added} = request.body;
+//   console.log(request.body);
+//   const db = DbService.getDbServiceInstance();
 
-  const result = db.updateById(id, dino_name, dino_image_url, date_added);
+//   const result = db.updateById(id, dino_name, dino_image_url, date_added);
 
-  result
-  .then(data => response.json({success: data}))
-  .catch(err => console.log(err));
-});
+//   result
+//   .then(data => response.json({success: data}))
+//   .catch(err => console.log(err));
+// });
 
 app.get('/getLoginData', (request, response) => {
   const db = DbLoginService.getDbLoginServiceInstance();
@@ -194,29 +210,29 @@ app.get('/getLoginData', (request, response) => {
 })
 /* Login for google Recaptcha */
 
-app.post('/login', (request, response) => {
-  const params = new URLSearchParams({
-    secret: process.env.GOOGLE_RECAP_SECERT,
-    response:request.body['g-recaptcha-response'],
-    remoteip: request.ip,
-  });
+// app.post('/login', (request, response) => {
+//   const params = new URLSearchParams({
+//     secret: process.env.GOOGLE_RECAP_SECERT,
+//     response:request.body['g-recaptcha-response'],
+//     remoteip: request.ip,
+//   });
 
-  console.log(params)
-  // console.log(params['secret'])
+//   console.log(params)
+//   // console.log(params['secret'])
   
-  fetch('https://www.google.com/recaptcha/api/siteverify', {
-    method:"POST",
-    body: params,
-  })
-  .then(response => response.json())
-  .then(data => {
-    if(data.success) {
-      response.json({captchaSuccess: true});
-    } else {
-      response.json({ captchaSuccess: false});
-    }
-  })
-});
+//   fetch('https://www.google.com/recaptcha/api/siteverify', {
+//     method:"POST",
+//     body: params,
+//   })
+//   .then(response => response.json())
+//   .then(data => {
+//     if(data.success) {
+//       response.json({captchaSuccess: true});
+//     } else {
+//       response.json({ captchaSuccess: false});
+//     }
+//   })
+// });
 
 
 
