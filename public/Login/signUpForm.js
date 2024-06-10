@@ -1,5 +1,5 @@
 import {inputElementEmail,inputElementPassword,loginModel,submitButton,loginButton,loginForm,
-    closeImage,inputElementPasswordCheck,formCenter,signUpButton,googleId,signUpForm} from '/loginForm.js'
+    closeImage,inputElementPasswordCheck,formCenter,signUpButton,googleId,signUpForm,resetPasswordButton} from '/loginForm.js'
 
 const inputEmailSignUp = document.getElementById("inputEmailSignUp");
 const inputPasswordSignUp = document.getElementById("inputPasswordSignUp")
@@ -13,6 +13,41 @@ const length = {
     1: "Too long",
     2: "Too short"
 }
+
+resetPasswordButton.addEventListener('click', async function resetClick(e) {
+    const emailResetValue = prompt("Enter in your email that you want your password reset for:");
+    console.log(emailResetValue)
+    if(emailResetValue.length > 0) {
+        let emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+        if(emailRegex.test(emailResetValue) == true) {
+
+            await fetch('/resetPassword', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({email:emailResetValue})
+            })
+            .then(async response => {
+                if(!response.ok) {
+                    await response.json().then(error => {
+                        throw new Error(error.message);
+                    });
+                }
+                alert("Password reset link was sent to " + emailResetValue + " if there is email in our system")
+                return response.json()
+            })
+            .catch(error => {
+                alert(error);
+            })
+        }
+        else {
+            alert("Not a valid email. Please try again")
+        }
+     } else {
+            alert("Must fill in email value");
+        }
+});
 
 signUpButton.addEventListener('click', function signUpClick(e) {
     formCenter[0].style.display = 'none'
