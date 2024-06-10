@@ -1,12 +1,14 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
-import dotenv from 'dotenv';
-import {app as appExpress} from '../index.js'
-import { request } from "http";
-import { response } from "express";
-import { reject } from "async";
+// import { getAnalytics } from "firebase/analytics";
+import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail } from "firebase/auth";
+// import dotenv from 'dotenv';
+// import {app as appExpress} from '../index.js'
+// import { request } from "http";
+// import { response } from "express";
+// import { reject } from "async";
+// import { error } from "console";
+// import { resolve } from "path";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -33,6 +35,7 @@ export default class firebaseService {
   }
   async createUser(email, password) {
     const promise = new Promise((resolve,reject) => {
+      // console.log("AUTH: ", auth)
       createUserWithEmailAndPassword(auth,email,password)
       .then(async (userCredential) => {
         const user = userCredential.user;
@@ -40,43 +43,25 @@ export default class firebaseService {
         // console.log("USER: ", user)
         resolve(user); 
       }).catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
+        console.log(error)
         reject(new Error(error.message));
       })
     });
     return promise;
   }
 
-  async verifyUser() {
-    const promise = new Promise((resolve, reject) => {
-      sendEmailVerification(auth.currentUser)
+  async passwordReset(email) {
+    const promise = new Promise(async (resolve,reject) => {
+      await sendPasswordResetEmail(auth,email)
       .then(() => {
-        resolve("Email verification was sent!")
-        // Email verification sent!
-        // ...
+        // console.log("AUTH: ", auth)
+        console.log("Password reset link was sent if email is valid")
+        resolve(email);
       }).catch((error) => {
+        console.log(error)
         reject(new Error(error.message));
       })
     });
-    return promise;
+    return promise
   }
 }
-// appExpress.post('/createNewUser', (request, response) => {
-//   const {user,pass} = req.body;
-//   const result = createUserWithEmailAndPassword(auth,user,pass);
-//   response.send(result);
-// });
-
-// createUserWithEmailAndPassword(auth, email, password)
-//   .then((userCredential) => {
-//     // Signed up 
-//     const user = userCredential.user;
-//     return user;
-//     // ...
-//   })
-//   .catch((error) => {
-//     const errorCode = error.code;
-//     const errorMessage = error.message;
-//     // ..
-//   });

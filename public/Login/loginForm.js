@@ -11,6 +11,7 @@ export const closeImage = document.querySelectorAll('.close');
 export const inputElementPasswordCheck = document.getElementById('passwordCheck')
 export const formCenter = document.querySelectorAll('.center');
 export const signUpButton = document.getElementById('signUpButton').querySelector('span');
+export const resetPasswordButton = document.getElementById('passwordResetButton').querySelector('span');
 export const googleId = document.getElementById('gID');
 export const signUpForm = document.getElementById('signUpForm');
 export const passwordCheckSignUp = document.getElementById("passwordCheckSignUp")

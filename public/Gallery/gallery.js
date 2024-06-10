@@ -2,7 +2,7 @@ try {
     window.onload = async function displayImage() {
         let allData = await getData();
         /* Test for login data */
-        let allLoginData = await getLoginData();
+        // let allLoginData = await getLoginData();
         let modal = document.getElementById("updateModal");
         
         let imgSrcUpdate = document.getElementById("img-src-update");

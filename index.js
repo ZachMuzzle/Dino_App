@@ -21,6 +21,7 @@ import deleteAllDinoDataRoutes from './routes/deleteAllData.js';
 import deleteDinoIdRoutes from './routes/deleteDinoId.js';
 import updateDinoRoutes from './routes/updateDino.js';
 import loginDinoRoutes from './routes/login.js';
+import passwordReset from './routes/firebaseResetPass.js';
 if(process.env.NODE_ENV != 'production') {
   dotenv.config();
   }
@@ -48,6 +49,7 @@ app.use('/truncate',deleteAllDinoDataRoutes);
 app.use('/delete',deleteDinoIdRoutes);
 app.use('/update',updateDinoRoutes);
 app.use('/login',loginDinoRoutes);
+app.use('/resetPassword', passwordReset)
 
 app.listen(port, function() {
   console.log(`Example app listening at http://localhost:${port}`);
@@ -200,6 +202,8 @@ app.get('/myIcon.ico',(response,request) => {
 //   .catch(err => console.log(err));
 // });
 
+/*
+!! 
 app.get('/getLoginData', (request, response) => {
   const db = DbLoginService.getDbLoginServiceInstance();
   const results = db.getAllData();
@@ -207,7 +211,7 @@ app.get('/getLoginData', (request, response) => {
   results
   .then(data => response.json({data: data}))
   .catch(err => console.log(err));
-})
+}) */
 /* Login for google Recaptcha */
 
 // app.post('/login', (request, response) => {
