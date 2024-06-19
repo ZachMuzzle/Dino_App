@@ -7,7 +7,7 @@ router.post('/', (request, response) => {
       remoteip: request.ip,
     });
   
-    console.log(params)
+    // console.log(params)
     // console.log(params['secret'])
     
     fetch('https://www.google.com/recaptcha/api/siteverify', {

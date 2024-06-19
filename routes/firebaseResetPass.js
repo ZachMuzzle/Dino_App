@@ -8,12 +8,12 @@ router.post('/', (request, response) => {
     console.log("email: " + email);
     const firebaseObj = firebaseService.getFirebaseServiceInstance();
     const result = firebaseObj.passwordReset(email);
-    result.then(() => {
+    result.then((result) => {
         let jsonInit = {};
         let passReset = [];
         jsonInit.passReset = passReset;
         let messageJson = {
-            "Email": email,
+            "Email": result.email,
             "Password Reset": true
         }
         jsonInit.passReset.push(messageJson);

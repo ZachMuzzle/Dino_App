@@ -10,22 +10,44 @@ import {addZoomEffect,removeZoomEffect,addShakeEffect,removeShakeEffect} from '.
 
 loginForm.addEventListener('submit', async function submitForm(e) {
     e.preventDefault();
+    const emailValue = inputElementEmail.value;
+    const passValue = inputElementPassword.value;
+    
     // if((inputElementEmail.value.length == 0) || 
     // (inputElementPassword.value.length == 0)) {
     //     alert("Please fill out both Email and Password fields")
     // } else {
-    await submitClick()
-    /* Below only continues if no errors occur in submitClick() */
-    document.getElementById('popupMessage').style.display = 'none';
-    loginModel.style.display = "none"
-    /*
-    !! Web Browser freezes when using alert  
-    * Had to close and reopen web apps  
-    */
-    setTimeout(function() {
-        alert("You have been logged in")
-    },1000);          
-// }
+    const loginResults = await submitClick()
+    console.log("Results after logging in: ", loginResults);
+    if(loginResults === true) {
+        await fetch('/loginCheck', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: emailValue,
+                password: passValue
+            })
+        })
+            .then(async response => {
+                if(!response.ok) {
+                    await response.json().then(error => {
+                        throw new Error(error.message);
+                    });
+                }
+                /* successful code */
+                document.getElementById('popupMessage').style.display = 'none';
+                loginModel.style.display = "none"
+                
+                setTimeout(function() {
+                    alert("You have been logged in")
+                },1000);   
+            })
+            .catch(error => {
+                alert(error);
+            });
+    }
 });
 
 loginButton.addEventListener('click', function loginEvent(){
@@ -88,6 +110,9 @@ function popupMessageAlert() {
                 resolve(data.captchaSuccess)
                 console.log('Validation successful!')
             } else {
+                /*
+                !! Make resolve a reject 
+                 */
                 resolve(data.captchaSuccess)
                 console.log('Validation failed!')
             }
