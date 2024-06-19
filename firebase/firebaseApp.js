@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 // import { getAnalytics } from "firebase/analytics";
-import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, signInWithEmailAndPassword, onAuthStateChanged} from "firebase/auth";
 // import dotenv from 'dotenv';
 // import {app as appExpress} from '../index.js'
 // import { request } from "http";
@@ -25,10 +25,26 @@ const firebaseConfig = {
 };
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const auth = getAuth(app)
+const auth = getAuth(app);
+const instance = null;
 
-// express call
-let instance = null;
+/* 
+!! Used as a listener whenever auth is called
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    // User is signed in, see docs for a list of available properties
+    // https://firebase.google.com/docs/reference/js/auth.user
+    const userEmail = user.email;
+    console.log("User was signed in: ", userEmail);
+    console.log("Is user email verified?: ", user.emailVerified);
+    // ...
+  } else {
+    console.log("User was signed out");
+    // User is signed out
+    // ...
+  }
+}); */
+
 export default class firebaseService {
   static getFirebaseServiceInstance() {
     return instance ? instance : new firebaseService();
@@ -38,14 +54,14 @@ export default class firebaseService {
       // console.log("AUTH: ", auth)
       createUserWithEmailAndPassword(auth,email,password)
       .then(async (userCredential) => {
-        const user = userCredential.user;
+        const userCred = userCredential.user;
         await sendEmailVerification(auth.currentUser)
         // console.log("USER: ", user)
-        resolve(user); 
+        resolve(userCred); 
       }).catch((error) => {
         console.log(error)
         reject(new Error(error.message));
-      })
+      });
     });
     return promise;
   }
@@ -60,8 +76,31 @@ export default class firebaseService {
       }).catch((error) => {
         console.log(error)
         reject(new Error(error.message));
-      })
+      });
     });
-    return promise
+    return promise;
+  }
+
+  async signUserIn(email, password)  {
+    const promise = new Promise(async (resolve, reject) => {
+      await signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const userCred = userCredential.user;
+        if (auth.currentUser) {
+          // User is signed in, see docs for a list of available properties
+          // https://firebase.google.com/docs/reference/js/auth.user
+          const user = auth.currentUser;
+          console.log("User was signed in: ", user.email);
+          console.log("Is user email verified?: ", user.emailVerified);
+          // ...
+          resolve(userCred);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        reject(new Error(error.message));
+      });
+    });
+    return promise;
   }
 }
