@@ -7,15 +7,16 @@ router.post('/', (request, response) => {
     const firebaseObj = firebaseService.getFirebaseServiceInstance();
     const result = firebaseObj.signUserIn(email,password);
     result.then((result) => {
-        let jsonInit = {};
-        let loginAttempt = [];
-        jsonInit.loginAttempt = loginAttempt;
+        // let jsonInit = {};
+        // let passReset = [];
+        // jsonInit.passReset = passReset;
         let messageJson = {
             "Email": result.email,
-            "Password match": true
+            "Password Match": true
         }
-        jsonInit.loginAttempt.push(messageJson);
-        response.send(jsonInit);
+        // jsonInit.passReset.push(messageJson);
+        response.json(messageJson);
+        // response.send(messageJson);
     })
     .catch(error => {
         if(error.message.includes("auth/invalid-email")) {
