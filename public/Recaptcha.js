@@ -1,5 +1,6 @@
 import{closeImage,loginButtonPress,loginButton,submitButton,loginModel,inputElementEmail,inputElementPassword,loginForm} from '/loginForm.js'
 import {addZoomEffect,removeZoomEffect,addShakeEffect,removeShakeEffect} from './styleEffects.js'
+import { removeLoginButton } from './Login/loginFeature.js';
 // const recaptchaKey = await getRecaptchPublicKey();
 // const recaptchaKeyInsert = document.querySelectorAll('.g-recaptcha');
 /* Pull key from api. Set the key value to the attribute in html */
@@ -36,13 +37,20 @@ loginForm.addEventListener('submit', async function submitForm(e) {
                         throw new Error(error.message);
                     });
                 }
+                return response.json();
+            })
+            .then(async data => {
                 /* successful code */
+                let userDisplayId = document.getElementById('userDisplay');
                 document.getElementById('popupMessage').style.display = 'none';
                 loginModel.style.display = "none"
-                
+                userDisplayId.innerHTML = data.Email;
+                userDisplayId.style.display = "block";
+                removeLoginButton();
                 setTimeout(function() {
-                    alert("You have been logged in")
-                },1000);   
+                    alert(`User ${data.Email} was signed in`);
+                },500);
+
             })
             .catch(error => {
                 alert(error);
