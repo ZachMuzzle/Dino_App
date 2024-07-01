@@ -93,7 +93,7 @@ export default class firebaseService {
           console.log("User was signed in: ", user.email);
           console.log("Is user email verified?: ", user.emailVerified);
           // ...
-          resolve(userCred);
+          resolve(user);
         }
       })
       .catch((error) => {

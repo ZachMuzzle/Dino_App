@@ -1,8 +1,6 @@
 /* Client side javascript */
 let generateButton = document.getElementById('button-load');  // Check before doing operation
-
 checkForButtonPress(generateButton);
-
 function checkForButtonPress(generateButton) {
     if(generateButton) {
 
