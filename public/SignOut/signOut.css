@@ -1,0 +1,17 @@
+/* Sign out styles */
+.signOutButton {
+    display: none;
+    color: white;
+    background-color: #333;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    border: none;
+    font-size: inherit;
+    opacity: 1;
+    float:right;
+}
+.signOutButton:hover {
+    opacity: .8;
+    cursor: pointer;
+}

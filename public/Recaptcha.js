@@ -1,6 +1,7 @@
 import{closeImage,loginButtonPress,loginButton,submitButton,loginModel,inputElementEmail,inputElementPassword,loginForm} from '/loginForm.js'
 import {addZoomEffect,removeZoomEffect,addShakeEffect,removeShakeEffect} from './styleEffects.js'
 import { removeLoginButton } from './Login/loginFeature.js';
+import { displaySignOutButton } from './SignOut/signOut.js';
 // const recaptchaKey = await getRecaptchPublicKey();
 // const recaptchaKeyInsert = document.querySelectorAll('.g-recaptcha');
 /* Pull key from api. Set the key value to the attribute in html */
@@ -47,6 +48,7 @@ loginForm.addEventListener('submit', async function submitForm(e) {
                 userDisplayId.innerHTML = data.Email;
                 userDisplayId.style.display = "block";
                 removeLoginButton();
+                displaySignOutButton();
                 setTimeout(function() {
                     alert(`User ${data.Email} was signed in`);
                 },500);

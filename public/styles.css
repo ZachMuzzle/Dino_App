@@ -173,6 +173,7 @@ ul > li a:hover {
 :root {
     --font-size-button: 3rem
 }
+/* Acts as a dynamic value change for the variable being set */
 .button-load {
     font-size: var(--font-size-button);
 }
