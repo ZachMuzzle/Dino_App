@@ -121,6 +121,14 @@ app.get('/myIcon.ico',(response,request) => {
 app.get('/loginFeature.js',(response,request) => {
   request.sendFile(`${publicPath}/Login/loginFeature.js`)
 });
+
+app.get('/signOut.js',(response,request) => {
+  request.sendFile(`${publicPath}/SignOut/signOut.js`)
+});
+
+app.get('/signOut.css',(response,request) => {
+  request.sendFile(`${publicPath}/SignOut/signOut.css`)
+});
 // app.get('/dinoname', async(request,response) => {
 //     // RUN CODE HERE
     

@@ -28,8 +28,8 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const instance = null;
 
-/* 
-!! Used as a listener whenever auth is called
+
+// !! Used as a listener whenever auth is called
 onAuthStateChanged(auth, (user) => {
   if (user) {
     // User is signed in, see docs for a list of available properties
@@ -43,7 +43,7 @@ onAuthStateChanged(auth, (user) => {
     // User is signed out
     // ...
   }
-}); */
+});
 
 export default class firebaseService {
   static getFirebaseServiceInstance() {
