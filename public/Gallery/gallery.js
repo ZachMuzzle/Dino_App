@@ -1,5 +1,16 @@
+// window.addEventListener("load", async() => {
+//         const response = await fetch('/checkLoginStatus');
+//         const data = await response.json();
+//         console.log("Check Status Response: " + data.isUserSignedIn);
+//     });
+
 try {
     window.onload = async function displayImage() {
+
+        const response = await fetch('/checkLoginStatus');
+        const data = await response.json();
+        console.log("Check Status Response: " + data.isUserSignedIn);
+
         let allData = await getData();
         /* Test for login data */
         // let allLoginData = await getLoginData();
@@ -135,8 +146,11 @@ try {
 
 try {
     let button = document.querySelector('#delete_all');
-    button.onclick = function() {
-        truncateAllData();
+    if(button) {
+
+        button.onclick = function() {
+            truncateAllData();
+        }
     }
 } catch(error) {
     console.log(error);

@@ -1,6 +1,27 @@
 /* Client side javascript */
+// window.addEventListener("load", async() => {
+//     const response = await fetch('/checkLoginStatus');
+//     const data = await response.json();
+//     console.log("Check Status Response: " + data.isUserSignedIn);
+// });
+try {
+    window.onload = async function checkUserAuth() {
+        const response = await fetch('/checkLoginStatus');
+        const data = await response.json();
+        console.log("Check Status Response: " + data.isUserSignedIn);
+    }
+} catch(error) {
+    console.log(error);
+}
 let generateButton = document.getElementById('button-load');  // Check before doing operation
 checkForButtonPress(generateButton);
+
+// generateButton.addEventListener('mouseover', async() => {
+//     const loginStatus = await fetch('/checkLoginStatus');
+//     console.log("Check Status Response: " + loginStatus);
+// })
+
+
 function checkForButtonPress(generateButton) {
     if(generateButton) {
 
