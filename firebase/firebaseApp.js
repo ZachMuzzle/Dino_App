@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 // import { getAnalytics } from "firebase/analytics";
-import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, signInWithEmailAndPassword, onAuthStateChanged} from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, signInWithEmailAndPassword, onAuthStateChanged, setPersistence, browserLocalPersistence, browserSessionPersistence} from "firebase/auth";
 // import dotenv from 'dotenv';
 // import {app as appExpress} from '../index.js'
 // import { request } from "http";
@@ -28,22 +28,32 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const instance = null;
 
-
+// setPersistence(auth, browserSessionPersistence)
+// .then(() => { 
+//   console.log("Sign in set persistence changed!")
+// return signInWithEmailAndPassword(auth, email, password);
+// })
+// .catch((error) => {
+//   // Handle Errors here.
+//   const errorCode = error.code;
+//   const errorMessage = error.message;
+//   console.log(error);
+// });
 // !! Used as a listener whenever auth is called
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    // User is signed in, see docs for a list of available properties
-    // https://firebase.google.com/docs/reference/js/auth.user
-    const userEmail = user.email;
-    console.log("User was signed in: ", userEmail);
-    console.log("Is user email verified?: ", user.emailVerified);
-    // ...
-  } else {
-    console.log("User was signed out");
-    // User is signed out
-    // ...
-  }
-});
+// onAuthStateChanged(auth, (user) => {
+//   if (user) {
+//     // User is signed in, see docs for a list of available properties
+//     // https://firebase.google.com/docs/reference/js/auth.user
+//     const userEmail = user.email;
+//     console.log("User was signed in: ", userEmail);
+//     console.log("Is user email verified?: ", user.emailVerified);
+//     // ...
+//   } else {
+//     console.log("User was signed out");
+//     // User is signed out
+//     // ...
+//   }
+// });
 
 export default class firebaseService {
   static getFirebaseServiceInstance() {
@@ -82,10 +92,14 @@ export default class firebaseService {
   }
 
   async signUserIn(email, password)  {
+    /* 
+    setPersistence: Pass in auth and your desired persistence.
+    Session: Good for a session login will be remove if leave browser
+    Local: Keep persistence even when browser window is closed
+    */
     const promise = new Promise(async (resolve, reject) => {
-      await signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const userCred = userCredential.user;
+      await setPersistence(auth, browserSessionPersistence)
+      .then(() => {
         if (auth.currentUser) {
           // User is signed in, see docs for a list of available properties
           // https://firebase.google.com/docs/reference/js/auth.user
@@ -95,6 +109,7 @@ export default class firebaseService {
           // ...
           resolve(user);
         }
+        return signInWithEmailAndPassword(auth, email, password);
       })
       .catch((error) => {
         console.log(error);
@@ -103,4 +118,30 @@ export default class firebaseService {
     });
     return promise;
   }
+
+  async checkLoginStatus() {
+    const promise = new Promise(async (resolve, reject) => {
+      onAuthStateChanged(auth, (user) => {
+          if (user) {
+            // User is signed in, see docs for a list of available properties
+            // https://firebase.google.com/docs/reference/js/auth.user
+            const userEmail = user.email;
+            console.log("User was signed in: ", userEmail);
+            console.log("Is user email verified?: ", user.emailVerified);
+            resolve(true);
+            // return `User ${userEmail} was signed in`;
+            // ...
+          } else {
+            const signedOut = "User is signed out";
+            console.log(signedOut);
+            resolve(false);
+            // User is signed out
+            // ...
+          }
+        });
+      });
+      return promise;
+
+  }
+
 }
