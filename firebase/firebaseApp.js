@@ -128,12 +128,12 @@ export default class firebaseService {
             const userEmail = user.email;
             console.log("User was signed in: ", userEmail);
             console.log("Is user email verified?: ", user.emailVerified);
-            resolve(true);
+            resolve(userEmail);
             // return `User ${userEmail} was signed in`;
             // ...
           } else {
-            const signedOut = "User is signed out";
-            console.log(signedOut);
+            // const signedOut = "User is signed out";
+            // console.log(signedOut);
             resolve(false);
             // User is signed out
             // ...
