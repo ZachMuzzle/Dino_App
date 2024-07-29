@@ -1,15 +1,25 @@
-// window.addEventListener("load", async() => {
-//         const response = await fetch('/checkLoginStatus');
-//         const data = await response.json();
-//         console.log("Check Status Response: " + data.isUserSignedIn);
-//     });
-
-try {
-    window.onload = async function displayImage() {
-
+import { closeButtons } from "../reusedFunctions/closeButtons.js";
+// try {
+//     window.onload = async function displayImage() {
+/* 
+!! Need to clean this file up. Make it more functional
+*/
+document.addEventListener("DOMContentLoaded", async function() {
         const response = await fetch('/checkLoginStatus');
         const data = await response.json();
         console.log("Check Status Response: " + data.isUserSignedIn);
+
+        if(data.isUserSignedIn != false) {
+            let userDisplayId = document.getElementById('userDisplay');
+            userDisplayId.innerHTML = data.isUserSignedIn;
+            userDisplayId.style.display = "block";
+            removeLoginButton();
+            displaySignOutButton();
+        }
+});
+        // const response = await fetch('/checkLoginStatus');
+        // const data = await response.json();
+        // console.log("Check Status Response: " + data.isUserSignedIn);
 
         let allData = await getData();
         /* Test for login data */
@@ -139,10 +149,10 @@ try {
             console.log(err);
             console.log("Length of images: " + images.length);
          }
-    }
-} catch(err) {
-    console.log(err);
-}
+//     }
+// } catch(err) {
+//     console.log(err);
+// }
 
 try {
     let button = document.querySelector('#delete_all');
@@ -399,40 +409,40 @@ async function updateImage(id, dinoImage, dinoAlt) {
         * two if statements. One is for the first modal when viewing an image
         * Second is for when updating an image.
         */
-export function closeButtons(closeImage,modal,model,popupModel) {
+// export function closeButtons(closeImage,modal,model,popupModel) {
 
-    for(let i = 0; i < closeImage.length; i++) {
-        closeImage[i].onclick = function() {
-            if(closeImage[i] == closeImage[0]) {
-                model.style.display = "none";
-                document.getElementById('popupMessage').style.display = 'none';
+//     for(let i = 0; i < closeImage.length; i++) {
+//         closeImage[i].onclick = function() {
+//             if(closeImage[i] == closeImage[0]) {
+//                 model.style.display = "none";
+//                 document.getElementById('popupMessage').style.display = 'none';
                 
-                if(document.getElementById("popupValue")) {
-                    document.getElementById("popupValue").remove();
-                }
+//                 if(document.getElementById("popupValue")) {
+//                     document.getElementById("popupValue").remove();
+//                 }
 
-            }
-            else if (closeImage[i] == closeImage[1]) {
-                modal.style.display = "none";
-                document.querySelector('#img-src-update').removeAttribute('src')
-                document.querySelector('#caption-update').innerHTML = "";
+//             }
+//             else if (closeImage[i] == closeImage[1]) {
+//                 modal.style.display = "none";
+//                 document.querySelector('#img-src-update').removeAttribute('src')
+//                 document.querySelector('#caption-update').innerHTML = "";
 
-               if(document.querySelectorAll('.submitButton')[0]) {
+//                if(document.querySelectorAll('.submitButton')[0]) {
                    
-                   document.querySelectorAll('.submitButton')[0].remove();
-            } 
+//                    document.querySelectorAll('.submitButton')[0].remove();
+//             } 
 
-            }
-            else if (closeImage[i] == closeImage[2]) {
-                popupModel.style.display = "none";
+//             }
+//             else if (closeImage[i] == closeImage[2]) {
+//                 popupModel.style.display = "none";
                 
-                if(document.getElementById("popupValue")) {
-                    document.getElementById("popupValue").remove();
-                }
-            }
-        }
-    }
-}
+//                 if(document.getElementById("popupValue")) {
+//                     document.getElementById("popupValue").remove();
+//                 }
+//             }
+//         }
+//     }
+// }
 /*
 * Checks suggestions from search input
 */

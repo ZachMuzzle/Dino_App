@@ -1,20 +1,25 @@
-/* Client side javascript */
-// window.addEventListener("load", async() => {
-//     const response = await fetch('/checkLoginStatus');
-//     const data = await response.json();
-//     console.log("Check Status Response: " + data.isUserSignedIn);
-// });
+import { removeLoginButton } from "./Login/loginFeature.js";
+import { displaySignOutButton } from "./SignOut/signOut.js";
 try {
     window.onload = async function checkUserAuth() {
         const response = await fetch('/checkLoginStatus');
         const data = await response.json();
         console.log("Check Status Response: " + data.isUserSignedIn);
+
+        if(data.isUserSignedIn != false) {
+            let userDisplayId = document.getElementById('userDisplay');
+            userDisplayId.innerHTML = data.isUserSignedIn;
+            userDisplayId.style.display = "block";
+            removeLoginButton();
+            displaySignOutButton();
+        }
     }
 } catch(error) {
     console.log(error);
 }
 let generateButton = document.getElementById('button-load');  // Check before doing operation
 checkForButtonPress(generateButton);
+
 
 // generateButton.addEventListener('mouseover', async() => {
 //     const loginStatus = await fetch('/checkLoginStatus');
