@@ -1,5 +1,5 @@
 //Import gallery.js is pulled from index.js. Where we routed it.
-import{closeButtons} from '/gallery.js'
+import{closeButtons} from '../reusedFunctions/closeButtons.js'
 /* DOM Methods */
 export const inputElementEmail = document.getElementById('inputEmail')
 export const inputElementPassword = document.getElementById('inputPassword')
@@ -34,6 +34,10 @@ export function loginButtonPress(loginButton) {
 
     }
 }
+/* Listener  for login button  press */
+loginButton.addEventListener('click', function loginEvent(){
+    loginButtonPress(loginButton)
+});
 /* Call function only on hover over */
 closeImage[0].onmouseover = function() {
       closeButtons(closeImage,modal,loginModel,popupModel)

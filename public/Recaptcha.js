@@ -9,7 +9,9 @@ import { displaySignOutButton } from './SignOut/signOut.js';
 
 // recaptchaKey[0].setAttribute("data-sitekey","6LcqGJgpAAAAAN5_hDLAiWO44xIiQwBmHzbPOKDy")
 // const loginBtn = document.getElementById("loginButton");
-
+/*
+!! Look into putting loginForm.addEventListener into it's own file.
+ */
 loginForm.addEventListener('submit', async function submitForm(e) {
     e.preventDefault();
     const emailValue = inputElementEmail.value;
@@ -58,12 +60,6 @@ loginForm.addEventListener('submit', async function submitForm(e) {
                 alert(error);
             });
     }
-});
-
-loginButton.addEventListener('click', function loginEvent(){
-    loginButtonPress(loginButton)
-
-
 });
 
 /* 
