@@ -98,18 +98,26 @@ export default class firebaseService {
     Local: Keep persistence even when browser window is closed
     */
     const promise = new Promise(async (resolve, reject) => {
-      await setPersistence(auth, browserSessionPersistence)
+      setPersistence(auth, browserSessionPersistence)
       .then(() => {
         if (auth.currentUser) {
           // User is signed in, see docs for a list of available properties
           // https://firebase.google.com/docs/reference/js/auth.user
           const user = auth.currentUser;
-          console.log("User was signed in: ", user.email);
+          console.log("Sign in attempt. User was already signed in: ", user.email);
           console.log("Is user email verified?: ", user.emailVerified);
           // ...
           resolve(user);
+        } else {
+
+        return signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          console.log("Sign in attempt. User was signed in: ", user.email);
+          console.log("Is user email verified?: ", user.emailVerified);
+          resolve(user);
+        })
         }
-        return signInWithEmailAndPassword(auth, email, password);
       })
       .catch((error) => {
         console.log(error);
