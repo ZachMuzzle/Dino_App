@@ -23,42 +23,38 @@ loginForm.addEventListener('submit', async function submitForm(e) {
     // } else {
     const loginResults = await submitClick()
     console.log("Results after logging in: ", loginResults);
-    if(loginResults === true) {
-        await fetch('/loginCheck', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                email: emailValue,
-                password: passValue
-            })
-        })
-            .then(async response => {
-                if(!response.ok) {
-                    await response.json().then(error => {
-                        throw new Error(error.message);
-                    });
-                }
-                return response.json();
-            })
-            .then(async data => {
-                /* successful code */
-                let userDisplayId = document.getElementById('userDisplay');
-                document.getElementById('popupMessage').style.display = 'none';
-                loginModel.style.display = "none"
-                userDisplayId.innerHTML = data.Email;
-                userDisplayId.style.display = "block";
-                removeLoginButton();
-                displaySignOutButton();
-                setTimeout(function() {
-                    alert(`User ${data.Email} was signed in`);
-                },500);
-
-            })
-            .catch(error => {
-                alert(error);
+    if(loginResults == true) {
+        try {
+            const response = await fetch('/loginCheck', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: emailValue,
+                    password: passValue
+                })
             });
+            if(!response.ok) {
+                const error = await response.json();
+                throw new Error(error.message);
+            }
+            
+            const data = await response.json();
+            
+            let userDisplayId = document.getElementById('userDisplay');
+            document.getElementById('popupMessage').style.display = 'none';
+            loginModel.style.display = "none"
+            userDisplayId.innerHTML = data.Email;
+            userDisplayId.style.display = "block";
+            removeLoginButton();
+            displaySignOutButton();
+            setTimeout(function() {
+                alert(`User ${data.Email} was signed in`);
+            },500);
+        } catch(error) {
+            alert(error);
+        }
     }
 });
 

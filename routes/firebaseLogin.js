@@ -4,8 +4,10 @@ const router = express.Router();
 
 router.post('/', (request, response) => {
     const {email,password} = request.body;
+    console.log("email and password: ", email, password);
     const firebaseObj = firebaseService.getFirebaseServiceInstance();
     const result = firebaseObj.signUserIn(email,password);
+    console.log("Result: ", result);
     result.then((result) => {
         // let jsonInit = {};
         // let passReset = [];
@@ -14,8 +16,9 @@ router.post('/', (request, response) => {
             "Email": result.email,
             "Password Match": true
         }
+        console.log("JSON: ", messageJson);
         // jsonInit.passReset.push(messageJson);
-        response.json(messageJson);
+        response.status(200).json(messageJson);
         // response.send(messageJson);
     })
     .catch(error => {
