@@ -50,16 +50,13 @@ body {
     z-index: 1;
 }
 
-.nav-bar > li {
-    float: left;
-}
-
 .nav-bar > li a {
     display: block;
     color: white;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
+    float: left;
 }
 
 .nav-bar > li a:hover {
@@ -83,6 +80,7 @@ body {
     border-radius: 10%;
     padding: 5px 5px;
 }
+
 
 /* Search Styles */
 .search-container {

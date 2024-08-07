@@ -1,5 +1,6 @@
-import { removeLoginButton } from "./Login/loginFeature.js";
+import { removeLoginButton, addLoginButton} from "./Login/loginFeature.js";
 import { displaySignOutButton } from "./SignOut/signOut.js";
+
 try {
     window.onload = async function checkUserAuth() {
         const response = await fetch('/checkLoginStatus');
@@ -10,8 +11,9 @@ try {
             let userDisplayId = document.getElementById('userDisplay');
             userDisplayId.innerHTML = data.isUserSignedIn;
             userDisplayId.style.display = "block";
-            removeLoginButton();
             displaySignOutButton();
+        } else if(data.isUserSignedIn == false) {
+            addLoginButton();
         }
     }
 } catch(error) {
