@@ -1,6 +1,6 @@
 /* FORM STYLES */
 .loginButton {
-    display: block;
+    display: none;
     color: white;
     background-color: #333;
     text-align: center;
