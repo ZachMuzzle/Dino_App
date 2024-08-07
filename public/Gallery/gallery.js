@@ -1,4 +1,6 @@
 import { closeButtons } from "../reusedFunctions/closeButtons.js";
+import { removeLoginButton } from "../Login/loginFeature.js"
+import { displaySignOutButton } from "../SignOut/signOut.js";
 // try {
 //     window.onload = async function displayImage() {
 /* 
@@ -13,7 +15,7 @@ document.addEventListener("DOMContentLoaded", async function() {
             let userDisplayId = document.getElementById('userDisplay');
             userDisplayId.innerHTML = data.isUserSignedIn;
             userDisplayId.style.display = "block";
-            removeLoginButton();
+            // removeLoginButton();
             displaySignOutButton();
         }
 });
