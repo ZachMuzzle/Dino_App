@@ -24,6 +24,7 @@ import loginDinoRoutes from './routes/login.js';
 import passwordReset from './routes/firebaseResetPass.js';
 import loginCheck from './routes/firebaseLogin.js';
 import checkLoginStatus from './routes/checkLoginStatus.js'
+import signOutUser from './routes/signOutUser.js';
 if(process.env.NODE_ENV != 'production') {
   dotenv.config();
   }
@@ -54,6 +55,7 @@ app.use('/login',loginDinoRoutes);
 app.use('/resetPassword', passwordReset);
 app.use('/loginCheck', loginCheck);
 app.use('/checkLoginStatus', checkLoginStatus)
+app.use('/signOutUser',signOutUser)
 
 app.listen(port, function() {
   console.log(`Example app listening at http://localhost:${port}`);

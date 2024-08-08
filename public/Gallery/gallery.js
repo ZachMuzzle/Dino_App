@@ -1,6 +1,6 @@
 import { closeButtons } from "../reusedFunctions/closeButtons.js";
 import { removeLoginButton } from "../Login/loginFeature.js"
-import { displaySignOutButton } from "../SignOut/signOut.js";
+import { displaySignOutButton, signUserOut } from "../SignOut/signOut.js";
 // try {
 //     window.onload = async function displayImage() {
 /* 
@@ -18,6 +18,20 @@ document.addEventListener("DOMContentLoaded", async function() {
             // removeLoginButton();
             displaySignOutButton();
         }
+});
+
+signOutButton.addEventListener('click', async function signOutClickButton() {
+    /* 
+    ?? Not sure if anything needs to be returned or not 
+    */
+   try {
+       const response = await signUserOut();
+       if(response == true) {
+           location.reload();
+        }
+    } catch(error) {
+        console.log(error);
+    }
 });
         // const response = await fetch('/checkLoginStatus');
         // const data = await response.json();
