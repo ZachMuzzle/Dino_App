@@ -1,7 +1,8 @@
 // Import the functions you need from the SDKs you need
+import { reject } from "async";
 import { initializeApp } from "firebase/app";
 // import { getAnalytics } from "firebase/analytics";
-import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, signInWithEmailAndPassword, onAuthStateChanged, setPersistence, browserLocalPersistence, browserSessionPersistence} from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, signInWithEmailAndPassword, onAuthStateChanged, setPersistence, browserLocalPersistence, browserSessionPersistence, signOut} from "firebase/auth";
 // import dotenv from 'dotenv';
 // import {app as appExpress} from '../index.js'
 // import { request } from "http";
@@ -121,6 +122,25 @@ export default class firebaseService {
       })
       .catch((error) => {
         console.log(error);
+        reject(new Error(error.message));
+      });
+    });
+    return promise;
+  }
+
+  /* 
+  ?? Should I return a promise?
+  !! Add Reject
+  */
+  async signOutUser() {
+    const promise = new Promise(async (resolve, reject) => {
+
+      signOut(auth).then(() => {
+        const strSignOut = 'User was signed out';
+        console.log(strSignOut);
+        resolve(true);
+      }).catch((error) => {
+        console.log("Error occurred with sign out\n Error: " + error.message);
         reject(new Error(error.message));
       });
     });

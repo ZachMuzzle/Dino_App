@@ -10,3 +10,12 @@ export function displaySignOutButton() {
         signOutButton.style.display = "block";
         }
 }
+
+export async function signUserOut() {
+    /* 
+    !! Will create a api route for firebase to sign out a user
+    */
+    const response = await fetch('/signOutUser');
+    const data = await response.json();
+    return data.userWasSignedOut;
+}

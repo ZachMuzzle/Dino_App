@@ -1,5 +1,5 @@
 import { removeLoginButton, addLoginButton} from "./Login/loginFeature.js";
-import { displaySignOutButton } from "./SignOut/signOut.js";
+import { displaySignOutButton,signUserOut } from "./SignOut/signOut.js";
 
 try {
     window.onload = async function checkUserAuth() {
@@ -19,8 +19,23 @@ try {
 } catch(error) {
     console.log(error);
 }
+let signOutButton = document.getElementById('signOutButton');
 let generateButton = document.getElementById('button-load');  // Check before doing operation
 checkForButtonPress(generateButton);
+
+signOutButton.addEventListener('click', async function signOutClickButton() {
+    /* 
+    ?? Not sure if anything needs to be returned or not 
+    */
+   try {
+       const response = await signUserOut();
+       if(response == true) {
+           location.reload();
+        }
+    } catch(error) {
+        console.log(error);
+    }
+});
 
 
 // generateButton.addEventListener('mouseover', async() => {
