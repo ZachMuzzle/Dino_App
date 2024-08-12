@@ -33,7 +33,9 @@ export default class DbService {
                 const query = "SELECT * FROM dino_table";
 
                 connection.query(query, (err, results) => {
-                    if(err) reject(new Error(err.message));
+                    if(err) {
+                        return reject(new Error(err.message));
+                    }
                     resolve(results);
                 })
             });
