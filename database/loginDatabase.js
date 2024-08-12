@@ -1,5 +1,3 @@
-import { reject } from 'async';
-import { response } from 'express';
 import dotenv from 'dotenv';
 import mysql from 'mysql'
 
@@ -26,19 +24,21 @@ export default class DbLoginService {
     static getDbLoginServiceInstance() {
         return instance ? instance : new DbLoginService();
     }
-    async getAllData() {
-        try {
-            const response = await new Promise((resolve, reject) => {
-                const query = "SELECT * FROM dinoUserNameAndPasswordTable";
 
-                connection.query(query, (err, results) => {
-                    if(err) reject(new Error(err.message));
-                    resolve(results);
+    async insertUser(username) {
+            const insertId = await new Promise((resolve, reject) => {
+                const query = "INSERT INTO dino_users (username) VALUES (?);"
+                connection.query(query, [username], (err, result) => {
+                    if(err) {
+                        return reject(new Error(err.message));
+                    }
+                    resolve(result.insertId);
                 })
             });
-            return response; 
-        } catch(error) {
-            console.log(error);
-        }
+            /* NOT SURE IF RETURN IS NEEDED */
+            return {
+                id: insertId,
+                username: username
+            }
     }
 }
