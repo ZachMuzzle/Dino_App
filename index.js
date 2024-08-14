@@ -12,7 +12,7 @@ import DbLoginService from './database/loginDatabase.js';
 import cors from 'cors';
 import path from 'path';
 import {fileURLToPath} from 'url';
-import firebaseCreateUser from './routes/firebase.js';
+import firebaseCreateUser from './routes/firebaseCreateUser.js';
 import getDinoRoutes from './routes/getDinos.js';
 import dinoNameRoutes from './routes/getDinoName.js';
 import dinoImageRoutes from './routes/getDinoImage.js';
