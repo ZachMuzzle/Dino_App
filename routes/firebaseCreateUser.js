@@ -20,6 +20,11 @@ router.post('/', (request, response) => {
     jsonInit.userCreated.push(emailValue)
     console.log(jsonInit)
     response.send(jsonInit);
+  })
+  .catch(error => {
+    if(error.message.includes("auth/email-already-in-use")) {
+      response.status(400).json({message: "Email has already been used"});
+    }
   });
 });
 

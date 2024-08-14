@@ -23,11 +23,11 @@ router.post('/', (request, response) => {
     })
     .catch(error => {
         if(error.message.includes("auth/invalid-email")) {
-            response.status(404).json({message: "Invalid email address"});
+            response.status(400).json({message: "Invalid email address"});
             console.log(error);
         }
         else if(error.message.includes("auth/invalid-credential")) {
-            response.status(404).json({message: "Invalid credentials"});
+            response.status(401).json({message: "Invalid credentials"});
             console.log(error);
         }
         else {

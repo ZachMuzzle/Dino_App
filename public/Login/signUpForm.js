@@ -87,46 +87,21 @@ signUpForm.addEventListener('submit', async function submitSignUpForm(e) {
         /* 
         !! When we add the database creation for the username and password. Will need to check if already in the database.
         */
-        await createNewUser(inputEmailSignUp,inputPasswordSignUp);
-            // try {
-            //  const response = await fetch('/createNewUser', {
-            //      method: 'POST',
-            //      headers: {
-            //          'Content-Type': 'application/json'
-            //      },
-            //      body: JSON.stringify({user: inputEmailSignUp.value, pass: inputPasswordSignUp.value})
-            //     });
-            //     if(!response.ok) {
-            //      const error = await response.json();
-            //      throw new Error(error.message);
-            //     }
-            // } catch(error){
-            //  console.log(error);
-            //  alert(error);
-            // }
+        const newUserCreate = await createNewUser(inputEmailSignUp,inputPasswordSignUp);
+        if(newUserCreate == 0) {
+			formCenter[0].style.display = "block";
+			} else if(newUserCreate == 1) {
+			    const newUserInsert = await insertNewUser(inputEmailSignUp);
+			    if(newUserInsert == 0) {
+				    formCenter[0].style.display = "block";
+			    }else if(newUserInsert == 1) {
+				    setTimeout(function() {
+                        alert("Please use the link in the email sent to " + inputEmailSignUp.value + " to verify your account")
+                        formCenter[0].style.display = "block";
+                    },1000);
+			    }
+		    }
 
-            try {
-                let user = inputEmailSignUp.value.split('@')[0];
-                const response = await fetch('/insertUser', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({username: user})
-                });
-                if(!response.ok) {
-                    const error = await response.json();
-                    throw new Error(error.message);
-                   }
-            } catch(error) {
-                console.log(error);
-                alert(error);
-            }
-
-             setTimeout(function() {
-                    alert("Please use the link in the email sent to " + inputEmailSignUp.value + " to verify your account")
-                    formCenter[0].style.display = "block";
-                },1000);
         } 
         else if(passwordCheckValue === "Very weak") {
             alert("Password is very weak please try again");
@@ -200,11 +175,35 @@ async function createNewUser(inputEmailSignUp,inputPasswordSignUp) {
             const error = await response.json();
             throw new Error(error.message);
            }
+        return 1;
        } catch(error){
         console.log(error);
         alert(error);
+        return 0;
        }
 }
+
+async function insertNewUser(inputEmailSignUp) {
+    try {
+        let user = inputEmailSignUp.value.split('@')[0];
+        const response = await fetch('/insertUser', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({username: user})
+        });
+        if(!response.ok) {
+            const error = await response.json();
+            throw new Error(error.message);
+           }
+        return 1;
+    } catch(error) {
+        console.log(error);
+        alert(error);
+        return 0;
+    }
+} 
 
 
 
