@@ -9,11 +9,11 @@ import { displaySignOutButton, signUserOut } from "../SignOut/signOut.js";
 document.addEventListener("DOMContentLoaded", async function() {
         const response = await fetch('/checkLoginStatus');
         const data = await response.json();
-        console.log("Check Status Response: " + data.isUserSignedIn);
+        console.log("Check Status Response: " + data.userSignedIn);
 
-        if(data.isUserSignedIn != false) {
+        if(data.userSignedIn != false) {
             let userDisplayId = document.getElementById('userDisplay');
-            userDisplayId.innerHTML = data.isUserSignedIn;
+            userDisplayId.innerHTML = data.userSignedIn;
             userDisplayId.style.display = "block";
             // removeLoginButton();
             displaySignOutButton();
@@ -35,7 +35,7 @@ signOutButton.addEventListener('click', async function signOutClickButton() {
 });
         // const response = await fetch('/checkLoginStatus');
         // const data = await response.json();
-        // console.log("Check Status Response: " + data.isUserSignedIn);
+        // console.log("Check Status Response: " + data.userSignedIn);
 
         let allData = await getData();
         /* Test for login data */
