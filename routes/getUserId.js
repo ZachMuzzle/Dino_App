@@ -5,10 +5,10 @@ router.post('/', (request,response) => {
     const {username} = request.body;
     const db = DbLoginService.getDbLoginServiceInstance();
 
-    const result = db.insertUser(username);
+    const result = db.getUser(username);
 
     result
-    .then(data => response.json({"Insert User": data}))
+    .then(data => response.status(200).json({"UserId": data}))
     .catch(err => {
         response.status(500).json({message: err.message});
     });

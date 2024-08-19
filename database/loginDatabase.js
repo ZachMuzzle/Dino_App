@@ -41,4 +41,21 @@ export default class DbLoginService {
                 username: username
             }
     }
+
+    async getUser(username) {
+        const userId = await new Promise((resolve, reject) => {
+            const query = "SELECT id FROM dino_users WHERE username = ?";
+            connection.query(query, [username], (err, result) => {
+                if(err) {
+                    return reject(new Error(err.message));
+                }
+                if(result.length > 0) {
+                    resolve(result[0].id);
+                } else {
+                    resolve(null);
+                }
+            })
+        });
+        return userId;
+    }
 }

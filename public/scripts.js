@@ -5,14 +5,14 @@ try {
     window.onload = async function checkUserAuth() {
         const response = await fetch('/checkLoginStatus');
         const data = await response.json();
-        console.log("Check Status Response: " + data.isUserSignedIn);
+        console.log("Check Status Response: " + data.userSignedIn);
 
-        if(data.isUserSignedIn != false) {
+        if(data.userSignedIn != false) {
             let userDisplayId = document.getElementById('userDisplay');
-            userDisplayId.innerHTML = data.isUserSignedIn;
+            userDisplayId.innerHTML = data.userSignedIn;
             userDisplayId.style.display = "block";
             displaySignOutButton();
-        } else if(data.isUserSignedIn == false) {
+        } else if(data.userSignedIn == false) {
             addLoginButton();
         }
     }
@@ -60,7 +60,26 @@ function checkForButtonPress(generateButton) {
                 let dinoName = createDinoDiv(data);
                 let imageData = await getDinoImage(dinoName);
                 let imageDataBranch = createImage(imageData[0], imageData[1]);
-                await insert(imageDataBranch[0], imageDataBranch[1]);
+                const response = await fetch('/checkLoginStatus');
+                const responseData = await response.json();
+                /* Check if user is logged in and if so we can then pass the userName? */
+                if(responseData.userSignedIn != false) {
+                    const user = responseData.userSignedIn.split('@')[0];
+                    const response = await getUserId(user);
+                    const data = await response.json();
+                    // alert(`USERID IS: ${data.UserId}`);
+                    /* 
+                    TODO: Work on getting insert to work with userId
+                    */
+                    await insert(imageDataBranch[0], imageDataBranch[1], data.UserId);
+
+                    // let userDisplayId = document.getElementById('userDisplay');
+                    // userDisplayId.innerHTML = responseData.isUserSignedIn;
+                    // userDisplayId.style.display = "block";
+                    // displaySignOutButton();
+                }
+
+                // await insert(imageDataBranch[0], imageDataBranch[1]);
                 setTimeout(function() {
                 generateButton.disabled = false;
                 },1000);
@@ -136,7 +155,7 @@ function createImage(data, dinoName) {
     } 
 }
 
-async function insert(dinoName, dinoImageUrl) {
+async function insert(dinoName, dinoImageUrl, user) {
     return new Promise((resolve) => {
 
         fetch('/insert', {
@@ -145,10 +164,31 @@ async function insert(dinoName, dinoImageUrl) {
             },
             method: 'POST',
             body: JSON.stringify({dino_name: dinoName,
-                dino_image_url: dinoImageUrl
+                dino_image_url: dinoImageUrl,
+                username: user
             })
         })
         .then(response => response.json())
         resolve()
     })
+}
+
+async function getUserId(username) {
+    try {
+        const response = await fetch('/getUserId', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({username: username})
+        });
+        if(!response.ok) {
+            const error = await response.json();
+            throw new Error(error.message);
+        }
+        return response;
+    } catch(error) {
+        console.log(error);
+        alert(error);
+    }
 }
