@@ -7,7 +7,7 @@ const result = firebaseObj.checkLoginStatus();
 result.then(function(result) {
     let userCheckLogin = {
       
-     "isUserSignedIn": result
+     "userSignedIn": result
     }
     console.log(userCheckLogin);
     response.status(200).json(userCheckLogin);
