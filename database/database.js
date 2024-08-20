@@ -27,12 +27,13 @@ export default class DbService {
         return instance ? instance : new DbService();
     }
 
-    async getAllData() {
+    async getAllData(userId) {
         try {
             const response = await new Promise((resolve, reject) => {
-                const query = "SELECT * FROM dino_table";
+                const query = "SELECT dt.id, dino_name, dino_image_url, date_added  FROM dino_database.dino_table dt \
+                JOIN dino_database.dino_users du ON dt.user_id = du.id WHERE du.id = ?";
 
-                connection.query(query, (err, results) => {
+                connection.query(query,[userId], (err, results) => {
                     if(err) {
                         return reject(new Error(err.message));
                     }

@@ -142,6 +142,10 @@ app.get('/signOut.css',(response,request) => {
 app.get('/closeButtons.js',(response,request) => {
   request.sendFile(`${publicPath}/reusedFunctions/closeButtons.js`)
 });
+
+app.get('/getUserIdRequest.js',(response,request) => {
+  request.sendFile(`${publicPath}/reusedFunctions/getUserIdRequest.js`)
+});
 // app.get('/dinoname', async(request,response) => {
 //     // RUN CODE HERE
     

@@ -1,5 +1,6 @@
 import { removeLoginButton, addLoginButton} from "./Login/loginFeature.js";
 import { displaySignOutButton,signUserOut } from "./SignOut/signOut.js";
+import { getUserId } from "./reusedFunctions/getUserIdRequest.js";
 
 try {
     window.onload = async function checkUserAuth() {
@@ -72,11 +73,6 @@ function checkForButtonPress(generateButton) {
                     TODO: Work on getting insert to work with userId
                     */
                     await insert(imageDataBranch[0], imageDataBranch[1], data.UserId);
-
-                    // let userDisplayId = document.getElementById('userDisplay');
-                    // userDisplayId.innerHTML = responseData.isUserSignedIn;
-                    // userDisplayId.style.display = "block";
-                    // displaySignOutButton();
                 }
 
                 // await insert(imageDataBranch[0], imageDataBranch[1]);
@@ -118,12 +114,20 @@ function createDinoDiv(data) {
 ! Do the same thing here. But for this only do the task of getting the dino image.
 */
 async function getDinoImage(dinoName) {
+    try {
     const response = await fetch('/dinoimage');
+    if(!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message);
+    }
     const data = await response.json(); // data length is whatever count is ?
     // console.log("DATA CALL AFTER BUTTON CLICK: ", data.results)
      // put img element into body of html
 
      return [data,dinoName];
+    } catch(error){
+        alert(error);
+    }
 
     // await insert(dinoName, dinoImageUrl);
    
@@ -173,22 +177,22 @@ async function insert(dinoName, dinoImageUrl, user) {
     })
 }
 
-async function getUserId(username) {
-    try {
-        const response = await fetch('/getUserId', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({username: username})
-        });
-        if(!response.ok) {
-            const error = await response.json();
-            throw new Error(error.message);
-        }
-        return response;
-    } catch(error) {
-        console.log(error);
-        alert(error);
-    }
-}
+// async function getUserId(username) {
+//     try {
+//         const response = await fetch('/getUserId', {
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json'
+//             },
+//             body: JSON.stringify({username: username})
+//         });
+//         if(!response.ok) {
+//             const error = await response.json();
+//             throw new Error(error.message);
+//         }
+//         return response;
+//     } catch(error) {
+//         console.log(error);
+//         alert(error);
+//     }
+// }
