@@ -11,9 +11,13 @@ const options = {
 const url = 'https://duckduckgo-image-search.p.rapidapi.com/search/image?q=dinosaur';
 
 router.get('/', async(request, response) => {
+  try {
     const fetchAPI = await fetch(url, options);
     const dinoImageResponse = await fetchAPI.json();
     response.json(dinoImageResponse);
+  } catch(error){
+    response.status(500).json({message: error.message});
+  }
 });
 
 export default router;

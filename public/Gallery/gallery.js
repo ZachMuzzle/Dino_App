@@ -1,6 +1,8 @@
 import { closeButtons } from "../reusedFunctions/closeButtons.js";
 import { removeLoginButton } from "../Login/loginFeature.js"
 import { displaySignOutButton, signUserOut } from "../SignOut/signOut.js";
+import { getUserId } from "../reusedFunctions/getUserIdRequest.js";
+
 // try {
 //     window.onload = async function displayImage() {
 /* 
@@ -36,8 +38,17 @@ signOutButton.addEventListener('click', async function signOutClickButton() {
         // const response = await fetch('/checkLoginStatus');
         // const data = await response.json();
         // console.log("Check Status Response: " + data.userSignedIn);
+        const response = await fetch('/checkLoginStatus');
+        const responseData = await response.json();
+        let allData = [];
+        if(responseData.userSignedIn != false) {
+            const user = responseData.userSignedIn.split('@')[0];
+            const response = await getUserId(user);
+            const data = await response.json();
 
-        let allData = await getData();
+            allData = await getData(data.UserId);
+        } 
+        // allData = await getData();
         /* Test for login data */
         // let allLoginData = await getLoginData();
         let modal = document.getElementById("updateModal");
@@ -197,10 +208,16 @@ const results = [];
     return results;
 }
 
-async function getData() {
+async function getData(user_id) {
     return new Promise((resolve) => {
 
-        fetch('/getData')
+        fetch('/getData', {
+            headers: {
+                'Content-type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({userId: user_id})
+        })
         .then(response => response.json())
         .then(data => {
             resolve(data['data'])
