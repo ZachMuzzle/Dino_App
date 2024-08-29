@@ -22,6 +22,11 @@ try {
 }
 let signOutButton = document.getElementById('signOutButton');
 let generateButton = document.getElementById('button-load');  // Check before doing operation
+let dinoNameArray = [];
+let dinoImageArray = [];
+let sessionDinoNameArray = [];
+let sessionDinoImageArray = [];
+
 checkForButtonPress(generateButton);
 
 signOutButton.addEventListener('click', async function signOutClickButton() {
@@ -73,6 +78,26 @@ function checkForButtonPress(generateButton) {
                     TODO: Work on getting insert to work with userId
                     */
                     await insert(imageDataBranch[0], imageDataBranch[1], data.UserId);
+                } else {
+                    let jsonArrayDinoNames = sessionStorage.getItem('dino_name');
+                    let jsonArrayDinoImages = sessionStorage.getItem('dino_image_url');
+                    if((jsonArrayDinoNames == null || jsonArrayDinoNames == '') || (jsonArrayDinoImages == null || jsonArrayDinoImages == '')) {
+                        sessionDinoNameArray = [];
+                        sessionDinoImageArray = [];
+                        dinoNameArray.push(imageDataBranch[0]);
+                        dinoImageArray.push(imageDataBranch[1]);
+                        sessionDinoNameArray = JSON.stringify(dinoNameArray);
+                        sessionDinoImageArray = JSON.stringify(dinoImageArray);
+                        sessionStorage.setItem('dino_name', sessionDinoNameArray);
+                        sessionStorage.setItem('dino_image_url',sessionDinoImageArray);
+                    } else {
+                        dinoNameArray.push(imageDataBranch[0]);
+                        dinoImageArray.push(imageDataBranch[1]);
+                        sessionDinoNameArray = JSON.stringify(dinoNameArray);
+                        sessionDinoImageArray = JSON.stringify(dinoImageArray);
+                        sessionStorage.setItem('dino_name', sessionDinoNameArray);
+                        sessionStorage.setItem('dino_image_url',sessionDinoImageArray);
+                    }
                 }
 
                 // await insert(imageDataBranch[0], imageDataBranch[1]);

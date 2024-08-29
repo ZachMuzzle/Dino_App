@@ -47,7 +47,32 @@ signOutButton.addEventListener('click', async function signOutClickButton() {
             const data = await response.json();
 
             allData = await getData(data.UserId);
-        } 
+        } else {
+            const jsonArrayDinoName = sessionStorage.getItem('dino_name');
+            const jsonArrayDinoImage = sessionStorage.getItem('dino_image_url');
+            const arrayDinoName = jsonArrayDinoName ? JSON.parse(jsonArrayDinoName) : [];
+            const arrayDinoImage = jsonArrayDinoImage ? JSON.parse(jsonArrayDinoImage) : [];
+            let guestArray = [];
+            console.log(`Array Dino Name: ${arrayDinoName}`);
+            console.log(`Array Dino Image: ${arrayDinoImage}`);
+            for(let i = 0; i < arrayDinoName.length; i++){
+                    guestArray.push({
+                        "dino_name": arrayDinoName[i], 
+                        "dino_image_url": arrayDinoImage[i]});
+                }
+            console.log(`guestArray: ${JSON.stringify(guestArray)}`);
+            let jsonInt = {
+                "data": guestArray
+            }
+            let dinoArray = jsonInt.data;
+            noDataInDB(dinoArray);
+            removeDeleteAllButton(dinoArray);
+            createGalleryGuest(dinoArray);
+            Resize(dinoArray)
+            // deleteButtonOnImages(dinoArray);
+            // updateImageModal(allData,modal)
+
+        }
         // allData = await getData();
         /* Test for login data */
         // let allLoginData = await getLoginData();
@@ -69,6 +94,12 @@ signOutButton.addEventListener('click', async function signOutClickButton() {
         const resultsHTML = document.querySelector('.suggestions ul');
         const searchButton = document.querySelector('#searchButton');
         
+        /*
+        !! Original code for user
+        * Need to add below in a function that is only called when user is logged in.
+        * So call doesn't happen twice  
+        */
+
         noDataInDB(allData);
         removeDeleteAllButton(allData);
         createGallery(allData);
@@ -79,8 +110,8 @@ signOutButton.addEventListener('click', async function signOutClickButton() {
         /* Hover Text Dynamic Width 
            based on width of dinoGalleryImage
         */
-        function Resize() {
-            for(let i = 0; i < allData.length; i++) {
+        function Resize(data) {
+            for(let i = 0; i < data.length; i++) {
                 const parent = document.querySelectorAll(".dinoGalleryImage")[i]
                 const parentWidth = getComputedStyle(parent).width;
                 document.documentElement.style.setProperty('--hover-width', parentWidth);
@@ -88,7 +119,7 @@ signOutButton.addEventListener('click', async function signOutClickButton() {
 
             }
         }
-        Resize()
+        Resize(allData)
         window.addEventListener("resize", Resize)
          
         autocomplete.oninput = function () { 
@@ -289,6 +320,16 @@ function createGallery(allData) {
     updateImagesButton(allData,i)
     textOnHoverImage(allData,i)
     }
+}
+
+function createGalleryGuest(allData) {
+    for(let i = 0; i < allData.length; i++) {
+    
+        createImages(allData,i);
+        // deleteImagesButton(allData,i)
+        // updateImagesButton(allData,i)
+        textOnHoverImage(allData,i)
+        }
 }
 
 function createImages(allData, i) {
