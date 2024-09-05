@@ -40,13 +40,38 @@ signOutButton.addEventListener('click', async function signOutClickButton() {
         // console.log("Check Status Response: " + data.userSignedIn);
         const response = await fetch('/checkLoginStatus');
         const responseData = await response.json();
+        const autocomplete = document.querySelector('#autocomplete');
+        const resultsHTML = document.querySelector('.suggestions ul');
+        const searchButton = document.querySelector('#searchButton');
+        let modal = document.getElementById("updateModal");
+        let imgSrcUpdate = document.getElementById("img-src-update");
+        let imgCaptionUpdate = document.getElementById("caption-update");
+        /* MODEL FOR IMAGE */
+        let model = document.getElementById("myModel");
+        let images = document.getElementsByClassName("dinoGalleryImage");
+        let imgSrc = document.getElementById("img-src");
+        let imgCaption = document.getElementById("caption");
+        let closeImage = document.querySelectorAll('.close');
+        let popupModel = document.getElementById("popupModel");
+        let popupMessage = document.getElementById("popupMessage");
+        /* Arrays for users and guests */
         let allData = [];
+        let dinoArray = [];
+        
+        
         if(responseData.userSignedIn != false) {
             const user = responseData.userSignedIn.split('@')[0];
             const response = await getUserId(user);
             const data = await response.json();
 
             allData = await getData(data.UserId);
+            noDataInDB(allData);
+            removeDeleteAllButton(allData);
+            createGallery(allData);
+            deleteButtonOnImages(allData);
+            updateImageModal(allData,modal)
+            closeButtons(closeImage,modal,model,popupModel);
+            Resize(allData);
         } else {
             const jsonArrayDinoName = sessionStorage.getItem('dino_name');
             const jsonArrayDinoImage = sessionStorage.getItem('dino_image_url');
@@ -64,11 +89,13 @@ signOutButton.addEventListener('click', async function signOutClickButton() {
             let jsonInt = {
                 "data": guestArray
             }
-            let dinoArray = jsonInt.data;
+            dinoArray = jsonInt.data;
             noDataInDB(dinoArray);
             removeDeleteAllButton(dinoArray);
             createGalleryGuest(dinoArray);
-            Resize(dinoArray)
+            Resize(dinoArray);
+            closeButtons(closeImage,modal,model,popupModel);
+
             // deleteButtonOnImages(dinoArray);
             // updateImageModal(allData,modal)
 
@@ -76,23 +103,6 @@ signOutButton.addEventListener('click', async function signOutClickButton() {
         // allData = await getData();
         /* Test for login data */
         // let allLoginData = await getLoginData();
-        let modal = document.getElementById("updateModal");
-        
-        let imgSrcUpdate = document.getElementById("img-src-update");
-        let imgCaptionUpdate = document.getElementById("caption-update");
-        
-        /* MODEL FOR IMAGE */
-        let model = document.getElementById("myModel");
-        let images = document.getElementsByClassName("dinoGalleryImage");
-        let imgSrc = document.getElementById("img-src");
-        let imgCaption = document.getElementById("caption");
-        let closeImage = document.querySelectorAll('.close');
-        let popupModel = document.getElementById("popupModel");
-        let popupMessage = document.getElementById("popupMessage");
-        
-        const autocomplete = document.querySelector('#autocomplete');
-        const resultsHTML = document.querySelector('.suggestions ul');
-        const searchButton = document.querySelector('#searchButton');
         
         /*
         !! Original code for user
@@ -100,27 +110,13 @@ signOutButton.addEventListener('click', async function signOutClickButton() {
         * So call doesn't happen twice  
         */
 
-        noDataInDB(allData);
-        removeDeleteAllButton(allData);
-        createGallery(allData);
-        deleteButtonOnImages(allData);
-        updateImageModal(allData,modal)
-        closeButtons(closeImage,modal,model,popupModel);
-
-        /* Hover Text Dynamic Width 
-           based on width of dinoGalleryImage
-        */
-        function Resize(data) {
-            for(let i = 0; i < data.length; i++) {
-                const parent = document.querySelectorAll(".dinoGalleryImage")[i]
-                const parentWidth = getComputedStyle(parent).width;
-                document.documentElement.style.setProperty('--hover-width', parentWidth);
-                document.documentElement.style.setProperty('--button-width', parentWidth);
-
+        window.addEventListener("resize", () => { 
+            if(responseData.userSignedIn != false) {
+                Resize(allData);
+            } else {
+                Resize(dinoArray);
             }
-        }
-        Resize(allData)
-        window.addEventListener("resize", Resize)
+        }); 
          
         autocomplete.oninput = function () { 
             let results = [];
@@ -151,6 +147,19 @@ signOutButton.addEventListener('click', async function signOutClickButton() {
              searchButtonOnClick();
             }
          }
+
+           /* Hover Text Dynamic Width 
+           based on width of dinoGalleryImage
+        */
+        function Resize(data) {
+            for(let i = 0; i < data.length; i++) {
+                const parent = document.querySelectorAll(".dinoGalleryImage")[i]
+                const parentWidth = getComputedStyle(parent).width;
+                document.documentElement.style.setProperty('--hover-width', parentWidth);
+                document.documentElement.style.setProperty('--button-width', parentWidth);
+
+            }
+        }
 
          /* Button click for search */
         function searchButtonOnClick() {
