@@ -17,6 +17,7 @@ body {
  }
 
 /* GALLERY STYLES */
+
 #dinoWrapperGallery {
     display: block;
     margin: auto;
@@ -27,9 +28,8 @@ body {
     border: rgba(247, 148, 61, .8);
     border-style: groove;
     max-height: 500px;
-    border-radius: 25px;
     box-shadow: 0 0 10px 10px black;
-    border-radius: 25px;
+    border-radius: 10px;
     box-shadow: 0 0 10px 10px black;
     /* margin: 10px; */
 }
@@ -38,16 +38,20 @@ body {
  }
 
 /* NAV BAR STYLES */
- .nav-bar {
-    list-style-type:none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #333;
-    position: fixed;
+.nav-bar-container {
+    position: relative;
     top: 0;
     width: 100%;
+    margin-bottom: 75px;
+}
+ .nav-bar {
+    list-style-type:none;
+    overflow: hidden;
+    background-color: #333;
+    width: 100%;
     z-index: 1;
+    margin: 0;
+    padding: 0;
 }
 
 .nav-bar > li a {
@@ -77,8 +81,17 @@ body {
 
 .headerErrorImage {
     background-color: rgb(230, 107, 0);
-    border-radius: 10%;
-    padding: 5px 5px;
+    border-style: solid;
+    /* border-radius: 10%; */
+    border-color: black;
+    color: black;
+    text-transform: uppercase;
+    border-radius: 10px;
+    box-shadow: 0 0 20px 10px;
+    text-align: center;
+    padding: 5px;
+    margin: 5px;
+    z-index: -1;
 }
 
 
@@ -87,7 +100,6 @@ body {
     float: right;
     width: 400px;
     position: relative;
-    margin-top: 100px;
 }
 input[type=text] {
     padding: 6px;
@@ -103,17 +115,16 @@ input[type=text] {
     font-size: 17px;
     border: none;
     cursor: pointer;
-    border-radius: 25px;
+    border-radius: 0 0 10px 10px;
     box-shadow: 0px 0px 5px 5px black;
     position: relative;
     z-index: auto;
 }
 
-input {
+/* input {
     border: 0 none;
-  }
+  } */
 
-  .search-container input,
   .search-container .suggestions {
     width: 100%;
     background: #fff;
@@ -122,14 +133,18 @@ input {
     z-index: auto;
   }
   .search-container input {
+    width: 100%;
     background: rgba(225, 224, 224, 0.46);
     height: 60px;
     padding: 0 10px;
     box-shadow: 0 0 25px 10px black;
-    border-radius: 25px 25px 0 0;
+    border-radius: 10px 10px 0 0;
     position: relative;
+    text-align: left;
     z-index: auto;
   }
+
+
 
 .has-suggestions {
     display: none;
@@ -190,7 +205,7 @@ ul.has-suggestions {
     position: relative;
     max-width: 700px;
     /* width: 700px; */
-    margin-top: 10px;
+    margin-top: 25px;
     margin-left: auto;
     margin-right: auto;
     padding-right: 100px;
@@ -210,10 +225,10 @@ ul.has-suggestions {
     width: var(--hover-width); /* Dynamically change width. */
     padding: 10px;
     top: 0;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.65);
     color: white;
     font-size: 1vw;
-    border-radius: 25px 25px 0 0;
+    border-radius: 10px 10px 0 0;
 
   }
 
@@ -240,13 +255,14 @@ ul.has-suggestions {
 }
 
 #delete_all {
-    background-color: rgba(247, 148, 61, .8);
+    background-color: rgb(230, 107, 0);
     padding: 14px 16px;
     font-size: large;
     color: white;
-    border: none;
+    border-style: solid;
+    border-color: black;
+    border-radius: 10px;
     cursor: pointer;
-    border-radius: 25px;
     box-shadow: 0 0 10px 10px black;
 }
 
@@ -320,7 +336,7 @@ ul.has-suggestions {
     animation-duration: 0.6s;
     line-height: 150px;
     box-shadow:  0 0 20px 10px rgba(153, 152, 152, 0.75);
-    border-radius: 25px;
+    border-radius: 10px;
 }
 
 #popupValue {
@@ -328,8 +344,7 @@ ul.has-suggestions {
     font-weight: bold;
 }
 
-
-
+/* Media Queries */
 @media screen and (max-width:500px) {
     .search-container {
         position: sticky;
@@ -366,5 +381,51 @@ ul.has-suggestions {
 @media screen and (max-width: 193px) {
     .search-container {
         top: 120px;
+    }
+}
+
+/* Variable values */
+:root {
+    --font-size-button: 3rem
+}
+
+/* Acts as a dynamic value change for the variable being set */
+.headerErrorImage {
+    font-size: var(--font-size-button);
+}
+
+@media (max-width:544px) {
+    .headerErrorImage {
+        --font-size-button:2.3rem
+    }
+}
+
+@media (max-width:427px) {
+    .headerErrorImage {
+        --font-size-button:2.0rem
+    }
+}
+
+@media (max-width:378px) {
+    .headerErrorImage {
+        --font-size-button:2.0rem
+    }
+}
+
+@media (max-width:377px) {
+    .headerErrorImage {
+        --font-size-button:1.7rem
+    }
+}
+
+@media (max-width:327px) {
+    .headerErrorImage {
+        --font-size-button:1.4rem
+    }
+}
+
+@media (max-width:277px) {
+    .headerErrorImage {
+        --font-size-button:1rem
     }
 }
