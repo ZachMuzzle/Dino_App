@@ -9,7 +9,7 @@
     <link href="styles.css" rel="stylesheet">
     <link href="loginStyles.css" rel="stylesheet">
     <link href="modelStyle.css" rel="stylesheet">
-    <link href="signOut.css" rel="stylesheet">=
+    <link href="signOut.css" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@200&display=swap" rel="stylesheet">
@@ -22,19 +22,18 @@
     <script defer src="signOut.js" type="module"></script>
     <script defer src="closeButtons.js" type="module"></script>
 
-
-
-
 </head>
 <body>
     <!-- NAV BAR -->
-    <ul class="nav-bar">
+    <div class="nav-bar-container">
+      <ul class="nav-bar">
         <li><a class="active" href="/DinoGenerator">Dinosaur Generator</a></li>
         <li><a href="/Gallery">Dinosaur Gallery</a></li>
         <li><button id="signOutButton" class="signOutButton">Sign out</button></li>
         <li><button id="loginButton" class="loginButton">Login</button></li>
         <li><button id="userDisplay" class="userDisplayButton"></button></li>
-    </ul>
+      </ul>
+    </div>
 
     <div id="loginModel" class="model">
         <span class="close">&times;</span>

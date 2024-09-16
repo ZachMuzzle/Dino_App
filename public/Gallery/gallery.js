@@ -43,6 +43,7 @@ signOutButton.addEventListener('click', async function signOutClickButton() {
         const autocomplete = document.querySelector('#autocomplete');
         const resultsHTML = document.querySelector('.suggestions ul');
         const searchButton = document.querySelector('#searchButton');
+        const searchContainer = document.querySelector('.search-container');
         let modal = document.getElementById("updateModal");
         let imgSrcUpdate = document.getElementById("img-src-update");
         let imgCaptionUpdate = document.getElementById("caption-update");
@@ -57,7 +58,6 @@ signOutButton.addEventListener('click', async function signOutClickButton() {
         /* Arrays for users and guests */
         let allData = [];
         let dinoArray = [];
-        
         
         if(responseData.userSignedIn != false) {
             const user = responseData.userSignedIn.split('@')[0];
@@ -90,6 +90,7 @@ signOutButton.addEventListener('click', async function signOutClickButton() {
                 "data": guestArray
             }
             dinoArray = jsonInt.data;
+
             noDataInDB(dinoArray);
             removeDeleteAllButton(dinoArray);
             createGalleryGuest(dinoArray);
@@ -118,12 +119,20 @@ signOutButton.addEventListener('click', async function signOutClickButton() {
             }
         }); 
          
-        autocomplete.oninput = function () { 
-            let results = [];
-            console.log("RESULTS ARRAY: ", results);
-            const userInput = this.value;
-            resultsHTML.innerHTML = "";
-            checkSuggestions(results,resultsHTML, userInput, allData);
+        autocomplete.oninput = function () {
+            if(responseData.userSignedIn != false) { 
+                let results = [];
+                console.log("RESULTS ARRAY: ", results);
+                const userInput = this.value;
+                resultsHTML.innerHTML = "";
+                checkSuggestions(results,resultsHTML, userInput, allData);
+            } else {
+                let results = [];
+                console.log("RESULTS ARRAY: ", results);
+                const userInput = this.value;
+                resultsHTML.innerHTML = "";
+                checkSuggestions(results,resultsHTML, userInput, dinoArray);
+            }
         }
         
         /* Onclick for suggestions */
@@ -304,6 +313,7 @@ function deleteById(id) {
 function noDataInDB(allData) {
     if(allData.length === 0) {
         const dinoImgError = document.createElement('h1');
+        searchContainer.style.display = "none";
         dinoImgError.className = 'headerErrorImage';
         dinoImgError.innerHTML = "PLEASE ADD AN IMAGE USING THE GENERATE BUTTON!";
         document.querySelector('.errorDiv').appendChild(dinoImgError);
@@ -312,11 +322,17 @@ function noDataInDB(allData) {
     
 }
 function removeDeleteAllButton(allData) {
-    if(allData.length === 0) {
-        let deleteButtonClass = document.querySelectorAll('.delete_all_container');
-        deleteButtonClass[0].hidden = true;
+    if((allData.length === 0)) {
+        hideDeleteAllButton();
+    } else if(responseData.userSignedIn == false) {
+        hideDeleteAllButton();
     }
 
+}
+
+function hideDeleteAllButton() {
+    let deleteButtonClass = document.querySelectorAll('.delete_all_container');
+        deleteButtonClass[0].hidden = true;
 }
 
 /* LOOP Creates all the necessary image galleries for this page until no data left*/
