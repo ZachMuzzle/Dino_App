@@ -15,7 +15,6 @@ body {
     background: #4e713e url('casey-horner-1sim8ojvCbE-unsplash.jpg') no-repeat center;
     display: grid;
     place-items: center;
-    height: 100vh;
 }
 
 h1 {
@@ -34,7 +33,7 @@ section > button {
     border-color: black;
     color: black;
     text-transform: uppercase;
-    border-radius: 25px;
+    border-radius: 10px;
     box-shadow: 0 0 20px 10px;
     z-index: -1;
 }
@@ -71,15 +70,20 @@ section > button:hover {
 
 
 /* NAV BAR STYLES */
-.nav-bar {
-    list-style-type:none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #333;
-    position: fixed;
+.nav-bar-container {
+    position: relative;
     top: 0;
     width: 100%;
+    margin-bottom: 75px;
+}
+ .nav-bar {
+    list-style-type:none;
+    overflow: hidden;
+    background-color: #333;
+    width: 100%;
+    z-index: 1;
+    margin: 0;
+    padding: 0;
 }
 
 
