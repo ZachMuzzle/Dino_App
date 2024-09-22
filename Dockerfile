@@ -1,19 +1,29 @@
+# STAGE: Development
 FROM  node:18
 
 # Create app directory
-WORKDIR /home/zachary/code/dino-app
+WORKDIR /app
 
 COPY package*.json ./
+RUN npm install
 
 COPY . .
+# Install nodemon globally
+RUN npm install -g nodemon
 
-RUN npm install
 
 EXPOSE 3000
 
-CMD [ "node", "index.js" ]
-# RUN npm ci --omit=dev
+CMD [ "nodemon", "index.js" ]
 
-# Bundle app source
+# STAGE: Production
+#FROM  node:18
+# Create app directory
+#WORKDIR /home/zachary/code/dino-app
+#COPY package*.json ./
+#COPY . .
+#RUN npm install
+#EXPOSE 3000
+#CMD [ "node", "index.js" ]
 
 

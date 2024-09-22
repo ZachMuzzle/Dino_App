@@ -1,16 +1,31 @@
 version: '3.8'
 services:
   app:
-    build: /home/zachary/code/dino-app
+    build: .
+    volumes:
+      - /home/zachary/code/dino-app:/app # Map local directory to container's /app directory
+      - /node_modules # Prevent node_modules from being overwritten
     restart: unless-stopped
     env_file: ./.env
     ports:
       - '3000:3000'
     environment:
-      - DB_HOST=$DB_HOST
+      - API_KEY=$API_KEY
+      - DB_HOST=host.docker.internal
       - DB_USER=$DB_USER
       - DB_PASSWORD=$DB_PASSWORD
       - DB_NAME=$DATABASE
       - DB_PORT=$DATABASE_PORT
+      - GOOGLE_RECAP_SECERT=$GOOGLE_RECAP_SECERT
+      - GOOGLE_RECAP_PUBLIC_SECERT=$GOOGLE_RECAP_PUBLIC_SECERT
+      - API_KEY_FIRE=$API_KEY_FIRE
+      - AUTH_DOMAIN=$AUTH_DOMAIN
+      - PROJECT_ID=$PROJECT_ID
+      - STORAGE_BUCKET=$STORAGE_BUCKET
+      - MESSAGING_SENDER_ID=$MESSAGING_SENDER_ID
+      - APP_ID=$APP_ID
+      - MEASUREMENT_ID=$MEASUREMENT_ID
+    extra_hosts:
+      - "host.docker.internal:host-gateway" 
     # stdin_open: true
     # tty: true 
