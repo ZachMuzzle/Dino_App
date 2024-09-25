@@ -157,27 +157,40 @@ Make sure npm is installed
 1. There a few other packages that will need to be installed. However, I didn't keep great documention on how they were installed. Please look at the [package.json](package.json) file to see all dependencies that are needed to get this project running locally.
 
 ### Using Docker
-1. You may also try to use Docker. I use docker for deploying versions to prod, but I am not too familiar with using Docker in dev envs. Please feel free to try and use docker if that is easier for you
-
+1. This project has been updated to be able to run in the dev and prod env by creating a docker image and running the container. Below will walk you through on how you can setup the codebase to run on your machine.
+      1. The `Dockerfile` and `docker-compose.yml` are setup to be used in the dev env
+      2. Below in the CLI you will have to build the docker image. Normally we would do the building and then then running manually, but with the help of the `docker-compose.yml` file it allows this project to be built and run automatically. You can choose either to run on the CLI or run in the background
 ``` docker 
-# Build dino app
-docker build . -t zachmuzzle/dino-web-app
-# Fixes permission error
-sudo chmod 666 /var/run/docker.sock
-# runs docker app on server 49160. -d means runs in background
-docker run -i -t -p 49160:3000 -d zachmuzzle/dino-web-app
-#Kill an image that won't stop
-docker exec -it <container> kill 1
-#Rebuild
-docker-compose up --force-recreate --build -d
-docker image prune -f
-#Kill images/container
-sudo systemctl restart docker.socket docker.service
-# Removes all images
-sudo docker image rm -f $(sudo docker image ls -q)
+# Build docker image and run container
+docker-compose up --build
+# Build and run in the background
+docker-compose up --build -d
+# Update and run docker container in background
+docker-compose up -d
 ```
-**Important**: If this is your first time building using docker... Then you will only need to do the first 3 prompts.
-If you're rebuilding the docker image/container you will need to kill the image and rebuild *you may have to not rebuild under the **#Rebuild** section above and just kill and remove all images and containers. Then rebuild like before.* (I still haven't figured out how to successfully update the docker piece)
+
+2. If you have any trouble with docker not allowing you to access use the command below
+``` docker
+# Give docker access
+sudo chmod 666 /var/run/docker.sock
+```
+
+3. Here are also a few commands that help with restarting docker and killing containers or delete images/containers
+
+```docker
+# Kill images/container (Use if nothing is working)
+sudo systemctl restart docker.socket docker.service
+# Kill specific docker container
+sudo docker stop <container-id>
+# Delete all unused images and containers
+docker system prune
+# Removes all images without at least one container associated to them.
+docker image prune -a
+# Force remove docker images
+docker rmi -f $(docker images -q)
+# Removes all systems and volumnes
+docker system prune --all --volumes
+```
 <!-- ### Installation
 
 1. Get a free API Key at [https://example.com](https://example.com)
@@ -210,7 +223,7 @@ Use this space to show useful examples of how a project can be used. Additional 
 
 _For more examples, please refer to the [Documentation](https://example.com)_ -->
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+<!-- <p align="right">(<a href="#readme-top">back to top</a>)</p> -->
 
 
 
