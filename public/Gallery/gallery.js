@@ -9,16 +9,14 @@ import { checkLoginStatus } from "../reusedFunctions/checkLoginStatusFunction.js
 !! Need to clean this file up. Make it more functional
 */
 window.addEventListener("load", async function() {
-        const response = await fetch('/checkLoginStatus');
-        const data = await response.json();
-
-        if(data.userSignedIn != false) {
+        const response = await checkLoginStatus(userSignedIn);
+        if(response != false) {
             let userDisplayId = document.getElementById('userDisplay');
-            userDisplayId.innerHTML = data.userSignedIn;
+            userDisplayId.innerHTML = response
             userDisplayId.style.display = "block";
             // removeLoginButton();
             displaySignOutButton();
-            navbarResize(data.userSignedIn);
+            navbarResize(response);
         }
 });
 let userSignedIn = null;
@@ -43,8 +41,7 @@ signOutButton.addEventListener('click', async function signOutClickButton() {
         // const response = await fetch('/checkLoginStatus');
         // const data = await response.json();
         // console.log("Check Status Response: " + data.userSignedIn);
-        const response = await fetch('/checkLoginStatus');
-        const responseData = await response.json();
+        const responseData = await checkLoginStatus(userSignedIn);
         const autocomplete = document.querySelector('#autocomplete');
         const resultsHTML = document.querySelector('.suggestions ul');
         const searchButton = document.querySelector('#searchButton');
@@ -63,8 +60,8 @@ signOutButton.addEventListener('click', async function signOutClickButton() {
         /* Arrays for users and guests */
         let allData = [];
         let dinoArray = [];
-        if(responseData.userSignedIn != false) {
-                const user = responseData.userSignedIn.split('@')[0];
+        if(responseData != false) {
+                const user = responseData.split('@')[0];
                 const response = await getUserId(user);
                 const data = await response.json();
                 
@@ -117,7 +114,7 @@ signOutButton.addEventListener('click', async function signOutClickButton() {
         */
 
         window.addEventListener("resize", () => { 
-            if(responseData.userSignedIn != false) {
+            if(responseData != false) {
                 Resize(allData);
             } else {
                 Resize(dinoArray);
@@ -125,7 +122,7 @@ signOutButton.addEventListener('click', async function signOutClickButton() {
         }); 
          
         autocomplete.oninput = function () {
-            if(responseData.userSignedIn != false) { 
+            if(responseData != false) { 
                 let results = [];
                 console.log("RESULTS ARRAY: ", results);
                 const userInput = this.value;
@@ -333,7 +330,7 @@ function noDataInDB(allData) {
 function removeDeleteAllButton(allData,responseData) {
     if((allData.length === 0)) {
         hideDeleteAllButton();
-    } else if(responseData.userSignedIn == false) {
+    } else if(responseData == false) {
         hideDeleteAllButton();
     }
 
