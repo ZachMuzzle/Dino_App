@@ -10,7 +10,11 @@ result.then(function(result) {
      "userSignedIn": result
     }
     console.log(userCheckLogin);
-    response.status(200).json(userCheckLogin);
+    if(userCheckLogin.userSignedIn !== false) {
+        response.status(200).json(userCheckLogin);
+    } else {
+        response.status(401).json(userCheckLogin);
+    }
 });
 });
 

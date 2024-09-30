@@ -84,8 +84,29 @@ section > button:hover {
     z-index: 1;
     margin: 0;
     padding: 0;
+    display: flex;
 }
 
+.right-side {
+    margin-left: auto;
+ }
+
+.resizeNavbar a {
+    width: 100%;
+}
+
+.resizeNavbar input[type=text] {
+    border: 1px solid #ccc;
+}
+
+.resizeNavbar button {
+    float: none;
+    margin: auto;
+}
+
+.resizeNavbar {
+    display: block;
+}
 
 /* ul > li {
     float: left;
