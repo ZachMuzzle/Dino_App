@@ -1,17 +1,16 @@
 import { closeButtons } from "../reusedFunctions/closeButtons.js";
-import { removeLoginButton } from "../Login/loginFeature.js"
-import { displaySignOutButton, signUserOut } from "../SignOut/signOut.js";
+import { displaySignOutButton, signUserOut,navbarResize,signOutButton} from "../SignOut/signOut.js";
 import { getUserId } from "../reusedFunctions/getUserIdRequest.js";
+import { checkLoginStatus } from "../reusedFunctions/checkLoginStatusFunction.js";
 
 // try {
 //     window.onload = async function displayImage() {
 /* 
 !! Need to clean this file up. Make it more functional
 */
-document.addEventListener("DOMContentLoaded", async function() {
+window.addEventListener("load", async function() {
         const response = await fetch('/checkLoginStatus');
         const data = await response.json();
-        console.log("Check Status Response: " + data.userSignedIn);
 
         if(data.userSignedIn != false) {
             let userDisplayId = document.getElementById('userDisplay');
@@ -19,7 +18,13 @@ document.addEventListener("DOMContentLoaded", async function() {
             userDisplayId.style.display = "block";
             // removeLoginButton();
             displaySignOutButton();
+            navbarResize(data.userSignedIn);
         }
+});
+let userSignedIn = null;
+window.addEventListener('resize', async() => {
+    const status = await checkLoginStatus(userSignedIn);
+    navbarResize(status);
 });
 
 signOutButton.addEventListener('click', async function signOutClickButton() {
@@ -58,20 +63,19 @@ signOutButton.addEventListener('click', async function signOutClickButton() {
         /* Arrays for users and guests */
         let allData = [];
         let dinoArray = [];
-        
         if(responseData.userSignedIn != false) {
-            const user = responseData.userSignedIn.split('@')[0];
-            const response = await getUserId(user);
-            const data = await response.json();
-
-            allData = await getData(data.UserId);
-            noDataInDB(allData);
-            removeDeleteAllButton(allData);
-            createGallery(allData);
-            deleteButtonOnImages(allData);
-            updateImageModal(allData,modal)
-            closeButtons(closeImage,modal,model,popupModel);
-            Resize(allData);
+                const user = responseData.userSignedIn.split('@')[0];
+                const response = await getUserId(user);
+                const data = await response.json();
+                
+                allData = await getData(data.UserId);
+                noDataInDB(allData);
+                removeDeleteAllButton(allData,responseData);
+                createGallery(allData);
+                deleteButtonOnImages(allData);
+                updateImageModal(allData,modal)
+                closeButtons(closeImage,modal,model,popupModel);
+                Resize(allData);
         } else {
             const jsonArrayDinoName = sessionStorage.getItem('dino_name');
             const jsonArrayDinoImage = sessionStorage.getItem('dino_image_url');
@@ -80,6 +84,7 @@ signOutButton.addEventListener('click', async function signOutClickButton() {
             let guestArray = [];
             console.log(`Array Dino Name: ${arrayDinoName}`);
             console.log(`Array Dino Image: ${arrayDinoImage}`);
+
             for(let i = 0; i < arrayDinoName.length; i++){
                     guestArray.push({
                         "dino_name": arrayDinoName[i], 
@@ -92,7 +97,7 @@ signOutButton.addEventListener('click', async function signOutClickButton() {
             dinoArray = jsonInt.data;
 
             noDataInDB(dinoArray);
-            removeDeleteAllButton(dinoArray);
+            removeDeleteAllButton(dinoArray,responseData);
             createGalleryGuest(dinoArray);
             Resize(dinoArray);
             closeButtons(closeImage,modal,model,popupModel);
@@ -157,6 +162,40 @@ signOutButton.addEventListener('click', async function signOutClickButton() {
             }
          }
 
+          /* 
+         !!
+         !! Maybe turn this into a function for easy recall? 
+         */
+         try {
+            if(images.length == 0) throw "No images found!";
+            for(let j =  0; j < images.length; j++) {
+                let modelImg = images[j];
+            modelImg.onclick = function(event) {
+                model.style.display = "block";
+                imgSrc.src = this.src;
+                imgCaption.innerHTML = this.alt;
+            }
+            }
+         } catch(err) {
+            console.log(err);
+            console.log("Length of images: " + images.length);
+         }
+
+         /* 
+         !! Turn into a function 
+         Delete all data 
+         */
+         try {
+            let button = document.querySelector('#delete_all');
+            if(button) {
+        
+                button.onclick = function() {
+                    truncateAllData();
+                }
+            }
+        } catch(error) {
+            console.log(error);
+        }
            /* Hover Text Dynamic Width 
            based on width of dinoGalleryImage
         */
@@ -206,41 +245,11 @@ signOutButton.addEventListener('click', async function signOutClickButton() {
                 console.log(err);
             }
         }
-
-         /* 
-         !!
-         !! Maybe turn this into a function for easy recall? 
-         */
-         try {
-            if(images.length == 0) throw "No images found!";
-            for(let j =  0; j < images.length; j++) {
-                let modelImg = images[j];
-            modelImg.onclick = function(event) {
-                model.style.display = "block";
-                imgSrc.src = this.src;
-                imgCaption.innerHTML = this.alt;
-            }
-            }
-         } catch(err) {
-            console.log(err);
-            console.log("Length of images: " + images.length);
-         }
 //     }
 // } catch(err) {
 //     console.log(err);
 // }
 
-try {
-    let button = document.querySelector('#delete_all');
-    if(button) {
-
-        button.onclick = function() {
-            truncateAllData();
-        }
-    }
-} catch(error) {
-    console.log(error);
-}
 
 /* End of first try/catch */
 /* getResults function gets suggestions from search bar input and returns if any found */
@@ -321,7 +330,7 @@ function noDataInDB(allData) {
     }
     
 }
-function removeDeleteAllButton(allData) {
+function removeDeleteAllButton(allData,responseData) {
     if((allData.length === 0)) {
         hideDeleteAllButton();
     } else if(responseData.userSignedIn == false) {

@@ -146,6 +146,10 @@ app.get('/closeButtons.js',(response,request) => {
 app.get('/getUserIdRequest.js',(response,request) => {
   request.sendFile(`${publicPath}/reusedFunctions/getUserIdRequest.js`)
 });
+
+app.get('/checkLoginStatusFunction.js',(response,request) => {
+  request.sendFile(`${publicPath}/reusedFunctions/checkLoginStatusFunction.js`)
+});
 // app.get('/dinoname', async(request,response) => {
 //     // RUN CODE HERE
     

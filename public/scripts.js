@@ -1,12 +1,12 @@
 import { removeLoginButton, addLoginButton} from "./Login/loginFeature.js";
-import { displaySignOutButton,signUserOut } from "./SignOut/signOut.js";
+import { displaySignOutButton,signUserOut,navbarResize } from "./SignOut/signOut.js";
+import { checkLoginStatus } from "./reusedFunctions/checkLoginStatusFunction.js";
 import { getUserId } from "./reusedFunctions/getUserIdRequest.js";
 
 try {
     window.onload = async function checkUserAuth() {
         const response = await fetch('/checkLoginStatus');
         const data = await response.json();
-        console.log("Check Status Response: " + data.userSignedIn);
 
         if(data.userSignedIn != false) {
             let userDisplayId = document.getElementById('userDisplay');
@@ -15,17 +15,25 @@ try {
             displaySignOutButton();
         } else if(data.userSignedIn == false) {
             addLoginButton();
+            navbarResize(userSignedIn);
         }
     }
 } catch(error) {
     console.log(error);
 }
+
+window.addEventListener('resize', async () => {
+    const status = await checkLoginStatus(userSignedIn);
+    navbarResize(status);
+});
+
 let signOutButton = document.getElementById('signOutButton');
 let generateButton = document.getElementById('button-load');  // Check before doing operation
 let dinoNameArray = [];
 let dinoImageArray = [];
 let sessionDinoNameArray = [];
 let sessionDinoImageArray = [];
+let userSignedIn = null;
 
 checkForButtonPress(generateButton);
 

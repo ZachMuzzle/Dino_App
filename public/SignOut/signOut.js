@@ -1,4 +1,4 @@
-let signOutButton = document.getElementById("signOutButton");
+export let signOutButton = document.getElementById("signOutButton");
 let userDisplayId = document.getElementById('userDisplay');
 let compStyles = window.getComputedStyle(userDisplayId);
 
@@ -18,4 +18,17 @@ export async function signUserOut() {
     const response = await fetch('/signOutUser');
     const data = await response.json();
     return data.userWasSignedOut;
+}
+
+export async function navbarResize(userSignedIn) {
+    if(userSignedIn !== false) { 
+        let screenWidth  = window.innerWidth;
+        let navBar = document.querySelector('.nav-bar');
+
+        if(screenWidth <= 660) {
+            navBar.classList.add('resizeNavbar');
+        } else {
+            navBar.classList.remove('resizeNavbar');
+        }
+    }
 }
