@@ -5,17 +5,16 @@ import { getUserId } from "./reusedFunctions/getUserIdRequest.js";
 
 try {
     window.onload = async function checkUserAuth() {
-        const response = await fetch('/checkLoginStatus');
-        const data = await response.json();
+        const response = await checkLoginStatus(userSignedIn);
 
-        if(data.userSignedIn != false) {
+        if(response != false) {
             let userDisplayId = document.getElementById('userDisplay');
-            userDisplayId.innerHTML = data.userSignedIn;
+            userDisplayId.innerHTML = response;
             userDisplayId.style.display = "block";
             displaySignOutButton();
-        } else if(data.userSignedIn == false) {
+        } else if(response == false) {
             addLoginButton();
-            navbarResize(userSignedIn);
+            navbarResize(response);
         }
     }
 } catch(error) {
@@ -74,11 +73,10 @@ function checkForButtonPress(generateButton) {
                 let dinoName = createDinoDiv(data);
                 let imageData = await getDinoImage(dinoName);
                 let imageDataBranch = createImage(imageData[0], imageData[1]);
-                const response = await fetch('/checkLoginStatus');
-                const responseData = await response.json();
+                const response = await checkLoginStatus(userSignedIn);
                 /* Check if user is logged in and if so we can then pass the userName? */
-                if(responseData.userSignedIn != false) {
-                    const user = responseData.userSignedIn.split('@')[0];
+                if(response != false) {
+                    const user = response.split('@')[0];
                     const response = await getUserId(user);
                     const data = await response.json();
                     // alert(`USERID IS: ${data.UserId}`);

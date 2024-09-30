@@ -13,7 +13,7 @@ result.then(function(result) {
     if(userCheckLogin.userSignedIn !== false) {
         response.status(200).json(userCheckLogin);
     } else {
-        response.status(401).json(userCheckLogin);
+        response.status(201).json(userCheckLogin);
     }
 });
 });
