@@ -154,8 +154,8 @@ export default class firebaseService {
             // User is signed in, see docs for a list of available properties
             // https://firebase.google.com/docs/reference/js/auth.user
             const userEmail = user.email;
-            console.log("User was signed in: ", userEmail);
-            console.log("Is user email verified?: ", user.emailVerified);
+            // console.log("User was signed in: ", userEmail);
+            // console.log("Is user email verified?: ", user.emailVerified);
             resolve(userEmail);
             // return `User ${userEmail} was signed in`;
             // ...
