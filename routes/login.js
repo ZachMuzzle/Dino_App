@@ -17,9 +17,9 @@ router.post('/', (request, response) => {
     .then(response => response.json())
     .then(data => {
       if(data.success) {
-        response.json({captchaSuccess: true});
+        response.status(200).json({captchaSuccess: true});
       } else {
-        response.json({ captchaSuccess: false});
+        response.status(401).json({ captchaSuccess: false});
       }
     })
   });

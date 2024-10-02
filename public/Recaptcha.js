@@ -80,16 +80,15 @@ function popupMessageAlert() {
         // form.submit();
         const captchaResponse = grecaptcha.getResponse();
         // console.log(captchaResponse)
-        if (!captchaResponse.length > 0) {
-            if(document.getElementById("popupValue")) {
+        if (captchaResponse.length === 0) {
+            const popupElement = document.getElementById("popupValue");
+            if(popupElement) {
                addShakeEffect();
                setTimeout(removeShakeEffect,2000);
                 throw new Error('Complete the Captcha!')
             }
             else {
-                setTimeout(function() {
-                    popupMessageAlert();
-                },0);
+                setTimeout(popupMessageAlert,0);
                 throw new Error("Captcha not complete!")
             }
         }
@@ -100,26 +99,18 @@ function popupMessageAlert() {
         const params = new URLSearchParams(fd);
         // console.log(params)
         //request to home page for now
-    return new Promise((resolve,reject) => {
-
-        fetch('/login', {
+        try {
+        const response = await fetch('/login', {
             method: "POST",
             body: params,
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.captchaSuccess) {
-                resolve(data.captchaSuccess)
-                console.log('Validation successful!')
-            } else {
-                /*
-                !! Make resolve a reject 
-                 */
-                resolve(data.captchaSuccess)
-                console.log('Validation failed!')
-            }
-        })
-        .catch(err => console.log(err))
-    });
+        });
+
+        const data = await response.json();
+        console.log(data.captchaSuccess ? 'Validation successful!' : 'Validation failed!');
+        return data.captchaSuccess;
+    } catch(err) {
+        console.error("Error: ", err);
+        throw err;
+    }
 }
 }
