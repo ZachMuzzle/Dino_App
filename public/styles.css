@@ -118,7 +118,6 @@ ul > li a {
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
-    float:left
 }
 
 ul > li a:hover {
@@ -237,5 +236,15 @@ ul > li a:hover {
 @media (max-width:277px) {
     .button-load {
         --font-size-button:1rem
+    }
+}
+
+@media screen and (max-width: 660px){
+    .nav-bar {
+        flex-direction: column;
+    }
+    .loginButton {
+        float: none;
+        margin: auto;
     }
 }
