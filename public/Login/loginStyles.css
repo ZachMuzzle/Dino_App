@@ -9,7 +9,7 @@
     border: none;
     font-size: inherit;
     opacity: 1;
-    float:right;
+    /* float:right; */
 }
 .loginButton:hover {
     opacity: .8;
@@ -25,7 +25,7 @@
     border: none;
     font-size: inherit;
     opacity: 1;
-    float:right;
+    /* float:right; */
 }
 /* .userDisplayButton:hover {
   opacity: .8;
