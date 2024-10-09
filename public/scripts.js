@@ -12,6 +12,7 @@ try {
             userDisplayId.innerHTML = response;
             userDisplayId.style.display = "block";
             displaySignOutButton();
+            navbarResize(response);
         } else if(response == false) {
             addLoginButton();
             navbarResize(response);

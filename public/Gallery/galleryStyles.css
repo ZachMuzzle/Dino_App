@@ -66,7 +66,6 @@ body {
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
-    float: left;
 }
 
 .nav-bar > li a:hover {
@@ -428,5 +427,11 @@ ul.has-suggestions {
 @media (max-width:277px) {
     .headerErrorImage {
         --font-size-button:1rem
+    }
+}
+
+@media screen and (max-width: 660px){
+    .nav-bar {
+        flex-direction: column;
     }
 }

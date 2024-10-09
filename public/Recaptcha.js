@@ -2,6 +2,7 @@ import{closeImage,loginButtonPress,loginButton,submitButton,loginModel,inputElem
 import {addZoomEffect,removeZoomEffect,addShakeEffect,removeShakeEffect} from './styleEffects.js'
 import { removeLoginButton } from './Login/loginFeature.js';
 import { displaySignOutButton } from './SignOut/signOut.js';
+import { navbarResize } from './SignOut/signOut.js';
 // const recaptchaKey = await getRecaptchPublicKey();
 // const recaptchaKeyInsert = document.querySelectorAll('.g-recaptcha');
 /* Pull key from api. Set the key value to the attribute in html */
@@ -49,13 +50,14 @@ loginForm.addEventListener('submit', async function submitForm(e) {
             userDisplayId.style.display = "block";
             removeLoginButton();
             displaySignOutButton();
+            navbarResize(true);
             setTimeout(function() {
                 alert(`User ${data.Email} was signed in`);
             },500);
         } catch(error) {
             alert(error);
         }
-    }
+    } 
 });
 
 /* 
