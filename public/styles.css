@@ -17,12 +17,30 @@ body {
     place-items: center;
 }
 
+.temp-message-container {
+	max-width: 530px;
+	margin: .5rem auto;
+	background-color: #333;
+	padding: .2rem;
+	border-radius: 10px;
+    width: 80vw;
+}
+
 h1 {
     font-size: 10rem;
     font-family: 'Fira Sans', sans-serif;
     margin: 0;
     color: rgb(230, 107, 0);
     text-shadow: 10px 20px 20px black;
+}
+
+h3 {
+	font-size: 1.5rem;
+	font-family: 'Fira Sans', sans-serif;
+	margin: 1.5rem 0;
+	color: rgb(219, 106, 7);
+	text-shadow: 10px 20px 20px black;
+    
 }
 
 section > button {
