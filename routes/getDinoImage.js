@@ -14,9 +14,12 @@ router.get('/', async(request, response) => {
   try {
     const fetchAPI = await fetch(url, options);
     const dinoImageResponse = await fetchAPI.json();
+    if(!dinoImageResponse.ok) {
+      throw new Error(dinoImageResponse.message || 'failed to fetch dino');
+  }
     response.json(dinoImageResponse);
   } catch(error){
-    response.status(500).json({message: error.message});
+    response.status(500).json({message: error.message || 'An unknown error occurred'});
   }
 });
 
