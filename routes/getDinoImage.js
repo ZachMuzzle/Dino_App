@@ -13,10 +13,10 @@ const url = 'https://duckduckgo-image-search.p.rapidapi.com/search/image?q=dinos
 router.get('/', async(request, response) => {
   try {
     const fetchAPI = await fetch(url, options);
-    const dinoImageResponse = await fetchAPI.json();
-    if(!dinoImageResponse.ok) {
+    if(!fetchAPI.ok) {
       throw new Error(dinoImageResponse.message || 'failed to fetch dino');
   }
+    const dinoImageResponse = await fetchAPI.json();
     response.json(dinoImageResponse);
   } catch(error){
     response.status(500).json({message: error.message || 'An unknown error occurred'});

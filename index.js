@@ -5,7 +5,7 @@
  * API keys in env file
 */
 import fetch from 'node-fetch';
-import express from 'express';
+import express, { response } from 'express';
 import dotenv from 'dotenv';
 import DbService from './database/database.js'
 import DbLoginService from './database/loginDatabase.js';
@@ -35,16 +35,16 @@ const getDirName = function (moduleUrl) {
   const filename = fileURLToPath(moduleUrl)
   return path.dirname(filename)
 }
-const { request, response } = express;
 export const app = express();
 const publicPath=path.join(getDirName(import.meta.url), 'public')
 const port = 3000;
-const api_key = process.env.API_KEY; // Used for API KEY instead of actual key in options
+
 /* App uses */
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 app.use(express.static('public')); 
+/* Routes */
 app.use('/createNewUser',firebaseCreateUser);
 app.use('/getData',getDinoRoutes);
 app.use('/dinoname',dinoNameRoutes);
@@ -61,216 +61,101 @@ app.use('/signOutUser',signOutUser)
 app.use('/insertUser',insertUser)
 app.use('/getUserId',getUserId)
 
+app.get('/',(request, response) => {
+  response.redirect('/DinoGenerator');
+});
+
+app.get('/DinoGenerator',(request, response) => {
+  response.sendFile(`${publicPath}/index.html`)
+});
+
+app.get('/Gallery',(request, response) => {
+  response.sendFile(`${publicPath}/Gallery/gallery.html`)
+});
+
+app.get('/styles.css',(request, response) => {
+  response.sendFile(`${publicPath}/styles.css`)
+});
+
+app.get('/scripts.js',(request, response) => {
+  response.sendFile(`${publicPath}/scripts.js`)
+});
+
+app.get('/galleryStyles.css',(request, response) => {
+  response.sendFile(`${publicPath}/Gallery/galleryStyles.css`)
+});
+
+app.get('/modelStyle.css',(request, response) => {
+  response.sendFile(`${publicPath}/modelStyle.css`)
+});
+
+app.get('/loginStyles.css',(request, response) => {
+  response.sendFile(`${publicPath}/Login/loginStyles.css`)
+});
+
+
+app.get('/gallery.js',(request, response) => {
+  response.sendFile(`${publicPath}/Gallery/gallery.js`)
+});
+app.get('/Recaptcha.js',(request, response) => {
+  response.sendFile(`${publicPath}/Recaptcha.js`)
+});
+
+app.get('/loginForm.js',(request, response) => {
+  response.sendFile(`${publicPath}/Login/loginForm.js`)
+});
+
+app.get('/signUpForm.js',(request, response) => {
+  response.sendFile(`${publicPath}/Login/signUpForm.js`)
+});
+
+app.get('/styleEffects.js',(request, response) => {
+  response.sendFile(`${publicPath}/styleEffects.js`)
+});
+
+app.get('/casey-horner-1sim8ojvCbE-unsplash.jpg',(request, response) => {
+  response.sendFile(`${publicPath}/Gallery/casey-horner-1sim8ojvCbE-unsplash.jpg`)
+});
+
+app.get('/myIcon.ico',(request, response) => {
+  response.sendFile(`${publicPath}/myIcon.ico`)
+});
+
+app.get('/loginFeature.js',(request, response) => {
+  response.sendFile(`${publicPath}/Login/loginFeature.js`)
+});
+
+app.get('/signOut.js',(request, response) => {
+  response.sendFile(`${publicPath}/SignOut/signOut.js`)
+});
+
+app.get('/signOut.css',(request, response) => {
+  response.sendFile(`${publicPath}/SignOut/signOut.css`)
+});
+
+app.get('/closeButtons.js',(request, response) => {
+  response.sendFile(`${publicPath}/reusedFunctions/closeButtons.js`)
+});
+
+app.get('/getUserIdRequest.js',(request, response) => {
+  response.sendFile(`${publicPath}/reusedFunctions/getUserIdRequest.js`)
+});
+
+app.get('/checkLoginStatusFunction.js',(request, response) => {
+  response.sendFile(`${publicPath}/reusedFunctions/checkLoginStatusFunction.js`)
+});
+
+/* 404 error */
+app.use((req,res,next) => {
+  res.status(404).send("Sorry, page was not found");
+});
+
+/* Any error handling */
+app.use((err,req,res,next) => {
+  console.log(err.stack);
+  res.status(500).send("Something went wrong!");
+})
 
 app.listen(port, function() {
   console.log(`Example app listening at http://localhost:${port}`);
 });
-
-app.get('',(response,request) => {
-  request.sendFile(`${publicPath}/index.html`)
-});
-
-app.get('/DinoGenerator',(response,request) => {
-  request.sendFile(`${publicPath}/index.html`)
-});
-
-app.get('/Gallery',(response,request) => {
-  request.sendFile(`${publicPath}/Gallery/gallery.html`)
-});
-
-app.get('/styles.css',(response,request) => {
-  request.sendFile(`${publicPath}/styles.css`)
-});
-
-app.get('/scripts.js',(response,request) => {
-  request.sendFile(`${publicPath}/scripts.js`)
-});
-
-
-app.get('/galleryStyles.css',(response,request) => {
-  request.sendFile(`${publicPath}/Gallery/galleryStyles.css`)
-});
-
-app.get('/modelStyle.css',(response,request) => {
-  request.sendFile(`${publicPath}/modelStyle.css`)
-});
-
-app.get('/loginStyles.css',(response,request) => {
-  request.sendFile(`${publicPath}/Login/loginStyles.css`)
-});
-
-
-app.get('/gallery.js',(response,request) => {
-  request.sendFile(`${publicPath}/Gallery/gallery.js`)
-});
-app.get('/Recaptcha.js',(response,request) => {
-  request.sendFile(`${publicPath}/Recaptcha.js`)
-});
-
-app.get('/loginForm.js',(response,request) => {
-  request.sendFile(`${publicPath}/Login/loginForm.js`)
-});
-
-app.get('/signUpForm.js',(response,request) => {
-  request.sendFile(`${publicPath}/Login/signUpForm.js`)
-});
-
-app.get('/styleEffects.js',(response,request) => {
-  request.sendFile(`${publicPath}/styleEffects.js`)
-});
-
-app.get('/casey-horner-1sim8ojvCbE-unsplash.jpg',(response,request) => {
-  request.sendFile(`${publicPath}/Gallery/casey-horner-1sim8ojvCbE-unsplash.jpg`)
-});
-
-app.get('/myIcon.ico',(response,request) => {
-  request.sendFile(`${publicPath}/myIcon.ico`)
-});
-
-app.get('/loginFeature.js',(response,request) => {
-  request.sendFile(`${publicPath}/Login/loginFeature.js`)
-});
-
-app.get('/signOut.js',(response,request) => {
-  request.sendFile(`${publicPath}/SignOut/signOut.js`)
-});
-
-app.get('/signOut.css',(response,request) => {
-  request.sendFile(`${publicPath}/SignOut/signOut.css`)
-});
-
-app.get('/closeButtons.js',(response,request) => {
-  request.sendFile(`${publicPath}/reusedFunctions/closeButtons.js`)
-});
-
-app.get('/getUserIdRequest.js',(response,request) => {
-  request.sendFile(`${publicPath}/reusedFunctions/getUserIdRequest.js`)
-});
-
-app.get('/checkLoginStatusFunction.js',(response,request) => {
-  request.sendFile(`${publicPath}/reusedFunctions/checkLoginStatusFunction.js`)
-});
-// app.get('/dinoname', async(request,response) => {
-//     // RUN CODE HERE
-    
-//     const fetchAPI = await fetch('https://dinoipsum.com/api/?format=json&words=2&paragraphs=1');
-
-//     const dinoNameResponse = await fetchAPI.json();
-//     // console.log(dinoNameResponse); // writes to console
-//     response.json(dinoNameResponse); // responded to any client requests
-
-// });
-// const options = {
-//     method: 'GET',
-//     headers: {
-//       'X-RapidAPI-Key': api_key,
-//       'X-RapidAPI-Host': 'duckduckgo-image-search.p.rapidapi.com'
-//     }
-//   };
-// const url = 'https://duckduckgo-image-search.p.rapidapi.com/search/image?q=dinosaur';
-
-// try {
-// app.get('/dinoimage', async(request,response) => {
-//     const fetchAPI = await fetch(url, options);
-//     const dinoImageResponse = await fetchAPI.json();
-//     // console.log(dinoImageResponse);
-//     response.json(dinoImageResponse);
-// });
-// } catch(error){
-//   console.log(error)
-// }
-
-/* Database Functionality */
-
-// app.post('/insert', (request, response) => {
-//   const {dino_name,dino_image_url} = request.body;
-//   console.log(request.body)
-//   const db = DbService.getDbServiceInstance();
-
-//   const result = db.insertDino(dino_name, dino_image_url);
-//   /* Need to add dino url */
-//   result
-//   .then(data => response.json({data: data}))
-//   .catch(err => console.log(err));
-// }); 
-
-// app.get('/getData', (request, response) => {
-//   const db = DbService.getDbServiceInstance();
-
-//   const result = db.getAllData();
-
-//   result
-//   .then(data => response.json({data: data}))
-//   .catch(err => console.log(err));
-// });
-
-// app.get('/truncate', (request, response) => {
-//   const db = DbService.getDbServiceInstance();
-//   const result = db.truncateAllData();
-
-//   result
-//   .then(data => response.json({data:data}))
-//   .catch(err => console.log(err))
-// });
-
-// app.delete('/delete/:id', (request, response) => {
-//   const {id} = request.params;
-//   const db = DbService.getDbServiceInstance();
-
-//   const result = db.deleteById(id);
-
-//   result
-//   .then(data => response.json({success:data}))
-//   .catch(err => console.log(err))
-// });
-
-// app.patch('/update', (request, response) => {
-//   const {id, dino_name, dino_image_url, date_added} = request.body;
-//   console.log(request.body);
-//   const db = DbService.getDbServiceInstance();
-
-//   const result = db.updateById(id, dino_name, dino_image_url, date_added);
-
-//   result
-//   .then(data => response.json({success: data}))
-//   .catch(err => console.log(err));
-// });
-
-/*
-!! 
-app.get('/getLoginData', (request, response) => {
-  const db = DbLoginService.getDbLoginServiceInstance();
-  const results = db.getAllData();
-
-  results
-  .then(data => response.json({data: data}))
-  .catch(err => console.log(err));
-}) */
-/* Login for google Recaptcha */
-
-// app.post('/login', (request, response) => {
-//   const params = new URLSearchParams({
-//     secret: process.env.GOOGLE_RECAP_SECERT,
-//     response:request.body['g-recaptcha-response'],
-//     remoteip: request.ip,
-//   });
-
-//   console.log(params)
-//   // console.log(params['secret'])
-  
-//   fetch('https://www.google.com/recaptcha/api/siteverify', {
-//     method:"POST",
-//     body: params,
-//   })
-//   .then(response => response.json())
-//   .then(data => {
-//     if(data.success) {
-//       response.json({captchaSuccess: true});
-//     } else {
-//       response.json({ captchaSuccess: false});
-//     }
-//   })
-// });
-
-
-
