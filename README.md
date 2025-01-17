@@ -145,7 +145,6 @@ This section will cover how you can get this running locally on your own compute
 11. Now use the **X-RapidAPI-Key** and place that in your `.env` file.
 12. Now you should be able to run `npm run dev` again and now when the button is clicked images will be displayed.
 
-<<<<<<< HEAD
 
 ### Prerequisites
 
@@ -186,20 +185,6 @@ Make sure npm is installed
 - You can run `sudo apt install python3-setuptools`if running into compose up issues
 - **Make sure to use compose up and not compose-up (deprecated)**
 
-=======
-### Prerequisites
-
-Make sure npm is installed
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
-
-### Other Items to Install
-1. There a few other packages that will need to be installed. However, I didn't keep great documention on how they were installed. Please look at the [package.json](package.json) file to see all dependencies that are needed to get this project running locally.
-
-### Using Docker
->>>>>>> master
 1. This project has been updated to be able to run in the dev and prod env by creating a docker image and running the container. Below will walk you through on how you can setup the codebase to run on your machine.
       1. The `Dockerfile` and `docker-compose.yml` are setup to be used in the dev env
       2. Below in the CLI you will have to build the docker image. Normally we would do the building and then then running manually, but with the help of the `docker-compose.yml` file it allows this project to be built and run automatically. You can choose either to run on the CLI or run in the background
