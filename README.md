@@ -145,6 +145,7 @@ This section will cover how you can get this running locally on your own compute
 11. Now use the **X-RapidAPI-Key** and place that in your `.env` file.
 12. Now you should be able to run `npm run dev` again and now when the button is clicked images will be displayed.
 
+
 ### Prerequisites
 
 Make sure npm is installed
@@ -153,10 +154,37 @@ Make sure npm is installed
   npm install npm@latest -g
   ```
 
-### Other Items to Install
-1. There a few other packages that will need to be installed. However, I didn't keep great documention on how they were installed. Please look at the [package.json](package.json) file to see all dependencies that are needed to get this project running locally.
+### Installing MySQL Locally
+- You will need too install MySQL to be able to work with the local database for storing users and dinos.
+- To do this follow the steps below
+1. Install MySQL APT Repo from [link](https://dev.mysql.com/downloads/repo/apt/)
+2. dpkg the file that was downloaded. Find where the file is located and `sudo dpkg -i the deb file`
+3. `sudo apt update`
+4. `sudo apt install mysql-workbench-community`
+5. connect to the mysql using `sudo mysql -u root`
+6. You will need to alter the user `Alter user by ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'root';`
+7. `FLUSH PRIVILEGES`
+
+**To connect to the database while using docker you will have to complete a few items**
+1. Download vim
+2. Once vim is downloaded run sudo `vim /etc/mysql/mysql.conf.d/mysqld.cnf`and add `bind-address=0.0.0.0`
+3. Next you will need to create a new user that can be used on any host.
+4. Open MySQL `mysql -h localhost -u root -p`
+5. Then run the following commands:
+  `CREATE USER 'root'@'%' IDENTIFIED BY 'yourpassword';`
+  `GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;`
+  `FLUSH PRIVILEGES;`
+  `ALTER USER 'root'@'%' IDENTIFIED WITH mysql_native_password BY 'newpassword';` **newpassword** is whatever you want.
+  `FLUSH PRIVILEGES;`
+6. Now when you get to docker compose up --build the database should be setup to run on the virtual machine with the docker ip address.
 
 ### Using Docker
+#### Downloading Docker/Prerequisites
+- After downloading docker you may run into issues when trying to use docker.
+- I used this issues page to resolve some of my issues [link](https://github.com/rashadphz/farfalle/issues/32 )
+- You can run `sudo apt install python3-setuptools`if running into compose up issues
+- **Make sure to use compose up and not compose-up (deprecated)**
+
 1. This project has been updated to be able to run in the dev and prod env by creating a docker image and running the container. Below will walk you through on how you can setup the codebase to run on your machine.
       1. The `Dockerfile` and `docker-compose.yml` are setup to be used in the dev env
       2. Below in the CLI you will have to build the docker image. Normally we would do the building and then then running manually, but with the help of the `docker-compose.yml` file it allows this project to be built and run automatically. You can choose either to run on the CLI or run in the background
