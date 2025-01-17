@@ -3,8 +3,13 @@ services:
   app:
     build: .
     volumes:
+<<<<<<< HEAD
       - .:/app # Map local directory to container's /app directory
       - /app/node_modules # Prevent node_modules from being overwritten
+=======
+      - /home/zachary/code/dino-app:/app # Map local directory to container's /app directory
+      - /node_modules # Prevent node_modules from being overwritten
+>>>>>>> master
     restart: unless-stopped
     env_file: ./.env
     ports:
