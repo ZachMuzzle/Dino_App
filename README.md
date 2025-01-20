@@ -69,15 +69,21 @@
       <a href="#getting-started">Getting Started</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
+        <li><a href="#installing-mysql-locally"> Installing MySQL Locally</a></li>
+        <li><a href="#docker">Docker</a></li>
+        <li>
+          <ul>
+          <li><a href="#downloading-docker-and-prerequisites">Downloading Docker/Prerequisites</a></li>
+          </ul>
+        </li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
-    <li><a href="#roadmap">Roadmap</a></li>
+    <!-- <li><a href="#usage">Usage</a></li> -->
+    <!-- <li><a href="#roadmap">Roadmap</a></li> -->
     <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
+    <!-- <li><a href="#license">License</a></li> -->
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
+    <!-- <li><a href="#acknowledgments">Acknowledgments</a></li> -->
   </ol>
 </details>
 
@@ -178,8 +184,8 @@ Make sure npm is installed
   `FLUSH PRIVILEGES;`
 6. Now when you get to docker compose up --build the database should be setup to run on the virtual machine with the docker ip address.
 
-### Using Docker
-#### Downloading Docker/Prerequisites
+### Docker
+#### Downloading Docker and Prerequisites
 - After downloading docker you may run into issues when trying to use docker.
 - I used this issues page to resolve some of my issues [link](https://github.com/rashadphz/farfalle/issues/32 )
 - You can run `sudo apt install python3-setuptools`if running into compose up issues
